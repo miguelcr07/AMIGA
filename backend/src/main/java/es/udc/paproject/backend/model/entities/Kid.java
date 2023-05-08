@@ -16,6 +16,11 @@ public class Kid {
     @JoinColumn(name = "participant_id")
     Participant participant;
 
+    public Kid(LocalDate birthDate, Gender gender) {
+        this.birthDate = birthDate;
+        this.gender = gender;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }

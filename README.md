@@ -1,4 +1,4 @@
-# PA Project 
+# AMIGA Project 
 
 ## Requirements
 

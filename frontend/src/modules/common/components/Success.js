@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import React from 'react'
 
 const Success = ({message, onClose}) => message && (
     <div className="alert alert-success alert-dismissible fade show" role="alert">

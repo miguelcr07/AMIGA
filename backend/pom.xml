@@ -8,8 +8,8 @@
     <version>1.0.0</version>
     <packaging>jar</packaging>
     
-    <name>PA Project Backend</name>
-	<description>PA Project Backend</description>
+    <name>Migrant</name>
+	<description>Application to register migrant's data</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -54,9 +54,8 @@
                 <jdbcDriver.className>com.mysql.cj.jdbc.Driver</jdbcDriver.className>
 
                 <!--  Data source properties -->
-                <dataSource.baseUrl>jdbc:mysql://localhost:3306/amiga</dataSource.baseUrl>
-                <dataSource.url>${dataSource.baseUrl}?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=Europe/Madrid</dataSource.url>
-                <testDataSource.url>${dataSource.baseUrl}?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=Europe/Madrid</testDataSource.url>
+                <dataSource.url>jdbc:mysql://localhost:3306/amiga?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=Europe/Madrid</dataSource.url>
+                <testDataSource.url>jdbc:mysql://localhost:3307/amiga-test?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=Europe/Madrid</testDataSource.url>
                 <dataSource.createTablesScript>1-MySQLCreateTables.sql</dataSource.createTablesScript>
                 <dataSource.createDataScript>2-MySQLCreateData.sql</dataSource.createDataScript>
             </properties>

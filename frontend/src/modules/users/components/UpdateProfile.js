@@ -2,6 +2,7 @@ import {useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {FormattedMessage} from 'react-intl';
 import {useNavigate} from 'react-router-dom';
+import React from 'react'
 
 import {Errors} from '../../common';
 import * as actions from '../actions';

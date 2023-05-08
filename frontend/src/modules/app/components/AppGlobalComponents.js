@@ -1,4 +1,5 @@
 import {useSelector, useDispatch} from 'react-redux';
+import React from 'react'
 
 import {ErrorDialog, Loader} from '../../common';
 import * as actions from '../actions';

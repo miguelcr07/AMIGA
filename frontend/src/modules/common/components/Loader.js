@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-
+import React from 'react'
 import './Loader.css';
 
 const Loader = ({loading}) => loading && (

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import {useIntl, FormattedMessage} from 'react-intl';
+import React from 'react'
 
 import {NetworkError} from '../../../backend';
 
