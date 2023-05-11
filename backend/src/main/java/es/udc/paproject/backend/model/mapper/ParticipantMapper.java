@@ -7,36 +7,38 @@ import es.udc.paproject.backend.rest.dtos.ParticipantSummaryDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 @Mapper(componentModel = "spring")
+@Component
 public interface ParticipantMapper {
     ParticipantSummaryDto toParticipantSummaryDto(Participant participant);
 
     List<ParticipantSummaryDto> toParticipantSummaryDtoList(List<Participant> participant);
 
-    @Mapping(source = "gender", target = "sex", qualifiedByName = "toSex")
-    @Mapping(source = "country.id", target = "country")
-    @Mapping(source = "participant.id", target = "idParticipant")
-    @Mapping(source = "annualData.id", target = "idAnnualData")
-    @Mapping(source = "nationalities", target = "nationalities", qualifiedByName = "toNationalities")
-    @Mapping(source = "municipality.id", target = "municipality")
-    @Mapping(source = "province.id", target = "province")
-    @Mapping(source = "situation", target = "situation", qualifiedByName = "toSituation")
-    @Mapping(source = "studies.id", target = "studies")
-    @Mapping(source = "languages", target = "languages", qualifiedByName = "toLanguages")
-    @Mapping(source = "cohabitation.id", target = "cohabitation")
-    @Mapping(source = "housing.id", target = "housing")
-    @Mapping(source = "exclusionFactors", target = "exclusionFactors", qualifiedByName = "toExclusionFactors")
-    @Mapping(source = "disability", target = "disability", qualifiedByName = "toDisability")
-    @Mapping(source = "employment.id", target = "employment")
-    @Mapping(source = "benefit", target = "benefit", qualifiedByName = "toBenefit")
-    @Mapping(source = "demand.id", target = "demand")
-    @Mapping(source = "programs", target = "programs", qualifiedByName = "toPrograms")
-    ParticipantDto toParticipantDto(Participant participant, AnnualData annualData);
+    @Mapping(source = "p.gender", target = "sex", qualifiedByName = "toSex")
+    @Mapping(source = "p.country.id", target = "country")
+    @Mapping(source = "p.id", target = "idParticipant")
+    @Mapping(source = "a.id", target = "idAnnualData")
+    @Mapping(source = "a.nationalities", target = "nationalities", qualifiedByName = "toNationalities")
+    @Mapping(source = "a.municipality.id", target = "municipality")
+    @Mapping(source = "a.province.id", target = "province")
+    @Mapping(source = "a.situation", target = "situation", qualifiedByName = "toSituation")
+    @Mapping(source = "a.studies.id", target = "studies")
+    @Mapping(source = "a.languages", target = "languages", qualifiedByName = "toLanguages")
+    @Mapping(source = "a.cohabitation.id", target = "cohabitation")
+    @Mapping(source = "a.housing.id", target = "housing")
+    @Mapping(source = "a.exclusionFactors", target = "exclusionFactors", qualifiedByName = "toExclusionFactors")
+    @Mapping(source = "a.disability", target = "disability", qualifiedByName = "toDisability")
+    @Mapping(source = "a.employment.id", target = "employment")
+    @Mapping(source = "a.benefit", target = "benefit", qualifiedByName = "toBenefit")
+    @Mapping(source = "a.demand.id", target = "demand")
+    @Mapping(source = "a.programs", target = "programs", qualifiedByName = "toPrograms")
+    ParticipantDto toParticipantDto(Participant p, AnnualData a);
 
     @Mapping(source = "gender", target = "sex", qualifiedByName = "toSex")
     KidDto toKidDto(Kid kid);

@@ -1,9 +1,6 @@
 package es.udc.paproject.backend.model.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Municipality {
@@ -12,6 +9,10 @@ public class Municipality {
     private Long id;
 
     private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "province_id")
+    private Province province;
 
     public void setId(Long id) {
         this.id = id;
@@ -27,5 +28,13 @@ public class Municipality {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Province getProvince() {
+        return province;
+    }
+
+    public void setProvince(Province province) {
+        this.province = province;
     }
 }
