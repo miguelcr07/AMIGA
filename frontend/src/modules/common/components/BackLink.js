@@ -1,6 +1,5 @@
 import {useNavigate} from 'react-router-dom';
 import {FormattedMessage} from 'react-intl';
-import React from 'react'
 
 const BackLink = () => {
 

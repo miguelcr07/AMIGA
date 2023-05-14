@@ -11,6 +11,7 @@ import es.udc.paproject.backend.rest.dtos.ParticipantSummaryDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -52,27 +53,42 @@ public class ParticipantServiceImpl implements ParticipantService{
     @Override
     public ParticipantDto saveParticipant(ParticipantDto participantDto) {
         Participant participant = new Participant();
-        participant.setId(participantDto.getIdParticipant());
-        participant.setName(participantDto.getName());
-        participant.setSurnames(participantDto.getSurnames());
-        participant.setDni(participantDto.getDni());
-        participant.setNie(participantDto.getNie());
-        participant.setPas(participantDto.getPas());
-        participant.setPhone(participantDto.getPhone());
-        participant.setEmail(participantDto.getEmail());
-        participant.setGender(Gender.valueOf(participantDto.getSex()));
-        participant.setBirthDate(participantDto.getBirthDate());
-        participant.setDatePi(participantDto.getDatePi());
-        participant.setInterviewPi(participantDto.getInterviewPi());
-        participant.setCountry(selectorService.getCountry(participantDto.getCountry()));
-        for(KidDto kidDto: participantDto.getKids()) {
-            participant.getKids().add(new Kid(kidDto.getBirthDate(), Gender.valueOf(kidDto.getSex())));
-        }
+        setParticipantData(participantDto, participant);
         Participant participantSaved = participantDao.save(participant);
 
         AnnualData annualData = new AnnualData();
         annualData.setParticipant(participantSaved);
-        annualData.setDate(participantDto.getDate());
+        setAnnualData(participantDto, annualData);
+
+        return participantMapper.toParticipantDto(participantSaved, annualDataDao.save(annualData));
+    }
+
+    @Override
+    public ParticipantDto updateParticipant(ParticipantDto participantDto) {
+        Participant participant = participantDao.findById(participantDto.getIdParticipant()).orElse(null);
+
+        if(participant == null)
+            return null;
+
+        setParticipantData(participantDto, participant);
+        //participantDao.save(participant);
+        return participantMapper.toParticipantDto(participant, null);
+
+    }
+    @Override
+    public ParticipantDto updateAnnualData(ParticipantDto participantDto) {
+        AnnualData annualData = annualDataDao.findById(participantDto.getIdAnnualData()).orElse(null);
+
+        if(annualData == null)
+            return null;
+
+        annualData.setParticipant(participantDao.findById(participantDto.getIdParticipant()).orElse(null));
+        setAnnualData(participantDto, annualData);
+        return participantMapper.toParticipantDto(null, annualData);
+    }
+
+    private void setAnnualData(ParticipantDto participantDto, AnnualData annualData) {
+        annualData.setDate(LocalDate.now());
         annualData.setReturned(participantDto.isReturned());
         for(Long nat : participantDto.getNationalities()) {
             annualData.getNationalities().add(selectorService.getCountry(nat));
@@ -121,17 +137,23 @@ public class ParticipantServiceImpl implements ParticipantService{
             annualData.getPrograms().add(selectorService.getProgram(pro));
         }
         annualData.setDerivation(participantDto.getDerivation());
-
-        return participantMapper.toParticipantDto(participantSaved, annualDataDao.save(annualData));
     }
 
-    @Override
-    public ParticipantDto updateParticipant(ParticipantDto participantDto) {
-        return null;
-    }
-
-    @Override
-    public ParticipantDto updateAnnualData(ParticipantDto participantDto) {
-        return null;
+    private void setParticipantData(ParticipantDto participantDto, Participant participant) {
+        participant.setName(participantDto.getName());
+        participant.setSurnames(participantDto.getSurnames());
+        participant.setDni(participantDto.getDni());
+        participant.setNie(participantDto.getNie());
+        participant.setPas(participantDto.getPas());
+        participant.setPhone(participantDto.getPhone());
+        participant.setEmail(participantDto.getEmail());
+        participant.setGender(Gender.valueOf(participantDto.getSex()));
+        participant.setBirthDate(participantDto.getBirthDate());
+        participant.setDatePi(participantDto.getDatePi());
+        participant.setInterviewPi(participantDto.getInterviewPi());
+        participant.setCountry(selectorService.getCountry(participantDto.getCountry()));
+        for(KidDto kidDto: participantDto.getKids()) {
+            participant.getKids().add(new Kid(kidDto.getBirthDate(), Gender.valueOf(kidDto.getSex())));
+        }
     }
 }

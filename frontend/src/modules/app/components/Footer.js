@@ -1,5 +1,5 @@
 import {FormattedMessage} from 'react-intl';
-import React from 'react'
+
 const Footer = () => (
 
     <div>

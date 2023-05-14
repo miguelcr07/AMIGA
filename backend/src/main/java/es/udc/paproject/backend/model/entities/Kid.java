@@ -21,6 +21,10 @@ public class Kid {
         this.gender = gender;
     }
 
+    public Kid() {
+
+    }
+
     public void setId(Long id) {
         this.id = id;
     }

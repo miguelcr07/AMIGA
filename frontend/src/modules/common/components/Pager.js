@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import {FormattedMessage} from 'react-intl';
-import React from 'react'
 
 const Pager = ({back, next}) => (
 

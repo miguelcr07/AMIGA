@@ -1,10 +1,10 @@
 package es.udc.paproject.backend.rest.dtos;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 
 public class ParticipantDto {
-
     private Long idParticipant;
     private String name;
     private String surnames;
@@ -17,27 +17,35 @@ public class ParticipantDto {
     private LocalDate birthDate;
     private LocalDate datePi;
     private LocalDate interviewPi;
+    @NotNull
     private List<KidDto> kids;
     private Long country;
-
     private Long idAnnualData;
     private LocalDate date;
     private boolean returned;
+    @NotNull
     private List<Long> nationalities;
     private String address;
     private String postalAddress;
+    @NotNull
     private Long municipality;
+    @NotNull
     private Long province;
     private String situation;
+    @NotNull
     private Long studies;
+    @NotNull
     private List<Long> languages;
     private boolean approved;
     private String demandedStudies;
     private boolean registered;
     private LocalDate dateRegister;
     private int numberRegistered;
+    @NotNull
     private Long cohabitation;
+    @NotNull
     private Long housing;
+    @NotNull
     private List<Long> exclusionFactors;
     private String socialWorker;
     private String healthCoverage;
@@ -45,6 +53,7 @@ public class ParticipantDto {
     private boolean unemployedHousehold;
     private boolean oneAdultHousehold;
     private boolean dependants;
+    @NotNull
     private Long employment;
     private String qualification;
     private String profExpOrigin;
@@ -59,7 +68,9 @@ public class ParticipantDto {
     private String benefit;
     private LocalDate dateBenefit;
     private String SpecialBenefit;
+    @NotNull
     private Long demand;
+    @NotNull
     private List<Long> programs;
     private String derivation;
 

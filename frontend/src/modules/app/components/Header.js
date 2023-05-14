@@ -1,7 +1,6 @@
 import {useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {FormattedMessage} from 'react-intl';
-import React from 'react'
 
 import users from '../../users';
 
@@ -73,4 +72,3 @@ const Header = () => {
 };
 
 export default Header;
-

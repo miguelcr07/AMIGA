@@ -1,10 +1,9 @@
 import {useSelector} from 'react-redux';
 import {Route, Routes} from 'react-router-dom';
-import React from 'react'
 
 import AppGlobalComponents from './AppGlobalComponents';
+import Home from './Home';
 import {Login, SignUp, UpdateProfile, ChangePassword, Logout} from '../../users';
-import {Participant} from '../../participant'
 import users from '../../users';
 
 const Body = () => {
@@ -17,7 +16,7 @@ const Body = () => {
             <br/>
             <AppGlobalComponents/>
             <Routes>
-                <Route path="/*" element={<Participant/>}/>
+                <Route path="/*" element={<Home/>}/>
                 {loggedIn && <Route path="/users/update-profile" element={<UpdateProfile/>}/>}
                 {loggedIn && <Route path="/users/change-password" element={<ChangePassword/>}/>}
                 {loggedIn && <Route path="/users/logout" element={<Logout/>}/>}
