@@ -798,3 +798,6 @@ INSERT INTO MaritalStatus (name) VALUES ('Casado/a'),
 INSERT INTO Housing (name) VALUES ('Propia'),('Alquilada'),('Cedida');
 INSERT INTO Cohabitation (name) VALUES ('Pareja'),('Familia monoparental'),
                                        ('Familia nulear'),('Agrupación voluntaria'),('Familia propia ampliada');
+insert into Employment (name) values ('Desempleado/a'),('Desempleado/a de larga duración'),
+                                     ('Inactiva/o'),('Inactiva/o, integrada/o en los sistemas de educación o formación'),
+                                     ('Ocupada/o'),('Subempleado/a por insuficiencia de horas');

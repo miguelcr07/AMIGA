@@ -1,6 +1,8 @@
 package es.udc.paproject.backend.rest.dtos;
 
 public class ParticipantSummaryDto {
+
+    private Long id;
     private String name;
     private String surnames;
     private String dni;
@@ -8,6 +10,14 @@ public class ParticipantSummaryDto {
     private String pas;
     private String phone;
     private String email;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

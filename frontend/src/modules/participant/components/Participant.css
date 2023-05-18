@@ -1,0 +1,36 @@
+.participant-container {
+    display: flex;
+    flex-direction: row;
+    padding-top: 3%;
+}
+.item {
+    width: 20%;
+}
+.item2 {
+    flex-grow: 1;
+    margin-left: 2%;
+}
+.participant-row {
+    margin-top: 2%;
+}
+.participant-details {
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #f5f5f5;
+}
+
+.participant-details h6 {
+    margin-bottom: 10px;
+}
+
+.participant-details p {
+    margin: 5px 0;
+}
+.button{
+    margin: 4%;
+    position: fixed;
+    top: 0;
+    right: 0;
+}

@@ -64,7 +64,7 @@ export const findAllMunicipalities = () => (dispatch, getState) => {
     }
 }
 const findAllLanguagesCompleted = languages => ({
-    type: actionTypes.FIND_ALL_COUNTRIES_COMPLETED,
+    type: actionTypes.FIND_ALL_LANGUAGES_COMPLETED,
     languages
 });
 

@@ -1,0 +1,35 @@
+.row-container {
+    display: flex;
+    flex-direction: row;
+    padding-top: 3%;
+}
+
+.item {
+    flex-grow: 1;
+}
+.item2 {
+    flex-grow: 3;
+}
+.birthdate{
+    width: 30%;
+}
+.space{
+    width: 2%;
+}
+.bigSpace{
+    width: 4%;
+}
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 3%;
+}
+.sexo {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid #ccc;
+    padding: 3px;
+    border-radius: 4px;
+
+}

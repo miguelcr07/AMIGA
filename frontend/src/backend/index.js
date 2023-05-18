@@ -1,7 +1,7 @@
 import {init} from './appFetch';
 import * as userService from './userService';
-import * as selectors from './selectors'
-import * as participant from './participant';
+import * as selectors from './selectorsService'
+import * as participant from './participantService';
 
 export {default as NetworkError} from "./NetworkError";
 
