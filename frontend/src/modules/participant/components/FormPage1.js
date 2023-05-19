@@ -13,21 +13,25 @@ const FormPage1 = ({ formData, setFormData, nextPage }) => {
     const provinces = useSelector(selectors.getProvinces);
     const municipalities = useSelector(selectors.getMunicipalities);
     const countries = useSelector(selectors.getCountries);
+    const hounsings = useSelector(selectors.getHousings);
+    const maritalStatus = useSelector(selectors.getMaritalStatus);
     const [municipalityOptions, setMunicipalityOptions] = useState([]);
     const [selectedProvince, setSelectedProvince] = useState(null);
     const [selectedCountry, setSelectedCountry] = useState(null);
     const [selectedNationalities, setSelectedNationalities] = useState([]);
     const [isNextButtonDisabled, setIsNextButtonDisabled] = useState(true);
-
+    const [isRegistered, setIsRegistered] = useState(false);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
     const handleCheckboxChange = (e) => {
-        const value = e.target.checked ? e.target.value : '';
+        const value = e.target.checked;
         setFormData({ ...formData, [e.target.name]: value });
+        setIsRegistered(value);
     };
+
     const handleNationalitiesChange = (event, values) => {
         const nationalityIds = values.map((value) => value.id);
         setFormData({ ...formData, nationalities: nationalityIds });
@@ -201,11 +205,11 @@ const FormPage1 = ({ formData, setFormData, nextPage }) => {
             </div>
             <div className="row-container">
                 <TextField className="item"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    label="Teléfono/s"
-                    placeholder="Teléfono"
+                           name="phone"
+                           value={formData.phone}
+                           onChange={handleChange}
+                           label="Teléfono/s"
+                           placeholder="Teléfono"
                 />
                 <div className="space"></div>
                 <Autocomplete
@@ -231,6 +235,66 @@ const FormPage1 = ({ formData, setFormData, nextPage }) => {
                     )}
                 />
             </div>
+            <div className="row-container">
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            name="isRegistered"
+                            checked={isRegistered}
+                            onChange={handleCheckboxChange}
+                        />
+                    }
+                    label="Empadronado"
+                />
+                <div className="space"></div>
+                {isRegistered && (
+                    <TextField
+                        className="item"
+                        type="date"
+                        name="dateRegister"
+                        value={formData.dateRegister}
+                        onChange={handleChange}
+                        label="Fecha de Empadronamiento"
+                        placeholder="Fecha de Empadronamiento"
+                        InputLabelProps={{ shrink: true }}
+                    />
+                )}
+                <div className="space"></div>
+                <TextField
+                    className="item"
+                    name="numPersonsRegistered"
+                    value={formData.numPersonsRegistered}
+                    onChange={handleChange}
+                    label="Número de personas empadronadas"
+                    placeholder="Número de personas empadronadas"
+                />
+            </div>
+
+            <Autocomplete
+                options={housings}
+                getOptionLabel={(option) => option.name}
+                value={selectedHousing}
+                onChange={(event, newValue) => {
+                    setFormData({ ...formData, housing: newValue ? newValue.id : '' });
+                    setSelectedHousing(newValue);
+                }}
+                renderInput={(params) => (
+                    <TextField {...params} label="Vivienda" placeholder="Seleccionar vivienda" />
+                )}
+            />
+
+            <Autocomplete
+                options={maritalStatus}
+                getOptionLabel={(option) => option.name}
+                value={selectedMaritalStatus}
+                onChange={(event, newValue) => {
+                    setFormData({ ...formData, maritalStatus: newValue ? newValue.id : '' });
+                    setSelectedMaritalStatus(newValue);
+                }}
+                renderInput={(params) => (
+                    <TextField {...params} label="Estado civil" placeholder="Seleccionar estado civil" />
+                )}
+            />
             <div className="center">
                 <Button variant="contained" onClick={nextPage} disabled={isNextButtonDisabled}>
                     Siguiente
