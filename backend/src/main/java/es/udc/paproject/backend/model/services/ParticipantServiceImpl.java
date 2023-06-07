@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -64,6 +65,20 @@ public class ParticipantServiceImpl implements ParticipantService{
     }
 
     @Override
+    public ParticipantDto saveAnnualData(ParticipantDto participantDto) {
+        Participant participant = participantDao.findById(participantDto.getIdParticipant()).orElse(null);
+
+        if(participant == null)
+            return null;
+
+        participant.addYear(LocalDate.now().getYear());
+        AnnualData annualData = new AnnualData();
+        annualData.setParticipant(participant);
+        setAnnualData(participantDto, annualData);
+        return participantMapper.toParticipantDto(participant, annualDataDao.save(annualData));
+    }
+
+    @Override
     public ParticipantDto updateParticipant(ParticipantDto participantDto) {
         Participant participant = participantDao.findById(participantDto.getIdParticipant()).orElse(null);
 
@@ -108,6 +123,7 @@ public class ParticipantServiceImpl implements ParticipantService{
         annualData.setDateRegister(participantDto.getDateRegister());
         annualData.setNumberRegistered(participantDto.getNumberRegistered());
         annualData.setCohabitation(selectorService.getCohabitation(participantDto.getCohabitation()));
+        annualData.setMaritalStatus(selectorService.getMaritalStatus(participantDto.getMaritalStatus()));
         annualData.setHousing(selectorService.getHousing(participantDto.getHousing()));
         for(Long fact : participantDto.getExclusionFactors()) {
             annualData.getExclusionFactors().add(selectorService.getExclusionFactor(fact));
@@ -152,6 +168,7 @@ public class ParticipantServiceImpl implements ParticipantService{
         participant.setDatePi(participantDto.getDatePi());
         participant.setInterviewPi(participantDto.getInterviewPi());
         participant.setCountry(selectorService.getCountry(participantDto.getCountry()));
+        participant.addYear(LocalDate.now().getYear());
         for(KidDto kidDto: participantDto.getKids()) {
             participant.getKids().add(new Kid(kidDto.getBirthDate(), Gender.valueOf(kidDto.getSex())));
         }

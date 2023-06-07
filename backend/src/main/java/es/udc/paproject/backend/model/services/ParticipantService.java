@@ -14,6 +14,8 @@ public interface ParticipantService {
 
     ParticipantDto saveParticipant(ParticipantDto participantDto);
 
+    ParticipantDto saveAnnualData(ParticipantDto participantDto);
+
     ParticipantDto updateParticipant(ParticipantDto participantDto);
 
     ParticipantDto updateAnnualData(ParticipantDto participantDto);

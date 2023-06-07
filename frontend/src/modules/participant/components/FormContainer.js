@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import FormPage2 from "./FormPage2";
 import FormPage3 from "./FormPage3";
 import FormPage1 from "./FormPage1";
+import FormCreateConfirm from "./FormCreateConfirm";
 
 const FormContainer = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -11,7 +12,7 @@ const FormContainer = () => {
         dni: '',
         pas: '',
         nie: '',
-        birthdate: '',
+        birthDate: '',
         sex: '',
         address: '',
         municipality: null,
@@ -22,7 +23,7 @@ const FormContainer = () => {
         datePi: null,
         interviewPi: null,
         kids: [],
-        country: '',
+        country: null,
         date: null,
         returned: false,
         nationalities: [],
@@ -32,14 +33,15 @@ const FormContainer = () => {
         approved: false,
         demandedStudies: '',
         registered: false,
-        dateRegister: null,
+        dateRegister: '',
         numberRegistered: null,
         cohabitation: null,
         housing: null,
+        maritalStatus: null,
         exclusionFactors: [],
         socialWorker: '',
         healthCoverage: '',
-        disability: '',
+        disability: 'NO',
         unemployedHousehold: false,
         oneAdultHousehold: false,
         dependants: false,
@@ -48,15 +50,15 @@ const FormContainer = () => {
         profExpOrigin: '',
         profExpSpain: '',
         skills: '',
-        AvailableHours: '',
+        availableHours: '',
         drivingLicence: false,
         valid: false,
         vehicle: false,
         sepe: false,
         monthsSepe: null,
-        benefit: '',
+        benefit: 'NO',
         dateBenefit: null,
-        SpecialBenefit: '',
+        specialBenefit: '',
         demand: null,
         programs: [],
         derivation: '',
@@ -94,8 +96,13 @@ const FormContainer = () => {
                     <FormPage3
                         formData={formData}
                         setFormData={setFormData}
+                        nextPage={nextPage}
                         previousPage={previousPage}
                     />
+                );
+            case 4:
+                return (
+                    <FormCreateConfirm formData={formData}></FormCreateConfirm>
                 );
             default:
                 return null;

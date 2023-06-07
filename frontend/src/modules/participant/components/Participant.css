@@ -2,14 +2,9 @@
     display: flex;
     flex-direction: row;
     padding-top: 3%;
+    width: 100%;
 }
-.item {
-    width: 20%;
-}
-.item2 {
-    flex-grow: 1;
-    margin-left: 2%;
-}
+
 .participant-row {
     margin-top: 2%;
 }
@@ -29,8 +24,7 @@
     margin: 5px 0;
 }
 .button{
-    margin: 4%;
-    position: fixed;
-    top: 0;
-    right: 0;
+    display: flex;
+    flex-direction: row-reverse;
+    margin: 10px;
 }

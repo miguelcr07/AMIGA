@@ -55,6 +55,9 @@ public class AnnualData {
     @ManyToOne
     @JoinColumn(name = "housing_id")
     private Housing housing;
+    @ManyToOne
+    @JoinColumn(name = "maritalStatus_id")
+    private MaritalStatus maritalStatus;
     @ManyToMany
     @JoinTable(name = "participant_exclusionFactor", joinColumns = @JoinColumn(name = "participant_id"), inverseJoinColumns = @JoinColumn(name = "exclusionFactor_id"))
     private Set<ExclusionFactor> exclusionFactors = new HashSet<>();
@@ -86,7 +89,7 @@ public class AnnualData {
 
     private boolean sepe;
 
-    private LocalDate monthsSepe;
+    private int monthsSepe;
 
     @Enumerated(EnumType.STRING)
     private Benefit benefit;
@@ -392,11 +395,11 @@ public class AnnualData {
         this.sepe = sepe;
     }
 
-    public LocalDate getMonthsSepe() {
+    public int getMonthsSepe() {
         return monthsSepe;
     }
 
-    public void setMonthsSepe(LocalDate monthsSepe) {
+    public void setMonthsSepe(int monthsSepe) {
         this.monthsSepe = monthsSepe;
     }
 
@@ -446,5 +449,13 @@ public class AnnualData {
 
     public void setDerivation(String derivation) {
         this.derivation = derivation;
+    }
+
+    public MaritalStatus getMaritalStatus() {
+        return maritalStatus;
+    }
+
+    public void setMaritalStatus(MaritalStatus maritalStatus) {
+        this.maritalStatus = maritalStatus;
     }
 }

@@ -8,6 +8,9 @@ public class ParticipantDto {
     private Long idParticipant;
     private String name;
     private String surnames;
+
+    private LocalDate date;
+    private List<Integer> yearList;
     private String dni;
     private String nie;
     private String pas;
@@ -21,7 +24,6 @@ public class ParticipantDto {
     private List<KidDto> kids;
     private Long country;
     private Long idAnnualData;
-    private LocalDate date;
     private boolean returned;
     @NotNull
     private List<Long> nationalities;
@@ -34,6 +36,8 @@ public class ParticipantDto {
     private String situation;
     @NotNull
     private Long studies;
+    @NotNull
+    private Long maritalStatus;
     @NotNull
     private List<Long> languages;
     private boolean approved;
@@ -59,15 +63,15 @@ public class ParticipantDto {
     private String profExpOrigin;
     private String profExpSpain;
     private String skills;
-    private String AvailableHours;
+    private String availableHours;
     private boolean drivingLicence;
     private boolean valid;
     private boolean vehicle;
     private boolean sepe;
-    private LocalDate monthsSepe;
+    private int monthsSepe;
     private String benefit;
     private LocalDate dateBenefit;
-    private String SpecialBenefit;
+    private String specialBenefit;
     @NotNull
     private Long demand;
     @NotNull
@@ -427,11 +431,11 @@ public class ParticipantDto {
     }
 
     public String getAvailableHours() {
-        return AvailableHours;
+        return availableHours;
     }
 
     public void setAvailableHours(String availableHours) {
-        AvailableHours = availableHours;
+        this.availableHours = availableHours;
     }
 
     public boolean isDrivingLicence() {
@@ -466,11 +470,11 @@ public class ParticipantDto {
         this.sepe = sepe;
     }
 
-    public LocalDate getMonthsSepe() {
+    public int getMonthsSepe() {
         return monthsSepe;
     }
 
-    public void setMonthsSepe(LocalDate monthsSepe) {
+    public void setMonthsSepe(int monthsSepe) {
         this.monthsSepe = monthsSepe;
     }
 
@@ -491,11 +495,11 @@ public class ParticipantDto {
     }
 
     public String getSpecialBenefit() {
-        return SpecialBenefit;
+        return specialBenefit;
     }
 
     public void setSpecialBenefit(String specialBenefit) {
-        SpecialBenefit = specialBenefit;
+        this.specialBenefit = specialBenefit;
     }
 
     public Long getDemand() {
@@ -520,5 +524,21 @@ public class ParticipantDto {
 
     public void setDerivation(String derivation) {
         this.derivation = derivation;
+    }
+
+    public List<Integer> getYearList() {
+        return yearList;
+    }
+
+    public void setYearList(List<Integer> yearList) {
+        this.yearList = yearList;
+    }
+
+    public Long getMaritalStatus() {
+        return maritalStatus;
+    }
+
+    public void setMaritalStatus(Long maritalStatus) {
+        this.maritalStatus = maritalStatus;
     }
 }

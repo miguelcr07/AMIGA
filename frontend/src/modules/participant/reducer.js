@@ -14,6 +14,9 @@ const participantList = (state = initialState.participantList, action) => {
         case actionTypes.FIND_ALL_PARTICIPANTS_COMPLETED:
             return action.participantList;
 
+        case actionTypes.UPDATE_PARTICIPANTS:
+            return action.participantList;
+
         default:
             return state;
 

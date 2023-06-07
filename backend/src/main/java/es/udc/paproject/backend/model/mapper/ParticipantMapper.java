@@ -31,6 +31,7 @@ public interface ParticipantMapper {
     @Mapping(source = "a.studies.id", target = "studies")
     @Mapping(source = "a.languages", target = "languages", qualifiedByName = "toLanguages")
     @Mapping(source = "a.cohabitation.id", target = "cohabitation")
+    @Mapping(source = "a.maritalStatus.id", target = "maritalStatus")
     @Mapping(source = "a.housing.id", target = "housing")
     @Mapping(source = "a.exclusionFactors", target = "exclusionFactors", qualifiedByName = "toExclusionFactors")
     @Mapping(source = "a.disability", target = "disability", qualifiedByName = "toDisability")

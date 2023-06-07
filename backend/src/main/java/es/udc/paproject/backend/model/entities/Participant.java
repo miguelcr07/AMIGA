@@ -2,6 +2,7 @@ package es.udc.paproject.backend.model.entities;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -28,6 +29,9 @@ public class Participant {
     @ManyToOne
     @JoinColumn(name = "country_id")
     private Country country;
+
+    @ElementCollection
+    private List<Integer> yearList = new ArrayList<>();
 
     public void setId(Long id) {
         this.id = id;
@@ -139,5 +143,17 @@ public class Participant {
 
     public void setCountry(Country country) {
         this.country = country;
+    }
+
+    public List<Integer> getYearList() {
+        return yearList;
+    }
+
+    public void setYearList(List<Integer> yearList) {
+        this.yearList = yearList;
+    }
+
+    public void addYear(int year){
+        this.yearList.add(year);
     }
 }

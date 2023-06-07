@@ -30,22 +30,24 @@ function Participant() {
 
     const attributeOptions = ['dni', 'nie', 'pas'];
 
+    if(participantList === null)
+        return null;
+
     return (
         <div>
             <div className="button">
             <Button variant="contained" onClick={() => {
                 navigate('/participant/form');
-            }} sx={{ marginTop: '16px' }}>
+            }}>
                 Registrar participante
             </Button>
             </div>
             <div className="participant-container">
-
-                <FormControl className="item">
-
-                    <InputLabel id="attribute-label" style={{ marginTop: '8px' }}>Seleccionar atributo</InputLabel>
+                <FormControl className="item" style={{ position: 'relative' }}>
+                    <InputLabel id="attribute-label">Seleccionar filtro</InputLabel>
                     <Select
                         labelId="attribute-label"
+                        label="Seleccionar filtro"
                         id="attribute"
                         value={selectedAttribute}
                         onChange={handleAttributeChange}
@@ -57,7 +59,6 @@ function Participant() {
                         ))}
                     </Select>
                 </FormControl>
-
 
                 <div className="item2">
                     <Autocomplete
@@ -72,15 +73,18 @@ function Participant() {
             </div>
 
             <div className="participant-row">
-                <Autocomplete
-                    id="name-surname-autocomplete"
-                    options={participantList}
-                    getOptionLabel={(participant) => `${participant.name} ${participant.surnames}`}
-                    renderInput={(params) => <TextField {...params} label="Buscar por nombre y apellidos" />}
-                    value={selectedParticipant}
-                    onChange={handleParticipantChange}
-                />
+                {selectedAttribute && (
+                    <Autocomplete
+                        id="name-surname-autocomplete"
+                        options={participantList}
+                        getOptionLabel={(participant) => `${participant.name} ${participant.surnames}`}
+                        renderInput={(params) => <TextField {...params} label="Buscar por nombre y apellidos" />}
+                        value={selectedParticipant}
+                        onChange={handleParticipantChange}
+                    />
+                )}
             </div>
+
 
             {selectedParticipant && (
                 <div className="participant-details">

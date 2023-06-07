@@ -1,23 +1,27 @@
 .row-container {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     padding-top: 3%;
+    flex-wrap: wrap;
 }
 
 .item {
+    min-width: 200px;
     flex-grow: 1;
+    margin-right: 20px;
 }
 .item2 {
+    min-width: 200px;
     flex-grow: 3;
+    margin-right: 20px;
 }
-.birthdate{
-    width: 30%;
-}
+
 .space{
     width: 2%;
 }
 .bigSpace{
-    width: 4%;
+    width: 8%;
 }
 .center {
     display: flex;
@@ -26,10 +30,11 @@
     padding-top: 3%;
 }
 .sexo {
+    padding-top: 5px;
     display: flex;
     flex-direction: row;
     border: 1px solid #ccc;
-    padding: 3px;
     border-radius: 4px;
+    flex-grow: 1;
 
 }

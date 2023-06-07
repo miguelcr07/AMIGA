@@ -29,3 +29,18 @@ export const findParticipant = (id, year) => (dispatch) => {
         participant => dispatch(findParticipantCompleted(participant))
     );
 }
+
+const updateParticipantList = participantList => ({
+    type: actionTypes.UPDATE_PARTICIPANTS,
+    participantList
+});
+export const createParticipant = (data, onSucess, onErrors) => (dispatch, getState) => {
+
+    const participantList = selectors.getParticipantList(getState());
+
+    backend.participant.createParticipant(data,
+        result => {
+        dispatch(updateParticipantList(...participantList, result));
+        onSucess()},
+        onErrors);
+}
