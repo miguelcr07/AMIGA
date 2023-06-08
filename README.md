@@ -9,10 +9,10 @@
 
 ## Database creation
 
-Se necesita un contenedor con MySQL 8. En caso de no contar con una ejecutar el siguiente comando para crearlo:
+Se necesita un contenedor con MySQL 8. En caso de no contar con uno ejecutar el siguiente comando para crearlo:
 
 ### Podman
-Se aconseja utilizar Podman y Podman Desktop para trabajar con contenedores. [Enlace de descarga](https://podman-desktop.io/docs/Installation)
+Se aconseja utilizar Podman Desktop para trabajar con contenedores. [Enlace de descarga](https://podman-desktop.io/docs/Installation)
 ```bash
 podman run -p 3306:3306 --name amiga -e MYSQL_ROOT_PASSWORD=amiga -d mysql:8
 ```
