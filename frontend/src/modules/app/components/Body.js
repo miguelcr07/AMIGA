@@ -3,7 +3,7 @@ import {Route, Routes} from 'react-router-dom';
 
 import AppGlobalComponents from './AppGlobalComponents';
 import {Login, SignUp, UpdateProfile, ChangePassword, Logout} from '../../users';
-import {Participant, FormParticipant} from '../../participant';
+import {Participant, FormParticipant, ParticipantDetails, EditParticipant} from '../../participant';
 import users from '../../users';
 
 const Body = () => {
@@ -18,6 +18,8 @@ const Body = () => {
             <Routes>
                 <Route path="/*" element={<Participant/>}/>
                 <Route path="/participant/form" element={<FormParticipant/>}/>
+                <Route path={"participant/details"} element={<ParticipantDetails/>}></Route>
+                <Route path={"participant/edit"} element={<EditParticipant/>}></Route>
                 {loggedIn && <Route path="/users/update-profile" element={<UpdateProfile/>}/>}
                 {loggedIn && <Route path="/users/change-password" element={<ChangePassword/>}/>}
                 {loggedIn && <Route path="/users/logout" element={<Logout/>}/>}

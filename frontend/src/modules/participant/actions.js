@@ -26,7 +26,9 @@ const findParticipantCompleted = participant => ({
 
 export const findParticipant = (id, year) => (dispatch) => {
     backend.participant.getParticipantData(id, year,
-        participant => dispatch(findParticipantCompleted(participant))
+        (participant) => {
+        dispatch(findParticipantCompleted(participant));
+    }
     );
 }
 

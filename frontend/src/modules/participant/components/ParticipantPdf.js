@@ -1,5 +1,4 @@
 import React from "react";
-import { format } from 'date-fns';
 import { Document, Page, Text, View, StyleSheet, Font, Image } from "@react-pdf/renderer";
 
 const DocuPDF = ({formData, selectors}) => {
@@ -122,7 +121,7 @@ const DocuPDF = ({formData, selectors}) => {
                 <View style={styles.viewHeader}>
                     <View style={styles.FitBox}>
                         <Text style={styles.textT}>Fecha:</Text>
-                        <Text style={styles.text}>{format(formData.date, 'dd/MM/yyyy')}</Text>
+                        <Text style={styles.text}>{formData.date.split("-").reverse().join("/")}</Text>
                     </View>
                     <Text style={styles.title}>Ficha de acogida</Text>
                     <Image style={styles.image} src={process.env.PUBLIC_URL + '/logopng.png'} />
@@ -137,7 +136,7 @@ const DocuPDF = ({formData, selectors}) => {
                         <View style={styles.Box}>
                             <Text style={styles.textT}>FEC. DE NACIMIENTO:</Text>
 
-                            <Text style={styles.text}>{formData.birthDate.split("-").reverse().join("/")}</Text>
+                            <Text style={styles.text}>{formData.birthDate ? formData.birthDate.split("-").reverse().join("/") : ''}</Text>
                             <Text style={styles.space}></Text>
                             <Text style={styles.textT}>SEXO:</Text>
                             <Text style={styles.text}>{formData.sex}</Text>
@@ -249,7 +248,7 @@ const DocuPDF = ({formData, selectors}) => {
                             <Text style={styles.nextLine}></Text>
                             <Text style={styles.textT}> Nº PERSONAS EMPADRONADAS: </Text>
                             <Text style={styles.text}>{formData.numberRegistered}</Text>
-                            <Text style={styles.nextLine}></Text>
+                            <Text style={styles.space}></Text>
                             <Text style={styles.textT}> TIPO DE VIVIENDA: </Text>
                             <Text style={styles.text}>{selectors.housings}</Text>
                             <Text style={styles.nextLine}></Text>
@@ -261,7 +260,7 @@ const DocuPDF = ({formData, selectors}) => {
                             <Text style={styles.nextLine}></Text>
                             <Text style={styles.textT}>TRABAJADOR/A SOCIAL:</Text>
                             <Text style={styles.text}>{formData.socialWorker ? formData.socialWorker : 'NO'}</Text>
-                            <Text style={styles.space}></Text>
+                            <Text style={styles.nextLine}></Text>
                             <Text style={styles.textT}>COBERTURA SANITARIA:</Text>
                             <Text style={styles.text}>{formData.healthCoverage ? formData.healthCoverage : 'NO'}</Text>
                         </View>
@@ -280,7 +279,7 @@ const DocuPDF = ({formData, selectors}) => {
                             <Text style={styles.text}>{formData.disability}</Text>
                             <Text style={styles.nextLine}></Text>
                             <Text style={styles.textT}> INSCRITO/A SEPE: </Text>
-                            <Text style={styles.text}>{formData.sepe ? formData.sepe : 'NO'}</Text>
+                            <Text style={styles.text}>{formData.sepe ? 'SI' : 'NO'}</Text>
                             <Text style={styles.space}></Text>
                             <Text style={styles.textT}> TIEMPO DESEMPLEO: </Text>
                             <Text style={styles.text}>{formData.monthsSepe}</Text>

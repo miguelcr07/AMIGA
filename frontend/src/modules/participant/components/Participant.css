@@ -28,3 +28,7 @@
     flex-direction: row-reverse;
     margin: 10px;
 }
+.formControl{
+    width: 400px;
+    margin: 20px;
+}

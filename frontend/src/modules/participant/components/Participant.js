@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import React, { useState } from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
@@ -11,10 +11,12 @@ import Button from '@mui/material/Button';
 import './Participant.css';
 
 import * as selectors from '../selectors';
+import * as actions from '../actions';
 import {useNavigate} from "react-router-dom";
 
 function Participant() {
     const participantList = useSelector(selectors.getParticipantList);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const [selectedAttribute, setSelectedAttribute] = useState('dni');
@@ -29,6 +31,14 @@ function Participant() {
     };
 
     const attributeOptions = ['dni', 'nie', 'pas'];
+
+    const handleGetDetails = () => {
+        dispatch(actions.findParticipant(
+            selectedParticipant.id,
+            null,
+            ));
+        navigate('/participant/details')
+    }
 
     let filteredParticipantList = null;
 
@@ -99,7 +109,9 @@ function Participant() {
                     <Typography variant="h6">{selectedParticipant.name} {selectedParticipant.surnames}</Typography>
                     <Typography>Email: {selectedParticipant.email}</Typography>
                     <Typography>Teléfono: {selectedParticipant.phone}</Typography>
-                    {/* Mostrar otros detalles del participante según sea necesario */}
+                    <Button variant="contained" onClick={handleGetDetails}>
+                        Ver detalles
+                    </Button>
                 </div>
             )}
         </div>
