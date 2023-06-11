@@ -16,9 +16,10 @@ public class Kid {
     @JoinColumn(name = "participant_id")
     Participant participant;
 
-    public Kid(LocalDate birthDate, Gender gender) {
+    public Kid(LocalDate birthDate, Gender gender, Participant participant) {
         this.birthDate = birthDate;
         this.gender = gender;
+        this.participant = participant;
     }
 
     public Kid() {

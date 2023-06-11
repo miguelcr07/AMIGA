@@ -30,7 +30,15 @@ function Participant() {
 
     const attributeOptions = ['dni', 'nie', 'pas'];
 
-    if(participantList === null)
+    let filteredParticipantList = null;
+
+    if(participantList !== null) {
+        filteredParticipantList = participantList.filter(
+            (participant) => participant[selectedAttribute] !== null
+        );
+    }
+
+    if(filteredParticipantList === null)
         return null;
 
     return (
@@ -54,7 +62,7 @@ function Participant() {
                     >
                         {attributeOptions.map((attribute) => (
                             <MenuItem key={attribute} value={attribute}>
-                                {attribute}
+                                {attribute.toUpperCase()}
                             </MenuItem>
                         ))}
                     </Select>
@@ -63,9 +71,9 @@ function Participant() {
                 <div className="item2">
                     <Autocomplete
                         id="participant-autocomplete"
-                        options={participantList}
+                        options={filteredParticipantList}
                         getOptionLabel={(participant) => participant[selectedAttribute]}
-                        renderInput={(params) => <TextField {...params} label="Buscar participante" />}
+                        renderInput={(params) => <TextField {...params} label="Documento participante" />}
                         value={selectedParticipant}
                         onChange={handleParticipantChange}
                     />
@@ -76,7 +84,7 @@ function Participant() {
                 {selectedAttribute && (
                     <Autocomplete
                         id="name-surname-autocomplete"
-                        options={participantList}
+                        options={filteredParticipantList}
                         getOptionLabel={(participant) => `${participant.name} ${participant.surnames}`}
                         renderInput={(params) => <TextField {...params} label="Buscar por nombre y apellidos" />}
                         value={selectedParticipant}

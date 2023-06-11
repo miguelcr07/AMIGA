@@ -40,7 +40,7 @@ public class ParticipantDto {
     private Long maritalStatus;
     @NotNull
     private List<Long> languages;
-    private boolean approved;
+    private String approved;
     private String demandedStudies;
     private boolean registered;
     private LocalDate dateRegister;
@@ -278,11 +278,11 @@ public class ParticipantDto {
         this.languages = languages;
     }
 
-    public boolean isApproved() {
+    public String getApproved() {
         return approved;
     }
 
-    public void setApproved(boolean approved) {
+    public void setApproved(String approved) {
         this.approved = approved;
     }
 

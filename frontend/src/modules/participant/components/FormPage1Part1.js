@@ -81,10 +81,9 @@ const FormPage1Part1 = ({ formData, setFormData }) => {
                         labelId="gender-label"
                         label="sexo"
                         name="sex"
-                        value={formData.sex || ""}
+                        value={formData.sex}
                         onChange={handleChange}
                     >
-                        <MenuItem value="">Otro</MenuItem>
                         <MenuItem value="H">Hombre</MenuItem>
                         <MenuItem value="M">Mujer</MenuItem>
                     </Select>

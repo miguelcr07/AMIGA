@@ -20,11 +20,11 @@ const FormContainer = () => {
         province: null,
         phone: '',
         email: '',
-        datePi: null,
-        interviewPi: null,
+        datePi: '',
+        interviewPi: '',
         kids: [],
         country: null,
-        date: null,
+        date: '',
         returned: false,
         nationalities: [],
         situation: '',
@@ -34,7 +34,7 @@ const FormContainer = () => {
         demandedStudies: '',
         registered: false,
         dateRegister: '',
-        numberRegistered: null,
+        numberRegistered: '',
         cohabitation: null,
         housing: null,
         maritalStatus: null,
@@ -55,9 +55,9 @@ const FormContainer = () => {
         valid: false,
         vehicle: false,
         sepe: false,
-        monthsSepe: null,
+        monthsSepe: '',
         benefit: 'NO',
-        dateBenefit: null,
+        dateBenefit: '',
         specialBenefit: '',
         demand: null,
         programs: [],
@@ -102,7 +102,10 @@ const FormContainer = () => {
                 );
             case 4:
                 return (
-                    <FormCreateConfirm formData={formData}></FormCreateConfirm>
+                    <FormCreateConfirm
+                        formData={formData}
+                        previousPage={previousPage}
+                    ></FormCreateConfirm>
                 );
             default:
                 return null;

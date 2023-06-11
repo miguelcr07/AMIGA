@@ -39,11 +39,13 @@ public class AnnualData {
     @JoinColumn(name = "studies_id")
     private Studies studies;
 
+    @Enumerated(EnumType.STRING)
+    private Approved approved;
+
     @ManyToMany
     @JoinTable(name = "participant_language", joinColumns = @JoinColumn(name = "participant_id"), inverseJoinColumns = @JoinColumn(name = "language_id"))
     private Set<Language> languages = new HashSet<>();
 
-    private boolean approved;
     private String demandedStudies;
     private boolean registered;
 
@@ -203,11 +205,11 @@ public class AnnualData {
         this.languages = languages;
     }
 
-    public boolean isApproved() {
+    public Approved getApproved() {
         return approved;
     }
 
-    public void setApproved(boolean approved) {
+    public void setApproved(Approved approved) {
         this.approved = approved;
     }
 

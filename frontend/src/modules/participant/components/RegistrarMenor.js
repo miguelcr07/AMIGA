@@ -1,12 +1,14 @@
 import React, { useState } from "react";
+import { format } from 'date-fns';
+import esLocale from 'date-fns/locale/es';
 import {TextField, Button, Table, TableHead, TableBody, TableRow,
     TableCell, MenuItem, Select, InputLabel,} from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 
 const RegistrarMenor = ({ formData, setFormData }) => {
     const [newChild, setNewChild] = useState({
-        sexo: "",
-        birthdate: "",
+        sex: "",
+        birthDate: "",
     });
 
     const handleInputChange = (e) => {
@@ -21,7 +23,7 @@ const RegistrarMenor = ({ formData, setFormData }) => {
         e.preventDefault();
 
         // Validar los campos antes de añadir una nueva fila
-        if (newChild.sexo.trim() === "" || newChild.birthdate.trim() === "") {
+        if (newChild.sex.trim() === "" || newChild.birthDate.trim() === "") {
             alert("Por favor, complete ambos campos.");
             return;
         }
@@ -32,8 +34,8 @@ const RegistrarMenor = ({ formData, setFormData }) => {
 
         // Restaurar los valores del formulario
         setNewChild({
-            sexo: "",
-            birthdate: "",
+            sex: "",
+            birthDate: "",
         });
     };
 
@@ -48,8 +50,8 @@ const RegistrarMenor = ({ formData, setFormData }) => {
                 <Select
                     labelId="kid-label"
                     label="Sexo"
-                    name="sexo"
-                    value={newChild.sexo}
+                    name="sex"
+                    value={newChild.sex}
                     onChange={handleInputChange}
                     required
                 >
@@ -62,8 +64,8 @@ const RegistrarMenor = ({ formData, setFormData }) => {
                     placeholder="Fecha de nacimiento"
                     label="Fecha de nacimiento"
                     type="date"
-                    name="birthdate"
-                    value={newChild.birthdate}
+                    name="birthDate"
+                    value={newChild.birthDate}
                     onChange={handleInputChange}
                     InputLabelProps={{ shrink: true }}
                     required
@@ -85,9 +87,9 @@ const RegistrarMenor = ({ formData, setFormData }) => {
                 <TableBody>
                     {formData.kids.map((child, index) => (
                         <TableRow key={index}>
-                            <TableCell>{child.sexo === "H" ? "Masculino" : "Femenino"}</TableCell>
+                            <TableCell>{child.sex === "H" ? "Masculino" : "Femenino"}</TableCell>
 
-                            <TableCell>{child.birthdate}</TableCell>
+                            <TableCell>{format(new Date(child.birthDate), "dd 'de' MMMM 'de' yyyy", { locale: esLocale })}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

@@ -11,8 +11,6 @@ export const getParticipantData = (id, year, onSuccess) =>{
 }
 
 export const createParticipant = ( data, onSuccess, onErrors) => {
-    console.log("peticion");
 
-    appFetch(`/participant/save`,
-        config('POST', data), onSuccess, onErrors);
+    appFetch(`/participant/save`, config('POST', data), onSuccess, onErrors);
 }

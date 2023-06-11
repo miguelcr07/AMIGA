@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -57,6 +57,10 @@ public class ParticipantServiceImpl implements ParticipantService{
         setParticipantData(participantDto, participant);
         Participant participantSaved = participantDao.save(participant);
 
+        for(KidDto kidDto: participantDto.getKids()) {
+            kidDao.save(new Kid(kidDto.getBirthDate(), Gender.valueOf(kidDto.getSex()), participantSaved));
+        }
+
         AnnualData annualData = new AnnualData();
         annualData.setParticipant(participantSaved);
         setAnnualData(participantDto, annualData);
@@ -85,6 +89,9 @@ public class ParticipantServiceImpl implements ParticipantService{
         if(participant == null)
             return null;
 
+        for(KidDto kidDto: participantDto.getKids()) {
+            kidDao.save(new Kid(kidDto.getBirthDate(), Gender.valueOf(kidDto.getSex()), participant));
+        }
         setParticipantData(participantDto, participant);
         //participantDao.save(participant);
         return participantMapper.toParticipantDto(participant, null);
@@ -117,7 +124,8 @@ public class ParticipantServiceImpl implements ParticipantService{
         for(Long lan : participantDto.getLanguages()) {
             annualData.getLanguages().add(selectorService.getLanguage(lan));
         }
-        annualData.setApproved(participantDto.isApproved());
+        if(!Objects.equals(participantDto.getApproved(), ""))
+            annualData.setApproved(Approved.valueOf(participantDto.getApproved()));
         annualData.setDemandedStudies(participantDto.getDemandedStudies());
         annualData.setRegistered(participantDto.isRegistered());
         annualData.setDateRegister(participantDto.getDateRegister());
@@ -169,8 +177,6 @@ public class ParticipantServiceImpl implements ParticipantService{
         participant.setInterviewPi(participantDto.getInterviewPi());
         participant.setCountry(selectorService.getCountry(participantDto.getCountry()));
         participant.addYear(LocalDate.now().getYear());
-        for(KidDto kidDto: participantDto.getKids()) {
-            participant.getKids().add(new Kid(kidDto.getBirthDate(), Gender.valueOf(kidDto.getSex())));
-        }
+
     }
 }

@@ -19,6 +19,7 @@ const FormPage1Part3 = ({ formData, setFormData }) => {
     const [hasSocialWorker, setHasSocialWorker] = useState(false);
     const [hasSocialCoverage, setHasSocialCoverage] = useState(false);
     const [unemployedHousehold, setUnemployedHousehold] = useState(formData.unemployedHousehold || false);
+    const [returned, setReturned] = useState(formData.returned || false);
     const [oneAdultHousehold, setOneAdultHousehold] = useState(formData.oneAdultHousehold || false);
     const [dependants, setDependants] = useState(formData.dependants || false);
     const [situation, setSituation] = useState(formData.situation || '');
@@ -44,6 +45,11 @@ const FormPage1Part3 = ({ formData, setFormData }) => {
         const value = event.target.value === 'true';
         setDependants(value);
         setFormData({ ...formData, dependants: value });
+    };
+    const handleReturnedChange = (event) => {
+        const value = event.target.value === 'true';
+        setReturned(value);
+        setFormData({ ...formData, returned: value });
     };
     const handleFactorsChange = (event, value) => {
         const selectedFactors = value.map((factor) => factor.id);
@@ -120,6 +126,18 @@ const FormPage1Part3 = ({ formData, setFormData }) => {
                 />
             </div>
             <div className="row-container">
+                <FormControl className="item">
+                    <InputLabel id="returned-lavel">E. retornado</InputLabel>
+                    <Select
+                        labelId="returned-lavel"
+                        label="E. retornado"
+                        value={returned}
+                        onChange={handleReturnedChange}
+                    >
+                        <MenuItem value={'false'}>No</MenuItem>
+                        <MenuItem value={'true'}>Sí</MenuItem>
+                    </Select>
+                </FormControl>
                 <FormControl className="item">
                     <InputLabel id="unemployed-lavel">Hogar sin empleo</InputLabel>
                     <Select

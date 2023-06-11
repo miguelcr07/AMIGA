@@ -16,60 +16,72 @@ const FormPage1Part2 = ({ formData, setFormData}) => {
     const maritalStatus = useSelector(selectors.getMaritalStatus);
     const cohabitation = useSelector(selectors.getCohabitations);
 
-    const selectedProvince = provinces.find((province) => province.id === formData.province);
-    const selectedMunicipality = municipalities.find((municipality) => municipality.id === formData.municipality);
-    const selectedCountry = countries.find((m) => m.id === formData.country);
-    const selectedHousing = housings.find((m) => m.id === formData.housing);
-    const selectedMaritalStatus = maritalStatus.find((m) => m.id === formData.maritalStatus);
-    const selectedCohabitation = cohabitation.find((m) => m.id === formData.cohabitation);
+    const [selectedProvince, setSelectedProvince] = useState(provinces.find((province) => province.id === formData.province) || null);
+    const [selectedMunicipality, setSelectedMunicipality] = useState(municipalities.find((municipality) => municipality.id === formData.municipality) || null);
+    const [selectedCountry, setSelectedCountry] = useState(countries.find((m) => m.id === formData.country) || null);
+    const [selectedHousing, setSelectedHousing] = useState(housings.find((m) => m.id === formData.housing) || null);
+    const [selectedMaritalStatus, setSelectedMaritalStatus] = useState(maritalStatus.find((m) => m.id === formData.maritalStatus) || null);
+    const [selectedCohabitation, setSelectedCohabitation] = useState(cohabitation.find((m) => m.id === formData.cohabitation) || null);
 
     const [municipalityOptions, setMunicipalityOptions] = useState([]);
     const [selectedNationalities, setSelectedNationalities] = useState([]);
-    const [isRegistered, setIsRegistered] = useState(false);
+    const [isRegistered, setIsRegistered] = useState(formData.registered || false);
 
     const handleProvinceChange = (event, value) => {
         if (value) {
             setFormData({ ...formData, province: value.id });
+            setSelectedProvince(provinces.find((province) => province.id === value.id));
         } else {
             setFormData({ ...formData, province: null });
+            setSelectedProvince(null);
         }
     };
 
     const handleMunicipalityChange = (event, value) => {
         if (value) {
             setFormData({ ...formData, municipality: value.id });
+            setSelectedMunicipality(municipalities.find((municipality) => municipality.id === value.id))
         } else {
             setFormData({ ...formData, municipality: null });
+            setSelectedMunicipality(null);
         }
     };
 
     const handleCountryChange = (event, value) => {
         if (value) {
             setFormData({ ...formData, country: value.id });
+            setSelectedCountry(countries.find((m) => m.id === value.id))
         } else {
             setFormData({ ...formData, country: null });
+            setSelectedCountry(null)
         }
     };
 
     const handleHousingChange = (event, value) => {
         if (value) {
             setFormData({ ...formData, housing: value.id });
+            setSelectedHousing(housings.find((m) => m.id === value.id));
         } else {
             setFormData({ ...formData, housing: null });
+            setSelectedHousing(null)
         }
     };
     const handleCohabitationChange = (event, value) => {
         if (value) {
             setFormData({ ...formData, cohabitation: value.id });
+            setSelectedCohabitation(cohabitation.find((m) => m.id === value.id))
         } else {
             setFormData({ ...formData, cohabitation: null });
+            setSelectedCohabitation(null)
         }
     };
     const handleMaritalStatusChange = (event, value) => {
         if (value) {
             setFormData({ ...formData, maritalStatus: value.id });
+            setSelectedMaritalStatus(maritalStatus.find((m) => m.id === value.id))
         } else {
             setFormData({ ...formData, maritalStatus: null });
+            setSelectedMaritalStatus(null)
         }
     };
     
@@ -94,7 +106,8 @@ const FormPage1Part2 = ({ formData, setFormData}) => {
             ? municipalities.filter((municipality) => municipality.province.id === selectedProvince.id)
             : [];
         setMunicipalityOptions(filteredMunicipalities);
-        setFormData({ ...formData, province: selectedProvince ? selectedProvince.id : '', municipality: '' });
+
+        setFormData({ ...formData, province: selectedProvince ? selectedProvince.id : null });
         // eslint-disable-next-line
     }, [selectedProvince, setFormData, municipalities]);
 
@@ -144,7 +157,7 @@ const FormPage1Part2 = ({ formData, setFormData}) => {
 
                 <TextField
                     className="item"
-                    name="postalCode"
+                    name="postalAddress"
                     value={formData.postalAddress}
                     onChange={handleChange}
                     label="Código Postal"
@@ -188,7 +201,7 @@ const FormPage1Part2 = ({ formData, setFormData}) => {
                 <FormControlLabel
                     control={
                         <Checkbox
-                            name="isRegistered"
+                            name="registered"
                             checked={isRegistered}
                             onChange={handleCheckboxChange}
                         />

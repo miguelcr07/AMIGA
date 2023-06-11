@@ -15,8 +15,11 @@ const FormPage2 = ({ formData, setFormData, nextPage, previousPage }) => {
     const employment = useSelector(selectors.getEmployments);
     const languages = useSelector(selectors.getLanguages);
 
-    const selectedStudies = studies.find((study) => study.id === formData.studies);
-    const selectedEmployment = employment.find((employment) => employment.id === formData.employment);
+    const [selectedStudies, setSelectedStudies] =
+        useState(studies.find((study) => study.id === formData.studies) || null);
+    const [selectedEmployment, setSelectedEmployment] =
+        useState(employment.find((employment) => employment.id === formData.employment) || null);
+
     const [homologados, setHomologados] = useState('');
     const [selectedLanguages, setSelectedLanguages] = useState([]);
     const [hasDrivingLicense, setHasDrivingLicense] = useState(formData.drivingLicence || false);
@@ -25,7 +28,7 @@ const FormPage2 = ({ formData, setFormData, nextPage, previousPage }) => {
     const [isSEPERegistered, setIsSEPERegistered] = useState(formData.sepe || false);
     const [unemploymentDuration, setUnemploymentDuration] = useState(formData.monthsSepe || '');
     const [benefit, setBenefit] = useState(formData.benefit || 'NO');
-    const [specialBenefit, setSpecialBenefit] = useState(formData.SpecialBenefit || '');
+    const [specialBenefit, setSpecialBenefit] = useState(formData.specialBenefit || '');
     const [dateBenefit, setDateBenefit] = useState(formData.dateBenefit || '');
 
     const handleBenefitChange = (event) => {
@@ -37,7 +40,7 @@ const FormPage2 = ({ formData, setFormData, nextPage, previousPage }) => {
     const handleSpecialBenefitChange = (event) => {
         const value = event.target.value;
         setSpecialBenefit(value);
-        setFormData({ ...formData, SpecialBenefit: value });
+        setFormData({ ...formData, specialBenefit: value });
     };
 
     const handleDateBenefitChange = (event) => {
@@ -78,16 +81,20 @@ const FormPage2 = ({ formData, setFormData, nextPage, previousPage }) => {
     const handleStudiesChange = (event, value) => {
         if (value) {
             setFormData({ ...formData, studies: value.id });
+            setSelectedStudies(studies.find((study) => study.id === value.id))
         } else {
             setFormData({ ...formData, studies: null });
+            setSelectedStudies(null);
         }
     };
 
     const handleEmploymentChange = (event, value) => {
         if (value) {
             setFormData({ ...formData, employment: value.id });
+            setSelectedEmployment(employment.find((employment) => employment.id === value.id));
         } else {
             setFormData({ ...formData, employment: null });
+            setSelectedEmployment(null);
         }
     };
 
@@ -153,7 +160,7 @@ const FormPage2 = ({ formData, setFormData, nextPage, previousPage }) => {
                 >
                     <MenuItem value="SI">Sí</MenuItem>
                     <MenuItem value="NO">No</MenuItem>
-                    <MenuItem value="EN TRAMITE">En trámite</MenuItem>
+                    <MenuItem value="EN_TRAMITE">En trámite</MenuItem>
                 </Select>
             </FormControl>
             </div>
@@ -224,7 +231,7 @@ const FormPage2 = ({ formData, setFormData, nextPage, previousPage }) => {
             <div className="row-container">
             <TextField
                 className="item"
-                name="AvailableHours"
+                name="availableHours"
                 label="Horario disponible"
                 value={formData.availableHours}
                 onChange={handleChange}

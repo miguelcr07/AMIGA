@@ -34,6 +34,7 @@ public interface ParticipantMapper {
     @Mapping(source = "a.maritalStatus.id", target = "maritalStatus")
     @Mapping(source = "a.housing.id", target = "housing")
     @Mapping(source = "a.exclusionFactors", target = "exclusionFactors", qualifiedByName = "toExclusionFactors")
+    @Mapping(source = "a.approved", target = "approved", qualifiedByName = "toApproved")
     @Mapping(source = "a.disability", target = "disability", qualifiedByName = "toDisability")
     @Mapping(source = "a.employment.id", target = "employment")
     @Mapping(source = "a.benefit", target = "benefit", qualifiedByName = "toBenefit")
@@ -61,6 +62,14 @@ public interface ParticipantMapper {
     @Named(value = "toDisability")
     static String toDisability (Disability disability){
         return disability.toString();
+    }
+    @Named(value = "toApproved")
+    static String toApproved (Approved approved){
+
+        if(approved == null)
+            return "";
+
+        return approved.toString();
     }
     @Named(value = "toNationalities")
     static List<Long> toNationalities (Set<Country> nationalities){

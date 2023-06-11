@@ -9,12 +9,10 @@
 .item {
     min-width: 200px;
     flex-grow: 1;
-    margin-right: 20px;
 }
 .item2 {
     min-width: 200px;
     flex-grow: 3;
-    margin-right: 20px;
 }
 
 .space{

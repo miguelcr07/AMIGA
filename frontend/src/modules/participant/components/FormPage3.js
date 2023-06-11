@@ -10,14 +10,16 @@ const FormPage3 = ({ formData, setFormData, previousPage , nextPage}) => {
     const demands = useSelector(selectors.getDemands);
     const programs = useSelector(selectors.getPrograms);
     const [selectedPrograms, setSelectedPrograms] = useState([]);
-
-    const selectedDemand = demands.find((demands) => demands.id === formData.demand);
+    const [selectedDemand, setSelectedDemand] =
+        useState(demands.find((demands) => demands.id === formData.demand) || null);
 
     const handleDemandChange = (event, value) => {
         if (value) {
             setFormData({ ...formData, demand: value.id });
+            setSelectedDemand(demands.find((demands) => demands.id === value.id))
         } else {
             setFormData({ ...formData, demand: null });
+            setSelectedDemand(null);
         }
     };
 
@@ -43,6 +45,7 @@ const FormPage3 = ({ formData, setFormData, previousPage , nextPage}) => {
             );
             setSelectedPrograms(selected);
         }
+        setFormData({ ...formData, date:  new Date() });
     }, [formData.programs, programs, selectedPrograms]);
 
     return (

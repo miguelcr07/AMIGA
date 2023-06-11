@@ -34,13 +34,16 @@ const updateParticipantList = participantList => ({
     type: actionTypes.UPDATE_PARTICIPANTS,
     participantList
 });
-export const createParticipant = (data, onSucess, onErrors) => (dispatch, getState) => {
 
-    const participantList = selectors.getParticipantList(getState());
+export const createParticipant = (data, onSucess, onErrors) => (dispatch) => {
 
     backend.participant.createParticipant(data,
-        result => {
-        dispatch(updateParticipantList(...participantList, result));
-        onSucess()},
+        () => {
+            backend.participant.getParticipants(
+                participantList => {
+                    dispatch(updateParticipantList(participantList));
+                });
+            onSucess();
+            },
         onErrors);
 }

@@ -1,5 +1,9 @@
 package es.udc.paproject.backend.rest.dtos;
 
+import es.udc.paproject.backend.model.entities.Participant;
+
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.time.LocalDate;
 
 
@@ -8,6 +12,10 @@ public class KidDto {
     private Long id;
     private LocalDate birthDate;
     private String sex;
+
+    @ManyToOne
+    @JoinColumn(name = "participant_id")
+    private Participant participant;
 
     public Long getId() {
         return id;
@@ -31,5 +39,13 @@ public class KidDto {
 
     public void setSex(String sex) {
         this.sex = sex;
+    }
+
+    public Participant getParticipant() {
+        return participant;
+    }
+
+    public void setParticipant(Participant participant) {
+        this.participant = participant;
     }
 }
