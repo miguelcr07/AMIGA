@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Button} from "@mui/material";
-import {PDFDownloadLink, PDFViewer} from "@react-pdf/renderer";
+import {PDFViewer} from "@react-pdf/renderer";
 import './Confirm.css';
 import {useDispatch, useSelector} from "react-redux";
 import ParticipantPdf from "./ParticipantPdf";
@@ -11,11 +10,11 @@ import * as actions from "../actions"
 import './Participant.css'
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
-import {useNavigate} from "react-router-dom";
+
+import Menu from "./Menu";
 
 const ParticipantDetails = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const [year, setYear] = useState();
     const [data, setData] = useState({
         factors: '',
@@ -53,9 +52,7 @@ const ParticipantDetails = () => {
         dispatch(actions.findParticipant(user.id, value));
     }
 
-    const handleEdit = () => {
-        navigate('/participant/edit');
-    }
+
     useEffect(() => {
         if (user?.exclusionFactors.length > 0 && exclusionFactors) {
             const exclusionFactorNames = exclusionFactors
@@ -163,9 +160,8 @@ const ParticipantDetails = () => {
         }
         if (user?.kids.length > 0) {
             const children = user.kids.map(function (kid) {
-                const dates = kid.birthDate.split("-");
-                const formatedDate = dates.reverse().join("/");
-                return formatedDate + ' ' + kid.sex;
+                const formattedDate = kid.birthDate.split("-").reverse().join("/");
+                return formattedDate + ' ' + kid.sex;
             });
             setYear(user.date.getFullYear().toString);
             if (children) {
@@ -175,42 +171,34 @@ const ParticipantDetails = () => {
         }
 
 
-
-    }, [user, municipalities, provinces, countries, housings,maritalStatus,cohabitation,studies,employment,languages,demands,programs,exclusionFactors]);
+    }, [user, municipalities, provinces, countries, housings, maritalStatus, cohabitation, studies, employment, languages, demands, programs, exclusionFactors]);
 
     if (!user) return null
 
     return (
-        <div>
-            <div className="header-details">
-                <Typography variant="h6" align="center">
-                    Datos {user.name + ' ' + user.surnames}
-                </Typography>
-                <div className="space"></div>
-                <Autocomplete
-                    className="item"
-                    options={user.yearList}
-                    value={year}
-                    onChange={handleYearChange}
-                    renderInput={(params) => <TextField {...params} label="Seleccionar año" />}
-                />
+        <div className="details">
+            <Menu/>
+            <div className="details-body">
+                <div className="header-details">
+                    <Typography variant="h6" align="center">
+                        Datos {user.name + ' ' + user.surnames}
+                    </Typography>
+                    <div className="space"></div>
+                    <Autocomplete
+                        className="item"
+                        options={user.yearList}
+                        value={year}
+                        onChange={handleYearChange}
+                        renderInput={(params) => <TextField {...params} label="Seleccionar año"/>}
+                    />
+                </div>
+                <br/>
+                <br/>
+
+                <PDFViewer style={{width: "100%", height: "90vh"}}>
+                    <ParticipantPdf formData={user} selectors={data}/>
+                </PDFViewer>
             </div>
-            <br/>
-            <PDFDownloadLink
-                document={<ParticipantPdf formData={user} selectors={data}/>}
-                fileName={user.name + user.surnames.replace(/\s+/g, '')}
-            >
-                <Button variant="contained" color="primary" size="large">Descargar PDF</Button>
-            </PDFDownloadLink>
-            <div className="space"></div>
-            <Button variant="contained" color="primary" size="large" onClick={handleEdit}>Editar informe</Button>
-            <br/>
-            <br/>
-
-            <PDFViewer style={{width: "100%", height: "90vh"}}>
-                <ParticipantPdf formData={user} selectors={data}/>
-            </PDFViewer>
-
 
         </div>
     );

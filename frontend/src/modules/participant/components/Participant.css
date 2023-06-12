@@ -32,3 +32,22 @@
     width: 400px;
     margin: 20px;
 }
+.drawer {
+    width: 240px;
+    flex: 0;
+}
+.drawerPaper {
+    width: 240px;
+}
+.toolbar {
+    min-height: 64px;
+}
+.details{
+    width: 100%;
+    display: flex;
+
+}
+.details-body{
+    flex-grow: 1;
+    margin-left: 30px;
+}

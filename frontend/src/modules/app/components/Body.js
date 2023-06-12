@@ -4,6 +4,7 @@ import {Route, Routes} from 'react-router-dom';
 import AppGlobalComponents from './AppGlobalComponents';
 import {Login, SignUp, UpdateProfile, ChangePassword, Logout} from '../../users';
 import {Participant, FormParticipant, ParticipantDetails, EditParticipant} from '../../participant';
+import "./Body.css"
 import users from '../../users';
 
 const Body = () => {
@@ -12,7 +13,7 @@ const Body = () => {
     
    return (
 
-        <div className="container">
+        <div className="body-container">
             <br/>
             <AppGlobalComponents/>
             <Routes>

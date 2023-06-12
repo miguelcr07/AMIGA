@@ -49,7 +49,7 @@ public interface ParticipantMapper {
 
     @Named(value = "toSex")
     static String toSex (Gender gender){
-        return gender.getValue();
+        return gender.toString();
     }
     @Named(value = "toSituation")
     static String toSituation (AdministrativeSituation situation){

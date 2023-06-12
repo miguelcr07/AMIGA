@@ -5,6 +5,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import * as selectors from "../../app/selectors";
 import "./Form.css";
+import {format} from "date-fns";
 
 const FormPage3 = ({ formData, setFormData, previousPage , nextPage}) => {
     const demands = useSelector(selectors.getDemands);
@@ -45,7 +46,7 @@ const FormPage3 = ({ formData, setFormData, previousPage , nextPage}) => {
             );
             setSelectedPrograms(selected);
         }
-        setFormData({ ...formData, date:  new Date() });
+        setFormData({ ...formData, date:  format(new Date(), 'dd/MM/yyyy') });
     }, [formData.programs, programs, selectedPrograms]);
 
     return (

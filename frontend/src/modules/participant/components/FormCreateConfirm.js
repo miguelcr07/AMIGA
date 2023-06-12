@@ -44,7 +44,6 @@ const FormCreateConfirm = ({formData, previousPage}) => {
     const programs = useSelector(selectors.getPrograms);
     const exclusionFactors = useSelector(selectors.getExclusions);
 
-
     useEffect(() => {
         if (formData.exclusionFactors.length > 0 && exclusionFactors) {
             const exclusionFactorNames = exclusionFactors
@@ -152,18 +151,16 @@ const FormCreateConfirm = ({formData, previousPage}) => {
         }
         if (formData.kids.length > 0) {
             const children = formData.kids.map(function (kid) {
-                const dates = kid.birthDate.split("-");
-                const formatedDate = dates.reverse().join("/");
-                return formatedDate + ' ' + kid.sex;
+                return  kid.birthDate + ' ' + kid.sex;
             });
 
-            if (children) {
-                const childrenString = children.join(", ");
-                setData(prevData => ({...prevData, kids: childrenString}));
-            }
+            const childrenString = children.join(", ");
+            setData(prevData => ({...prevData, kids: childrenString}));
+
         }
 
-    }, []);
+
+    }, [municipalities, provinces, countries]);
 
     const handleSubmit = () => {
         dispatch(actions.createParticipant(formData, setOpen(true), null));
@@ -173,7 +170,12 @@ const FormCreateConfirm = ({formData, previousPage}) => {
         setOpen(false);
         navigate('/');
     }
+    if(!municipalities && !provinces && !countries && !housings && !maritalStatus && !cohabitation
+        && !studies && !employment && !languages && !demands && !programs && !exclusionFactors)
+        return null;
 
+    console.log(formData.name);
+    console.log(data.programs);
     return (
         <div>
             <Typography variant="h6" align="center">

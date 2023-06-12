@@ -121,7 +121,7 @@ const DocuPDF = ({formData, selectors}) => {
                 <View style={styles.viewHeader}>
                     <View style={styles.FitBox}>
                         <Text style={styles.textT}>Fecha:</Text>
-                        <Text style={styles.text}>{formData.date.split("-").reverse().join("/")}</Text>
+                        <Text style={styles.text}>{formData.date}</Text>
                     </View>
                     <Text style={styles.title}>Ficha de acogida</Text>
                     <Image style={styles.image} src={process.env.PUBLIC_URL + '/logopng.png'} />
@@ -136,7 +136,7 @@ const DocuPDF = ({formData, selectors}) => {
                         <View style={styles.Box}>
                             <Text style={styles.textT}>FEC. DE NACIMIENTO:</Text>
 
-                            <Text style={styles.text}>{formData.birthDate ? formData.birthDate.split("-").reverse().join("/") : ''}</Text>
+                            <Text style={styles.text}>{formData.birthDate ? formData.birthDate : ''}</Text>
                             <Text style={styles.space}></Text>
                             <Text style={styles.textT}>SEXO:</Text>
                             <Text style={styles.text}>{formData.sex}</Text>
@@ -200,10 +200,10 @@ const DocuPDF = ({formData, selectors}) => {
                             {formData.datePi ?
                                 <View style={styles.BoxNoBorder}>
                                     <Text style={styles.textT}> MANIFESTACIÓN PI: </Text>
-                                    <Text style={styles.text}>{formData.datePi.split("-").reverse().join("/")}</Text>
+                                    <Text style={styles.text}>{formData.datePi}</Text>
                                     <Text style={styles.space}></Text>
                                     <Text style={styles.textT}> 1º ENTREVISTA PI:  </Text>
-                                    <Text style={styles.text}>{formData.interviewPi ? formData.interviewPi.split("-").reverse().join("/") : 'NO'}</Text>
+                                    <Text style={styles.text}>{formData.interviewPi ? formData.interviewPi : 'NO'}</Text>
                                 </View>
                                 :
                                 <Text style={styles.textT}> PROT. INTERN.:  NO</Text>
@@ -244,7 +244,7 @@ const DocuPDF = ({formData, selectors}) => {
                             <Text style={styles.text}>{formData.registered ? 'SI' : 'NO'}</Text>
                             <Text style={styles.space}></Text>
                             <Text style={styles.textT}> FECHA: </Text>
-                            <Text style={styles.text}>{formData.dateRegister ? formData.dateRegister.split("-").reverse().join("/") : 'NO'} </Text>
+                            <Text style={styles.text}>{formData.dateRegister ? formData.dateRegister : 'NO'} </Text>
                             <Text style={styles.nextLine}></Text>
                             <Text style={styles.textT}> Nº PERSONAS EMPADRONADAS: </Text>
                             <Text style={styles.text}>{formData.numberRegistered}</Text>
@@ -288,7 +288,7 @@ const DocuPDF = ({formData, selectors}) => {
                             <Text style={styles.text}>{formData.benefit}</Text>
                             <Text style={styles.space}></Text>
                             <Text style={styles.textT}> FECHA PRESTACIÓN: </Text>
-                            <Text style={styles.text}>{formData.dateBenefit ? formData.dateBenefit.split("-").reverse().join("/"): 'NO'}</Text>
+                            <Text style={styles.text}>{formData.dateBenefit ? formData.dateBenefit : 'NO'}</Text>
                             { formData.benefit === 'OTRA' &&
                                 <View style={styles.BoxNoBorder}>
                                     <Text style={styles.nextLine}></Text>
