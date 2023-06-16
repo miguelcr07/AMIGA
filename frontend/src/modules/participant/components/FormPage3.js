@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import React, {useEffect, useState} from "react";
+import {useSelector} from "react-redux";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import * as selectors from "../../app/selectors";
 import "./Form.css";
 import {format} from "date-fns";
+import {HomeLink} from "../../common";
 
-const FormPage3 = ({ formData, setFormData, previousPage , nextPage}) => {
+const FormPage3 = ({formData, setFormData, previousPage, nextPage}) => {
     const demands = useSelector(selectors.getDemands);
     const programs = useSelector(selectors.getPrograms);
     const [selectedPrograms, setSelectedPrograms] = useState([]);
@@ -16,10 +17,10 @@ const FormPage3 = ({ formData, setFormData, previousPage , nextPage}) => {
 
     const handleDemandChange = (event, value) => {
         if (value) {
-            setFormData({ ...formData, demand: value.id });
+            setFormData({...formData, demand: value.id});
             setSelectedDemand(demands.find((demands) => demands.id === value.id))
         } else {
-            setFormData({ ...formData, demand: null });
+            setFormData({...formData, demand: null});
             setSelectedDemand(null);
         }
     };
@@ -27,15 +28,15 @@ const FormPage3 = ({ formData, setFormData, previousPage , nextPage}) => {
     const handleProgramsChange = (event, value) => {
         const selectedPrograms = value.map((program) => program.id);
         setSelectedPrograms(value);
-        setFormData({ ...formData, programs: selectedPrograms });
+        setFormData({...formData, programs: selectedPrograms});
     };
 
     const handleDerivationChange = (event) => {
-        setFormData({ ...formData, derivation: event.target.value });
+        setFormData({...formData, derivation: event.target.value});
     };
 
     const handleObservationsChange = (event) => {
-        setFormData({ ...formData, observations: event.target.value });
+        setFormData({...formData, observations: event.target.value});
     };
 
 
@@ -46,12 +47,15 @@ const FormPage3 = ({ formData, setFormData, previousPage , nextPage}) => {
             );
             setSelectedPrograms(selected);
         }
-        setFormData({ ...formData, date:  format(new Date(), 'dd/MM/yyyy') });
+        setFormData({...formData, date: format(new Date(), 'yyyy/MM/dd')});
     }, [formData.programs, programs, selectedPrograms]);
 
     return (
         <div>
-            <h1>Tipo demanda</h1>
+            <div className="header">
+                <h1>Tipo demanda</h1>
+                <HomeLink></HomeLink>
+            </div>
             <div className="row-container">
                 <Autocomplete
                     className="item"
@@ -59,7 +63,7 @@ const FormPage3 = ({ formData, setFormData, previousPage , nextPage}) => {
                     getOptionLabel={(demand) => demand.name}
                     value={selectedDemand}
                     onChange={handleDemandChange}
-                    renderInput={(params) => <TextField {...params} label="Seleccionar demanda" />}
+                    renderInput={(params) => <TextField {...params} label="Seleccionar demanda"/>}
                 />
 
                 <Autocomplete
@@ -69,7 +73,7 @@ const FormPage3 = ({ formData, setFormData, previousPage , nextPage}) => {
                     getOptionLabel={(program) => program.name}
                     value={selectedPrograms}
                     onChange={handleProgramsChange}
-                    renderInput={(params) => <TextField {...params} label="Seleccionar programas" />}
+                    renderInput={(params) => <TextField {...params} label="Seleccionar programas"/>}
                 />
             </div>
             <div className="row-container">

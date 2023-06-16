@@ -9,6 +9,7 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import './Form.css';
 import Autocomplete from "@mui/material/Autocomplete";
+import {HomeLink} from "../../common";
 
 const FormPage2 = ({ formData, setFormData, nextPage, previousPage }) => {
     const studies = useSelector(selectors.getStudies);
@@ -138,7 +139,10 @@ const FormPage2 = ({ formData, setFormData, nextPage, previousPage }) => {
 
     return (
         <div>
-            <h1>Experiencia Laboral</h1>
+            <div className="header">
+                <h1>Experiencia Laboral</h1>
+                <HomeLink></HomeLink>
+            </div>
             <div className="row-container">
                 <Autocomplete
                     className="item"

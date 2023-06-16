@@ -90,6 +90,8 @@ const FormPage1Part2 = ({ formData, setFormData}) => {
     };
 
     const handleCheckboxChange = (e) => {
+        if(isRegistered)
+            setFormData({ ...formData, dateRegister: '' });
         const value = e.target.checked;
         setFormData({ ...formData, [e.target.name]: value });
         setIsRegistered(value);

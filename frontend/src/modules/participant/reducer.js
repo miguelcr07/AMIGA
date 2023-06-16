@@ -3,19 +3,16 @@ import {combineReducers} from 'redux';
 import * as actionTypes from './actionTypes';
 
 const initialState = {
-    participantList: null,
+    participantSummary: null,
     participant: null,
 };
 
-const participantList = (state = initialState.participantList, action) => {
+const participantSummary = (state = initialState.participantSummary, action) => {
 
     switch (action.type) {
 
-        case actionTypes.FIND_ALL_PARTICIPANTS_COMPLETED:
-            return action.participantList;
-
-        case actionTypes.UPDATE_PARTICIPANTS:
-            return action.participantList;
+        case actionTypes.FIND_PARTICIPANTS_SUMMARY_COMPLETED:
+            return action.participantSummary;
 
         default:
             return state;
@@ -38,7 +35,7 @@ const participant = (state = initialState.participant, action) => {
 
 }
 const reducer = combineReducers({
-    participantList,
+    participantSummary,
     participant
 });
 

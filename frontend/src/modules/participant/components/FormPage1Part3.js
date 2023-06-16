@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import './Form.css';
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import TextField from "@mui/material/TextField";
 import * as selectors from "../../app/selectors";
-import { useSelector } from "react-redux";
+import {useSelector} from "react-redux";
 import Autocomplete from "@mui/material/Autocomplete";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 
-const FormPage1Part3 = ({ formData, setFormData }) => {
+const FormPage1Part3 = ({formData, setFormData}) => {
     const exclusionFactors = useSelector(selectors.getExclusions);
 
     const [selectedExclusionFactors, setSelectedExclusionFactors] = useState([]);
-    const [isInternationalProtection, setIsInternationalProtection] = useState(false);
-    const [hasSocialWorker, setHasSocialWorker] = useState(false);
-    const [hasSocialCoverage, setHasSocialCoverage] = useState(false);
+    const [isInternationalProtection, setIsInternationalProtection] = useState(formData.datePi !== '');
+    const [hasSocialWorker, setHasSocialWorker] = useState(formData.socialWorker !== '');
+    const [hasSocialCoverage, setHasSocialCoverage] = useState(formData.healthCoverage !== '');
     const [unemployedHousehold, setUnemployedHousehold] = useState(formData.unemployedHousehold || false);
     const [returned, setReturned] = useState(formData.returned || false);
     const [oneAdultHousehold, setOneAdultHousehold] = useState(formData.oneAdultHousehold || false);
@@ -27,34 +27,34 @@ const FormPage1Part3 = ({ formData, setFormData }) => {
     const handleSituationChange = (event) => {
         const value = event.target.value;
         setSituation(value);
-        setFormData({ ...formData, situation: value });
+        setFormData({...formData, situation: value});
     };
     const handleUnemployedHouseholdChange = (event) => {
         const value = event.target.value === 'true';
         setUnemployedHousehold(value);
-        setFormData({ ...formData, unemployedHousehold: value });
+        setFormData({...formData, unemployedHousehold: value});
     };
 
     const handleOneAdultHouseholdChange = (event) => {
         const value = event.target.value === 'true';
         setOneAdultHousehold(value);
-        setFormData({ ...formData, oneAdultHousehold: value });
+        setFormData({...formData, oneAdultHousehold: value});
     };
 
     const handleDependantsChange = (event) => {
         const value = event.target.value === 'true';
         setDependants(value);
-        setFormData({ ...formData, dependants: value });
+        setFormData({...formData, dependants: value});
     };
     const handleReturnedChange = (event) => {
         const value = event.target.value === 'true';
         setReturned(value);
-        setFormData({ ...formData, returned: value });
+        setFormData({...formData, returned: value});
     };
     const handleFactorsChange = (event, value) => {
         const selectedFactors = value.map((factor) => factor.id);
         setSelectedExclusionFactors(value);
-        setFormData({ ...formData, exclusionFactors: selectedFactors });
+        setFormData({...formData, exclusionFactors: selectedFactors});
     };
 
     useEffect(() => {
@@ -67,12 +67,29 @@ const FormPage1Part3 = ({ formData, setFormData }) => {
     }, [formData.exclusionFactors, exclusionFactors]);
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        setFormData({...formData, [e.target.name]: e.target.value});
     };
 
-    const handleProtectionChange = () => setIsInternationalProtection(!isInternationalProtection);
-    const handleSocialWorkerChange = () => setHasSocialWorker(!hasSocialWorker);
-    const handleSocialCoverageChange = () => setHasSocialCoverage(!hasSocialCoverage);
+    const handleProtectionChange = () => {
+        if (isInternationalProtection) {
+            setFormData({...formData, datePi: '', interviewPi: ''})
+        }
+        setIsInternationalProtection(!isInternationalProtection)
+
+
+    };
+    const handleSocialWorkerChange = () => {
+        if (hasSocialWorker)
+            setFormData({...formData, socialWorker: ''})
+        setHasSocialWorker(!hasSocialWorker)
+
+    };
+    const handleSocialCoverageChange = () => {
+        if (hasSocialCoverage)
+            setFormData({...formData, healthCoverage: ''})
+        setHasSocialCoverage(!hasSocialCoverage);
+
+    };
 
     return (
         <div>
@@ -89,28 +106,28 @@ const FormPage1Part3 = ({ formData, setFormData }) => {
                 />
 
 
-                        <TextField
-                            className="item"
-                            type="date"
-                            name="datePi"
-                            value={formData.datePi}
-                            onChange={handleChange}
-                            label="Fecha de Manifestación PI"
-                            placeholder="Fecha de Manifestación PI"
-                            InputLabelProps={{ shrink: true }}
-                            disabled={!isInternationalProtection}
-                        />
-                        <TextField
-                            className="item"
-                            type="date"
-                            name="interviewPi"
-                            value={formData.interviewPi}
-                            onChange={handleChange}
-                            label="Fecha de 1ª Entrevista PI"
-                            placeholder="Fecha de 1ª Entrevista PI"
-                            InputLabelProps={{ shrink: true }}
-                            disabled={!isInternationalProtection}
-                        />
+                <TextField
+                    className="item"
+                    type="date"
+                    name="datePi"
+                    value={formData.datePi}
+                    onChange={handleChange}
+                    label="Fecha de Manifestación PI"
+                    placeholder="Fecha de Manifestación PI"
+                    InputLabelProps={{shrink: true}}
+                    disabled={!isInternationalProtection}
+                />
+                <TextField
+                    className="item"
+                    type="date"
+                    name="interviewPi"
+                    value={formData.interviewPi}
+                    onChange={handleChange}
+                    label="Fecha de 1ª Entrevista PI"
+                    placeholder="Fecha de 1ª Entrevista PI"
+                    InputLabelProps={{shrink: true}}
+                    disabled={!isInternationalProtection}
+                />
 
 
             </div>
@@ -122,7 +139,7 @@ const FormPage1Part3 = ({ formData, setFormData }) => {
                     getOptionLabel={(factor) => factor.name}
                     value={selectedExclusionFactors}
                     onChange={handleFactorsChange}
-                    renderInput={(params) => <TextField {...params} label="Seleccionar factores exclusión" />}
+                    renderInput={(params) => <TextField {...params} label="Seleccionar factores exclusión"/>}
                 />
             </div>
             <div className="row-container">
@@ -195,11 +212,11 @@ const FormPage1Part3 = ({ formData, setFormData }) => {
                     onChange={handleChange}
                     label="Datos del Trabajador Social"
                     placeholder="Datos del Trabajador Social"
-                    InputLabelProps={{ shrink: true }}
+                    InputLabelProps={{shrink: true}}
                     disabled={!hasSocialWorker}
                 />
             </div>
-                <div className="row-container">
+            <div className="row-container">
                 <FormControlLabel
                     control={
                         <Checkbox
@@ -218,26 +235,26 @@ const FormPage1Part3 = ({ formData, setFormData }) => {
                     onChange={handleChange}
                     label="Datos de Cobertura Sanitaria"
                     placeholder="Datos de Cobertura Sanitaria"
-                    InputLabelProps={{ shrink: true }}
+                    InputLabelProps={{shrink: true}}
                     disabled={!hasSocialCoverage}
                 />
             </div>
             <div className="row-container">
                 <FormControl className="item">
-                <InputLabel id="disability-label">Discapacidad</InputLabel>
-                <Select
-                    id="disability"
-                    labelId="disability-label"
-                    label="Discapacidad"
-                    name="disability"
-                    className="item"
-                    value={formData.disability}
-                    onChange={handleChange}
-                >
-                    <MenuItem value="NO">No</MenuItem>
-                    <MenuItem value="LESS_33">Menos del 33%</MenuItem>
-                    <MenuItem value="MORE_33">Más del 33%</MenuItem>
-                </Select>
+                    <InputLabel id="disability-label">Discapacidad</InputLabel>
+                    <Select
+                        id="disability"
+                        labelId="disability-label"
+                        label="Discapacidad"
+                        name="disability"
+                        className="item"
+                        value={formData.disability}
+                        onChange={handleChange}
+                    >
+                        <MenuItem value="NO">No</MenuItem>
+                        <MenuItem value="LESS_33">Menos del 33%</MenuItem>
+                        <MenuItem value="MORE_33">Más del 33%</MenuItem>
+                    </Select>
                 </FormControl>
 
                 <FormControl className="item">

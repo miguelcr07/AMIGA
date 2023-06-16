@@ -9,6 +9,14 @@ export const getParticipantData = (id, year, onSuccess) => {
 
     appFetch(path, config('GET'), onSuccess);
 }
+export const getParticipantSummaryData = (type, doc, onSuccess, onErrors) => {
+    let path = '/participant/getByDoc?type=';
+    path += type;
+    path += '&doc=';
+    path += doc;
+
+    appFetch(path, config('GET'), onSuccess, onErrors);
+}
 
 export const createParticipant = ( data, onSuccess, onErrors) => {
 

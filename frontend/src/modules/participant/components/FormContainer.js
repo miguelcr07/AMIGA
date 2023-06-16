@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import FormPage2 from "./FormPage2";
 import FormPage3 from "./FormPage3";
 import FormPage1 from "./FormPage1";
@@ -76,36 +76,44 @@ const FormContainer = () => {
         switch (currentPage) {
             case 1:
                 return (
-                    <FormPage1
-                        formData={formData}
-                        setFormData={setFormData}
-                        nextPage={nextPage}
-                    />
+                    <div className="container">
+                        <FormPage1
+                            formData={formData}
+                            setFormData={setFormData}
+                            nextPage={nextPage}
+                        />
+                    </div>
                 );
             case 2:
                 return (
-                    <FormPage2
-                        formData={formData}
-                        setFormData={setFormData}
-                        nextPage={nextPage}
-                        previousPage={previousPage}
-                    />
+                    <div className="container">
+                        <FormPage2
+                            formData={formData}
+                            setFormData={setFormData}
+                            nextPage={nextPage}
+                            previousPage={previousPage}
+                        />
+                    </div>
                 );
             case 3:
                 return (
-                    <FormPage3
-                        formData={formData}
-                        setFormData={setFormData}
-                        nextPage={nextPage}
-                        previousPage={previousPage}
-                    />
+                    <div className="container">
+                        <FormPage3
+                            formData={formData}
+                            setFormData={setFormData}
+                            nextPage={nextPage}
+                            previousPage={previousPage}
+                        />
+                    </div>
                 );
             case 4:
                 return (
-                    <FormCreateConfirm
-                        formData={formData}
-                        previousPage={previousPage}
-                    ></FormCreateConfirm>
+                    <div className="container">
+                        <FormCreateConfirm
+                            formData={formData}
+                            previousPage={previousPage}
+                        ></FormCreateConfirm>
+                    </div>
                 );
             default:
                 return null;

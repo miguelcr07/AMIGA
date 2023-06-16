@@ -1,5 +1,7 @@
 package es.udc.paproject.backend.rest.dtos;
 
+import java.util.List;
+
 public class ParticipantSummaryDto {
 
     private Long id;
@@ -10,6 +12,16 @@ public class ParticipantSummaryDto {
     private String pas;
     private String phone;
     private String email;
+
+    private List<Integer> yearList;
+
+    public List<Integer> getYearList() {
+        return yearList;
+    }
+
+    public void setYearList(List<Integer> yearList) {
+        this.yearList = yearList;
+    }
 
     public Long getId() {
         return id;

@@ -1,6 +1,5 @@
-import {useDispatch, useSelector} from 'react-redux';
-import React, { useState } from 'react';
-import Autocomplete from '@mui/material/Autocomplete';
+import {useDispatch} from 'react-redux';
+import React, {useState} from 'react';
 import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
@@ -10,100 +9,111 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import './Participant.css';
 
-import * as selectors from '../selectors';
 import * as actions from '../actions';
 import {useNavigate} from "react-router-dom";
+import backend from "../../../backend";
+import {Errors} from "../../common";
 
 function Participant() {
-    const participantList = useSelector(selectors.getParticipantList);
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const [selectedAttribute, setSelectedAttribute] = useState('dni');
+    const [doc, setDoc] = useState('');
     const [selectedParticipant, setSelectedParticipant] = useState(null);
+    const [backendErrors, setBackendErrors] = useState(null);
 
     const handleAttributeChange = (event) => {
         setSelectedAttribute(event.target.value);
     };
 
-    const handleParticipantChange = (event, value) => {
-        setSelectedParticipant(value);
-    };
-
     const attributeOptions = ['dni', 'nie', 'pas'];
 
     const handleGetDetails = () => {
+       // dispatch(actions.setParticipantSummary(selectedParticipant));
         dispatch(actions.findParticipant(
             selectedParticipant.id,
-            null,
-            ));
+            Math.max(...selectedParticipant.yearList),));
         navigate('/participant/details')
     }
+    const handleChange = (e) => {
+        setDoc(e.target.value);
+    };
 
-    let filteredParticipantList = null;
+    const handleFind = (event) => {
+        event.preventDefault();
 
-    if(participantList !== null) {
-        filteredParticipantList = participantList.filter(
-            (participant) => participant[selectedAttribute] !== null
+
+        let validFormat = true;
+        if (selectedAttribute === 'dni') {
+            validFormat = true;
+        } else if (selectedAttribute === 'nie') {
+            validFormat = true;
+        }
+
+        if (!validFormat) {
+            setBackendErrors({globalError: 'Formato de documento incorrecto'});
+            setSelectedParticipant(null);
+            return;
+        }
+
+        backend.participant.getParticipantSummaryData(
+            selectedAttribute,
+            doc,
+            (participant) => setSelectedParticipant(participant),
+            (errors) => {
+                setSelectedParticipant(null);
+                setBackendErrors(errors);
+            }
         );
-    }
+    };
 
-    if(filteredParticipantList === null)
-        return null;
 
     return (
-        <div>
+        <div className="container">
             <div className="button">
-            <Button variant="contained" onClick={() => {
-                navigate('/participant/form');
-            }}>
-                Registrar participante
-            </Button>
+                <Button variant="contained" onClick={() => {
+                    navigate('/participant/form');
+                }}>
+                    Registrar participante
+                </Button>
             </div>
-            <div className="participant-container">
-                <FormControl className="item" style={{ position: 'relative' }}>
-                    <InputLabel id="attribute-label">Seleccionar filtro</InputLabel>
-                    <Select
-                        labelId="attribute-label"
-                        label="Seleccionar filtro"
-                        id="attribute"
-                        value={selectedAttribute}
-                        onChange={handleAttributeChange}
-                    >
-                        {attributeOptions.map((attribute) => (
-                            <MenuItem key={attribute} value={attribute}>
-                                {attribute.toUpperCase()}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
+            <form onSubmit={handleFind}>
+                <div className="participant-container">
+                    <FormControl className="item" style={{position: 'relative'}}>
+                        <InputLabel id="attribute-label">Seleccionar filtro</InputLabel>
+                        <Select
+                            labelId="attribute-label"
+                            label="Seleccionar filtro"
+                            id="attribute"
+                            value={selectedAttribute}
+                            onChange={handleAttributeChange}
+                        >
+                            {attributeOptions.map((attribute) => (
+                                <MenuItem key={attribute} value={attribute}>
+                                    {attribute.toUpperCase()}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
 
-                <div className="item2">
-                    <Autocomplete
-                        id="participant-autocomplete"
-                        options={filteredParticipantList}
-                        getOptionLabel={(participant) => participant[selectedAttribute]}
-                        renderInput={(params) => <TextField {...params} label="Documento participante" />}
-                        value={selectedParticipant}
-                        onChange={handleParticipantChange}
+                    <TextField
+                        className="item2"
+                        value={doc}
+                        onChange={handleChange}
+                        label="Documento"
+                        placeholder="Documento"
+                        required
                     />
+                    <Button variant="contained" color="primary" type="submit">
+                        Buscar
+                    </Button>
+
                 </div>
-            </div>
-
-            <div className="participant-row">
-                {selectedAttribute && (
-                    <Autocomplete
-                        id="name-surname-autocomplete"
-                        options={filteredParticipantList}
-                        getOptionLabel={(participant) => `${participant.name} ${participant.surnames}`}
-                        renderInput={(params) => <TextField {...params} label="Buscar por nombre y apellidos" />}
-                        value={selectedParticipant}
-                        onChange={handleParticipantChange}
-                    />
-                )}
-            </div>
-
-
+            </form>
+            <br/>
+            <Errors errors={backendErrors} onClose={() => setBackendErrors(null)}/>
             {selectedParticipant && (
                 <div className="participant-details">
                     <Typography variant="h6">{selectedParticipant.name} {selectedParticipant.surnames}</Typography>

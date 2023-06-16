@@ -4,6 +4,7 @@ import es.udc.paproject.backend.model.daos.AnnualDataDao;
 import es.udc.paproject.backend.model.daos.KidDao;
 import es.udc.paproject.backend.model.daos.ParticipantDao;
 import es.udc.paproject.backend.model.entities.*;
+import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
 import es.udc.paproject.backend.model.mapper.ParticipantMapper;
 import es.udc.paproject.backend.rest.dtos.KidDto;
 import es.udc.paproject.backend.rest.dtos.ParticipantDto;
@@ -52,6 +53,22 @@ public class ParticipantServiceImpl implements ParticipantService{
     }
 
     @Override
+    public ParticipantSummaryDto getParcitipantByDocumentation(String type, String doc) throws InstanceNotFoundException {
+        Participant participant;
+
+        if(Objects.equals(type, "dni")){
+            participant = participantDao.findByDni(doc);
+        }else if(Objects.equals(type, "nie")){
+            participant = participantDao.findByNie(doc);
+        }else {
+            participant = participantDao.findByPas(doc);
+        }
+        if( participant == null)
+            throw new InstanceNotFoundException("el participante no existe", doc);
+        return participantMapper.toParticipantSummaryDto(participant);
+    }
+
+    @Override
     public ParticipantDto saveParticipant(ParticipantDto participantDto) {
         Participant participant = new Participant();
         setParticipantData(participantDto, participant);
@@ -75,6 +92,7 @@ public class ParticipantServiceImpl implements ParticipantService{
         if(participant == null)
             return null;
 
+        setParticipantData(participantDto, participant);
         participant.addYear(LocalDate.now().getYear());
         AnnualData annualData = new AnnualData();
         annualData.setParticipant(participant);

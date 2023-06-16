@@ -1,12 +1,11 @@
 import {useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 
-import Header from './Header';
 import Body from './Body';
 import Footer from './Footer';
 import users from '../../users';
-import participant from "../../participant";
 import * as actions from "../actions";
+import ResponsiveAppBar from "./ResponsiveAppBar";
 
 const App = () => {
 
@@ -16,8 +15,6 @@ const App = () => {
 
         dispatch(users.actions.tryLoginFromServiceToken(
             () => dispatch(users.actions.logout())));
-
-        dispatch(participant.actions.findAllParticipants());
 
         dispatch(actions.findAllCountries());
         dispatch(actions.findAllProvinces());
@@ -35,7 +32,7 @@ const App = () => {
 
     return (
         <div>
-            <Header/>
+            <ResponsiveAppBar/>
             <Body/>
             <Footer/>
         </div>

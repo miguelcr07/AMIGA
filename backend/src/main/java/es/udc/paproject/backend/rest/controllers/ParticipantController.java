@@ -1,5 +1,6 @@
 package es.udc.paproject.backend.rest.controllers;
 
+import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
 import es.udc.paproject.backend.model.services.ParticipantService;
 import es.udc.paproject.backend.rest.dtos.ParticipantDto;
 import es.udc.paproject.backend.rest.dtos.ParticipantSummaryDto;
@@ -20,6 +21,12 @@ public class ParticipantController {
     @GetMapping("/get")
     ResponseEntity<List<ParticipantSummaryDto>> getListParticipants() {
         return ResponseEntity.ok(participantService.getParcipants());
+    }
+
+    @GetMapping("/getByDoc")
+    ResponseEntity<ParticipantSummaryDto> getParticipantByIdentification(@RequestParam("type") String type,
+                                                                         @RequestParam("doc") String doc) throws InstanceNotFoundException {
+        return ResponseEntity.ok(participantService.getParcitipantByDocumentation(type, doc));
     }
 
     @GetMapping("/{id}")

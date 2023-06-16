@@ -8,10 +8,12 @@ import {useDispatch, useSelector} from "react-redux";
 import ParticipantPdf from "./ParticipantPdf";
 import Typography from "@mui/material/Typography";
 import * as selectors from "../../app/selectors";
+import {Errors} from "../../common";
 
 const FormCreateConfirm = ({formData, previousPage}) => {
     const [open, setOpen] = useState(false);
     const [verPDF, setVerPDF] = useState(false);
+    const [backendErrors, setBackendErrors] = useState(null);
     const [data, setData] = useState({
         factors: '',
         municipalities: '',
@@ -163,7 +165,7 @@ const FormCreateConfirm = ({formData, previousPage}) => {
     }, [municipalities, provinces, countries]);
 
     const handleSubmit = () => {
-        dispatch(actions.createParticipant(formData, setOpen(true), null));
+        dispatch(actions.createParticipant(formData, setOpen(true),  errors => setBackendErrors(errors)));
     }
 
     const handleCloseModal = () => {
@@ -174,10 +176,9 @@ const FormCreateConfirm = ({formData, previousPage}) => {
         && !studies && !employment && !languages && !demands && !programs && !exclusionFactors)
         return null;
 
-    console.log(formData.name);
-    console.log(data.programs);
     return (
         <div>
+            <Errors errors={backendErrors} onClose={() => setBackendErrors(null)}/>
             <Typography variant="h6" align="center">
                 Descargar el documento a firmar y guardar datos
             </Typography>

@@ -1,5 +1,3 @@
-export const FIND_ALL_PARTICIPANTS_COMPLETED = "project/participant/findAllParticipantsCompleted";
-
-export const UPDATE_PARTICIPANTS = "project/participant/updateParticipants";
+export const FIND_PARTICIPANTS_SUMMARY_COMPLETED = "project/participant/findParticipantSummaryCompleted";
 
 export const FIND_PARTICIPANT_DATA_COMPLETED = "project/participant/findParticipantDataCompleted";
