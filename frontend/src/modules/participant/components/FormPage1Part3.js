@@ -15,14 +15,14 @@ const FormPage1Part3 = ({formData, setFormData}) => {
     const exclusionFactors = useSelector(selectors.getExclusions);
 
     const [selectedExclusionFactors, setSelectedExclusionFactors] = useState([]);
-    const [isInternationalProtection, setIsInternationalProtection] = useState(formData.datePi !== '');
-    const [hasSocialWorker, setHasSocialWorker] = useState(formData.socialWorker !== '');
-    const [hasSocialCoverage, setHasSocialCoverage] = useState(formData.healthCoverage !== '');
-    const [unemployedHousehold, setUnemployedHousehold] = useState(formData.unemployedHousehold || false);
-    const [returned, setReturned] = useState(formData.returned || false);
-    const [oneAdultHousehold, setOneAdultHousehold] = useState(formData.oneAdultHousehold || false);
-    const [dependants, setDependants] = useState(formData.dependants || false);
-    const [situation, setSituation] = useState(formData.situation || '');
+    const [isInternationalProtection, setIsInternationalProtection] = useState(false);
+    const [hasSocialWorker, setHasSocialWorker] = useState(false);
+    const [hasSocialCoverage, setHasSocialCoverage] = useState(false);
+    const [unemployedHousehold, setUnemployedHousehold] = useState( false);
+    const [returned, setReturned] = useState(false);
+    const [oneAdultHousehold, setOneAdultHousehold] = useState(false);
+    const [dependants, setDependants] = useState(false);
+    const [situation, setSituation] = useState('');
 
     const handleSituationChange = (event) => {
         const value = event.target.value;
@@ -66,6 +66,17 @@ const FormPage1Part3 = ({formData, setFormData}) => {
         }
     }, [formData.exclusionFactors, exclusionFactors]);
 
+    useEffect(() => {
+            setOneAdultHousehold(formData.oneAdultHousehold || false);
+            setDependants(formData.dependants || false);
+            setReturned(formData.returned || false);
+            setUnemployedHousehold(formData.unemployedHousehold || false);
+            setHasSocialCoverage(formData.healthCoverage !== '');
+            setHasSocialWorker(formData.socialWorker !== '');
+            setIsInternationalProtection(formData.datePi !== '');
+            setSituation(formData.situation || '');
+    }, []);
+
     const handleChange = (e) => {
         setFormData({...formData, [e.target.name]: e.target.value});
     };
@@ -90,6 +101,8 @@ const FormPage1Part3 = ({formData, setFormData}) => {
         setHasSocialCoverage(!hasSocialCoverage);
 
     };
+    if(!exclusionFactors)
+        return null;
 
     return (
         <div>
@@ -134,6 +147,7 @@ const FormPage1Part3 = ({formData, setFormData}) => {
             <div className="row-container">
                 <Autocomplete
                     className="item"
+                    required
                     multiple
                     options={exclusionFactors}
                     getOptionLabel={(factor) => factor.name}
@@ -244,6 +258,7 @@ const FormPage1Part3 = ({formData, setFormData}) => {
                     <InputLabel id="disability-label">Discapacidad</InputLabel>
                     <Select
                         id="disability"
+                        required
                         labelId="disability-label"
                         label="Discapacidad"
                         name="disability"
@@ -261,6 +276,7 @@ const FormPage1Part3 = ({formData, setFormData}) => {
                     <InputLabel id="admin-label">Situación administrativa</InputLabel>
                     <Select
                         id="admin"
+                        required
                         labelId="admin-label"
                         label="Situación administrativa"
                         name="admin"

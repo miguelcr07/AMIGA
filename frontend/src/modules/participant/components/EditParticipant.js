@@ -2,14 +2,17 @@ import React, {useEffect, useState} from 'react';
 import FormPage2 from "./FormPage2";
 import FormPage3 from "./FormPage3";
 import FormPage1 from "./FormPage1";
-import FormCreateConfirm from "./FormCreateConfirm";
 import * as selectors from "../selectors"
 import {useSelector} from "react-redux";
+import FormEditConfirm from "./FormEditConfirm";
+import FormPage1Continue from "./FormPage1Continue";
 
 const FormContainer = () => {
     const participant = useSelector(selectors.getParticipantData);
     const [currentPage, setCurrentPage] = useState(1);
     const [formData, setFormData] = useState({
+        idParticipant: null,
+        idAnnualData: null,
         name: '',
         surnames: '',
         dni: '',
@@ -28,7 +31,7 @@ const FormContainer = () => {
         kids: [],
         country: null,
         date: '',
-        returned: false,
+        returned: '',
         nationalities: [],
         situation: '',
         studies: null,
@@ -81,7 +84,8 @@ const FormContainer = () => {
                 formData[attribute] = participant[attribute];
             }
         }
-    }, [participant, formData]
+
+    }, [participant]
     )
     const renderPage = () => {
         switch (currentPage) {
@@ -95,16 +99,18 @@ const FormContainer = () => {
                 );
             case 2:
                 return (
-                    <FormPage2
-                        formData={formData}
-                        setFormData={setFormData}
-                        nextPage={nextPage}
-                        previousPage={previousPage}
-                    />
+                    <div className="container">
+                        <FormPage1Continue
+                            formData={formData}
+                            setFormData={setFormData}
+                            nextPage={nextPage}
+                            previousPage={previousPage}
+                        />
+                    </div>
                 );
             case 3:
                 return (
-                    <FormPage3
+                    <FormPage2
                         formData={formData}
                         setFormData={setFormData}
                         nextPage={nextPage}
@@ -113,10 +119,19 @@ const FormContainer = () => {
                 );
             case 4:
                 return (
-                    <FormCreateConfirm
+                    <FormPage3
+                        formData={formData}
+                        setFormData={setFormData}
+                        nextPage={nextPage}
+                        previousPage={previousPage}
+                    />
+                );
+            case 5:
+                return (
+                    <FormEditConfirm
                         formData={formData}
                         previousPage={previousPage}
-                    ></FormCreateConfirm>
+                    ></FormEditConfirm>
                 );
             default:
                 return null;

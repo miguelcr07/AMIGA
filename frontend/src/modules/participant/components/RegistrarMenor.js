@@ -40,7 +40,7 @@ const RegistrarMenor = ({ formData, setFormData }) => {
     };
 
     return (
-        <div>
+        <div className="participant-details">
 
             <form onSubmit={handleAddChild}>
                 <div className="row-container">

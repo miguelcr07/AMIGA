@@ -3,7 +3,6 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
@@ -11,19 +10,19 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
+import {useNavigate} from 'react-router-dom';
+import Typography from "@mui/material/Typography";
 
-const pages = ['Participantes', 'Estadísticas', 'Voluntariado', 'Empleado'];
-const settings = ['Profile', 'Logout'];
 
 function ResponsiveAppBar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const navigate = useNavigate();
 
-    const  {pathname}  = window.location;
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
+
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
     };
@@ -36,34 +35,26 @@ function ResponsiveAppBar() {
         setAnchorElUser(null);
     };
 
-    if(pathname === '/sd'){
-        return null
-    }
-
     return (
-        <AppBar position="static">
+        <AppBar position="static" color="inherit">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="a"
-                        href="/"
+                    <Avatar
+                        alt="AMIGA Logo"
+                        src={process.env.PUBLIC_URL + '/logopng.png'}
                         sx={{
-                            mr: 2,
-                            display: { xs: 'none', md: 'flex' },
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            letterSpacing: '.3rem',
-                            color: 'inherit',
-                            textDecoration: 'none',
+                            display: 'flex',
+                            mr: 1,
+                            width: 1892 / 8, // Adjust the size according to your needs
+                            height: 692 / 8, // Adjust the size according to your needs
+                            borderRadius: 0,
+                            marginTop: 2,
+                            marginBottom: 1
                         }}
-                    >
-                        AMIGA
-                    </Typography>
+                        onClick={() => navigate('/')}
+                    />
 
-                    <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                    <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
                         <IconButton
                             size="large"
                             aria-label="account of current user"
@@ -72,7 +63,7 @@ function ResponsiveAppBar() {
                             onClick={handleOpenNavMenu}
                             color="inherit"
                         >
-                            <MenuIcon />
+                            <MenuIcon/>
                         </IconButton>
                         <Menu
                             id="menu-appbar"
@@ -89,55 +80,51 @@ function ResponsiveAppBar() {
                             open={Boolean(anchorElNav)}
                             onClose={handleCloseNavMenu}
                             sx={{
-                                display: { xs: 'block', md: 'none' },
+                                display: {xs: 'block', md: 'none'},
                             }}
                         >
-                            {pages.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{page}</Typography>
-                                </MenuItem>
-                            ))}
+                            <MenuItem variant="contained" onClick={handleCloseNavMenu}>
+                                <Typography textAlign="center">Participantes</Typography>
+                            </MenuItem>
+                            <MenuItem variant="contained" onClick={handleCloseNavMenu}>
+                                <Typography textAlign="center">Estadísticas</Typography>
+                            </MenuItem>
+                            <MenuItem variant="contained" onClick={handleCloseNavMenu}>
+                                <Typography textAlign="center">Voluntariado</Typography>
+                            </MenuItem>
+                            <MenuItem variant="contained" onClick={handleCloseNavMenu}>
+                                <Typography textAlign="center">Técnicos</Typography>
+                            </MenuItem>
                         </Menu>
                     </Box>
-                    <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-                    <Typography
-                        variant="h5"
-                        noWrap
-                        component="a"
-                        href=""
-                        sx={{
-                            mr: 2,
-                            display: { xs: 'flex', md: 'none' },
-                            flexGrow: 1,
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            letterSpacing: '.3rem',
-                            color: 'inherit',
-                            textDecoration: 'none',
-                        }}
-                    >
-                        LOGO
-                    </Typography>
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        {pages.map((page) => (
-                            <Button
-                                key={page}
-                                onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: 'white', display: 'block' }}
-                            >
-                                {page}
-                            </Button>
-                        ))}
+
+                    <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
+                        <Button variant="contained" onClick={handleCloseNavMenu}
+                                sx={{my: 2, color: 'white', display: 'block', margin: 2}}>
+                            Participantes
+                        </Button>
+                        <Button variant="contained" onClick={handleCloseNavMenu}
+                                sx={{my: 2, color: 'white', display: 'block', margin: 2}}>
+                            Estadísticas
+                        </Button>
+                        <Button variant="contained" onClick={handleCloseNavMenu}
+                                sx={{my: 2, color: 'white', display: 'block', margin: 2}}>
+                            Voluntariado
+                        </Button>
+                        <Button variant="contained" onClick={handleCloseNavMenu}
+                                sx={{my: 2, color: 'white', display: 'block', margin: 2}}>
+                            Técnicos
+                        </Button>
                     </Box>
 
-                    <Box sx={{ flexGrow: 0 }}>
+                    <Box sx={{flexGrow: 0}}>
                         <Tooltip title="Open settings">
-                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                            <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
+                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg"/>
                             </IconButton>
                         </Tooltip>
                         <Menu
-                            sx={{ mt: '45px' }}
+                            sx={{mt: '45px'}}
                             id="menu-appbar"
                             anchorEl={anchorElUser}
                             anchorOrigin={{
@@ -152,11 +139,12 @@ function ResponsiveAppBar() {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{setting}</Typography>
-                                </MenuItem>
-                            ))}
+                            <MenuItem onClick={handleCloseUserMenu}>
+                                <Typography textAlign="center">Profile</Typography>
+                            </MenuItem>
+                            <MenuItem onClick={handleCloseUserMenu}>
+                                <Typography textAlign="center">Logout</Typography>
+                            </MenuItem>
                         </Menu>
                     </Box>
                 </Toolbar>
@@ -164,4 +152,5 @@ function ResponsiveAppBar() {
         </AppBar>
     );
 }
+
 export default ResponsiveAppBar;

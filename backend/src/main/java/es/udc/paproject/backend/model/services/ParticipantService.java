@@ -21,5 +21,5 @@ public interface ParticipantService {
 
     ParticipantDto updateParticipant(ParticipantDto participantDto);
 
-    ParticipantDto updateAnnualData(ParticipantDto participantDto);
+
 }

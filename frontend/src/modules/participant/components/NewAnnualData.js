@@ -1,13 +1,19 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import FormPage2 from "./FormPage2";
 import FormPage3 from "./FormPage3";
 import FormPage1 from "./FormPage1";
-import FormCreateConfirm from "./FormCreateConfirm";
+import * as selectors from "../selectors"
+import {useSelector} from "react-redux";
+import FormEditConfirm from "./FormEditConfirm";
+import NewAnnualDataConfirm from "./NewAnnualDataConfirm";
 import FormPage1Continue from "./FormPage1Continue";
 
-const FormContainer = () => {
+const NewAnnualData = () => {
+    const participant = useSelector(selectors.getParticipantData);
     const [currentPage, setCurrentPage] = useState(1);
     const [formData, setFormData] = useState({
+        idParticipant: null,
+        idAnnualData: null,
         name: '',
         surnames: '',
         dni: '',
@@ -26,12 +32,12 @@ const FormContainer = () => {
         kids: [],
         country: null,
         date: '',
-        returned: false,
+        returned: '',
         nationalities: [],
         situation: '',
         studies: null,
         languages: [],
-        approved: '',
+        approved: false,
         demandedStudies: '',
         registered: false,
         dateRegister: '',
@@ -73,17 +79,24 @@ const FormContainer = () => {
         setCurrentPage(currentPage - 1);
     };
 
+    useEffect( () => {
+            for (const attribute in participant) {
+                if (participant.hasOwnProperty(attribute) && formData.hasOwnProperty(attribute)) {
+                    formData[attribute] = participant[attribute];
+                }
+            }
+
+        }, [participant]
+    )
     const renderPage = () => {
         switch (currentPage) {
             case 1:
                 return (
-                    <div className="container">
-                        <FormPage1
-                            formData={formData}
-                            setFormData={setFormData}
-                            nextPage={nextPage}
-                        />
-                    </div>
+                    <FormPage1
+                        formData={formData}
+                        setFormData={setFormData}
+                        nextPage={nextPage}
+                    />
                 );
             case 2:
                 return (
@@ -98,34 +111,28 @@ const FormContainer = () => {
                 );
             case 3:
                 return (
-                    <div className="container">
-                        <FormPage2
-                            formData={formData}
-                            setFormData={setFormData}
-                            nextPage={nextPage}
-                            previousPage={previousPage}
-                        />
-                    </div>
+                    <FormPage2
+                        formData={formData}
+                        setFormData={setFormData}
+                        nextPage={nextPage}
+                        previousPage={previousPage}
+                    />
                 );
             case 4:
                 return (
-                    <div className="container">
-                        <FormPage3
-                            formData={formData}
-                            setFormData={setFormData}
-                            nextPage={nextPage}
-                            previousPage={previousPage}
-                        />
-                    </div>
+                    <FormPage3
+                        formData={formData}
+                        setFormData={setFormData}
+                        nextPage={nextPage}
+                        previousPage={previousPage}
+                    />
                 );
             case 5:
                 return (
-                    <div className="container">
-                        <FormCreateConfirm
-                            formData={formData}
-                            previousPage={previousPage}
-                        ></FormCreateConfirm>
-                    </div>
+                    <NewAnnualDataConfirm
+                        formData={formData}
+                        previousPage={previousPage}
+                    ></NewAnnualDataConfirm>
                 );
             default:
                 return null;
@@ -135,4 +142,4 @@ const FormContainer = () => {
     return <div>{renderPage()}</div>;
 };
 
-export default FormContainer;
+export default NewAnnualData;

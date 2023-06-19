@@ -3,15 +3,17 @@ import {useNavigate} from "react-router-dom";
 import {Button, Dialog, DialogTitle, DialogContent, DialogActions, AppBar, Toolbar} from "@mui/material";
 import {PDFDownloadLink, PDFViewer} from "@react-pdf/renderer";
 import './Confirm.css';
-import * as actions from "../actions";
 import {useDispatch, useSelector} from "react-redux";
 import ParticipantPdf from "./ParticipantPdf";
 import Typography from "@mui/material/Typography";
 import * as selectors from "../../app/selectors";
 import {Errors} from "../../common";
 import backend from "../../../backend";
+import * as actions from "../actions"
 
-const FormCreateConfirm = ({formData, previousPage}) => {
+const NewAnnualDataConfirm = ({formData, previousPage}) => {
+    const dispatch = useDispatch();
+
     const [open, setOpen] = useState(false);
     const [verPDF, setVerPDF] = useState(false);
     const [backendErrors, setBackendErrors] = useState(null);
@@ -153,7 +155,7 @@ const FormCreateConfirm = ({formData, previousPage}) => {
         }
         if (formData.kids.length > 0) {
             const children = formData.kids.map(function (kid) {
-                return  kid.birthDate + ' ' + kid.sex;
+                return kid.birthDate + ' ' + kid.sex;
             });
 
             const childrenString = children.join(", ");
@@ -165,16 +167,19 @@ const FormCreateConfirm = ({formData, previousPage}) => {
     }, [municipalities, provinces, countries]);
 
     const handleSubmit = () => {
-        backend.participant.createParticipant(
-            formData, setOpen(true),
-                errors => setBackendErrors(errors));
+        backend.participant.saveAnnualData(
+            formData, data => {
+                setOpen(true);
+                dispatch(actions.findParticipantCompleted(data));
+            },
+            errors => setBackendErrors(errors))
     }
 
     const handleCloseModal = () => {
         setOpen(false);
-        navigate('/');
+        navigate('/participant/details');
     }
-    if(!municipalities && !provinces && !countries && !housings && !maritalStatus && !cohabitation
+    if (!municipalities && !provinces && !countries && !housings && !maritalStatus && !cohabitation
         && !studies && !employment && !languages && !demands && !programs && !exclusionFactors)
         return null;
 
@@ -198,7 +203,7 @@ const FormCreateConfirm = ({formData, previousPage}) => {
                         <Button variant="contained" color="primary" size="large">Descargar PDF</Button>
                     </PDFDownloadLink>
                     <Button variant="contained" color="primary" size="large" onClick={() => handleSubmit()}>
-                        Guardar
+                        Editar datos
                     </Button>
                 </Toolbar>
             </AppBar>
@@ -221,4 +226,4 @@ const FormCreateConfirm = ({formData, previousPage}) => {
     );
 };
 
-export default FormCreateConfirm;
+export default NewAnnualDataConfirm;

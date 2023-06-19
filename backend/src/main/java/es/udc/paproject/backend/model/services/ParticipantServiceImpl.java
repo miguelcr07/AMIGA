@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
-public class ParticipantServiceImpl implements ParticipantService{
+public class ParticipantServiceImpl implements ParticipantService {
 
     @Autowired
     private ParticipantDao participantDao;
@@ -56,14 +56,14 @@ public class ParticipantServiceImpl implements ParticipantService{
     public ParticipantSummaryDto getParcitipantByDocumentation(String type, String doc) throws InstanceNotFoundException {
         Participant participant;
 
-        if(Objects.equals(type, "dni")){
+        if (Objects.equals(type, "dni")) {
             participant = participantDao.findByDni(doc);
-        }else if(Objects.equals(type, "nie")){
+        } else if (Objects.equals(type, "nie")) {
             participant = participantDao.findByNie(doc);
-        }else {
+        } else {
             participant = participantDao.findByPas(doc);
         }
-        if( participant == null)
+        if (participant == null)
             throw new InstanceNotFoundException("el participante no existe", doc);
         return participantMapper.toParticipantSummaryDto(participant);
     }
@@ -73,8 +73,8 @@ public class ParticipantServiceImpl implements ParticipantService{
         Participant participant = new Participant();
         setParticipantData(participantDto, participant);
         Participant participantSaved = participantDao.save(participant);
-
-        for(KidDto kidDto: participantDto.getKids()) {
+        participantSaved.addYear(LocalDate.now().getYear());
+        for (KidDto kidDto : participantDto.getKids()) {
             kidDao.save(new Kid(kidDto.getBirthDate(), Gender.valueOf(kidDto.getSex()), participantSaved));
         }
 
@@ -89,14 +89,22 @@ public class ParticipantServiceImpl implements ParticipantService{
     public ParticipantDto saveAnnualData(ParticipantDto participantDto) {
         Participant participant = participantDao.findById(participantDto.getIdParticipant()).orElse(null);
 
-        if(participant == null)
+        if (participant == null)
             return null;
 
         setParticipantData(participantDto, participant);
+        for (KidDto kidDto : participantDto.getKids()) {
+            if (kidDto.getId() == null)
+                kidDao.save(new Kid(kidDto.getBirthDate(), Gender.valueOf(kidDto.getSex()), participant));
+        }
         participant.addYear(LocalDate.now().getYear());
+
         AnnualData annualData = new AnnualData();
         annualData.setParticipant(participant);
         setAnnualData(participantDto, annualData);
+
+        participantDao.save(participant);
+        annualDataDao.save(annualData);
         return participantMapper.toParticipantDto(participant, annualDataDao.save(annualData));
     }
 
@@ -104,33 +112,32 @@ public class ParticipantServiceImpl implements ParticipantService{
     public ParticipantDto updateParticipant(ParticipantDto participantDto) {
         Participant participant = participantDao.findById(participantDto.getIdParticipant()).orElse(null);
 
-        if(participant == null)
+        if (participant == null)
             return null;
 
-        for(KidDto kidDto: participantDto.getKids()) {
-            kidDao.save(new Kid(kidDto.getBirthDate(), Gender.valueOf(kidDto.getSex()), participant));
+        for (KidDto kidDto : participantDto.getKids()) {
+            if (kidDto.getId() == null)
+                kidDao.save(new Kid(kidDto.getBirthDate(), Gender.valueOf(kidDto.getSex()), participant));
         }
         setParticipantData(participantDto, participant);
-        //participantDao.save(participant);
-        return participantMapper.toParticipantDto(participant, null);
 
-    }
-    @Override
-    public ParticipantDto updateAnnualData(ParticipantDto participantDto) {
         AnnualData annualData = annualDataDao.findById(participantDto.getIdAnnualData()).orElse(null);
 
-        if(annualData == null)
+        if (annualData == null)
             return null;
-
-        annualData.setParticipant(participantDao.findById(participantDto.getIdParticipant()).orElse(null));
+        annualData.setParticipant(participant);
         setAnnualData(participantDto, annualData);
-        return participantMapper.toParticipantDto(null, annualData);
+
+        participantDao.save(participant);
+        annualDataDao.save(annualData);
+        return participantMapper.toParticipantDto(participant, annualData);
+
     }
 
     private void setAnnualData(ParticipantDto participantDto, AnnualData annualData) {
         annualData.setDate(LocalDate.now());
         annualData.setReturned(participantDto.isReturned());
-        for(Long nat : participantDto.getNationalities()) {
+        for (Long nat : participantDto.getNationalities()) {
             annualData.getNationalities().add(selectorService.getCountry(nat));
         }
         annualData.setAddress(participantDto.getAddress());
@@ -139,10 +146,10 @@ public class ParticipantServiceImpl implements ParticipantService{
         annualData.setProvince(selectorService.getProvince(participantDto.getProvince()));
         annualData.setSituation(AdministrativeSituation.valueOf(participantDto.getSituation()));
         annualData.setStudies(selectorService.getStudies(participantDto.getStudies()));
-        for(Long lan : participantDto.getLanguages()) {
+        for (Long lan : participantDto.getLanguages()) {
             annualData.getLanguages().add(selectorService.getLanguage(lan));
         }
-        if(!Objects.equals(participantDto.getApproved(), ""))
+        if (!Objects.equals(participantDto.getApproved(), ""))
             annualData.setApproved(Approved.valueOf(participantDto.getApproved()));
         annualData.setDemandedStudies(participantDto.getDemandedStudies());
         annualData.setRegistered(participantDto.isRegistered());
@@ -151,7 +158,7 @@ public class ParticipantServiceImpl implements ParticipantService{
         annualData.setCohabitation(selectorService.getCohabitation(participantDto.getCohabitation()));
         annualData.setMaritalStatus(selectorService.getMaritalStatus(participantDto.getMaritalStatus()));
         annualData.setHousing(selectorService.getHousing(participantDto.getHousing()));
-        for(Long fact : participantDto.getExclusionFactors()) {
+        for (Long fact : participantDto.getExclusionFactors()) {
             annualData.getExclusionFactors().add(selectorService.getExclusionFactor(fact));
         }
         annualData.setSocialWorker(participantDto.getSocialWorker());
@@ -175,7 +182,7 @@ public class ParticipantServiceImpl implements ParticipantService{
         annualData.setDateBenefit(participantDto.getDateBenefit());
         annualData.setSpecialBenefit(participantDto.getSpecialBenefit());
         annualData.setDemand(selectorService.getDemand(participantDto.getDemand()));
-        for(Long pro : participantDto.getPrograms()) {
+        for (Long pro : participantDto.getPrograms()) {
             annualData.getPrograms().add(selectorService.getProgram(pro));
         }
         annualData.setDerivation(participantDto.getDerivation());
@@ -194,7 +201,6 @@ public class ParticipantServiceImpl implements ParticipantService{
         participant.setDatePi(participantDto.getDatePi());
         participant.setInterviewPi(participantDto.getInterviewPi());
         participant.setCountry(selectorService.getCountry(participantDto.getCountry()));
-        participant.addYear(LocalDate.now().getYear());
 
     }
 }

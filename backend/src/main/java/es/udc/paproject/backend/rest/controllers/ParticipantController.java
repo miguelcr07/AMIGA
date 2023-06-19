@@ -42,6 +42,11 @@ public class ParticipantController {
         return ResponseEntity.ok(participantService.saveParticipant(participantDto));
     }
 
+    @PostMapping("/saveAnnualData")
+    ResponseEntity<ParticipantDto> newAnnualData(@RequestBody @Validated ParticipantDto participantDto){
+        return ResponseEntity.ok(participantService.saveAnnualData(participantDto));
+    }
+
     @PutMapping("/update")
     ResponseEntity<ParticipantDto> updateParticipant(@RequestBody ParticipantDto participantDto){
         ParticipantDto participantDto1 = participantService.updateParticipant(participantDto);

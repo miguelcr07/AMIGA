@@ -1,21 +1,15 @@
 import {useNavigate} from 'react-router-dom';
-import {FormattedMessage} from 'react-intl';
+import Button from "@mui/material/Button";
+import React from "react";
 
 const BackLink = () => {
 
     const navigate = useNavigate();
-    
+
     return (
-
-        <button type="button" className="btn btn-link" 
-            onClick={() => navigate(-1)}>
-
-            <FormattedMessage id='project.global.buttons.back'/>
-
-        </button>
+        <Button variant="contained" onClick={() => navigate("/participant/details")}>Anterior</Button>
 
     );
-
 };
 
 export default BackLink;

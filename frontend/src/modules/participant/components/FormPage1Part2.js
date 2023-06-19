@@ -1,139 +1,153 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import './Form.css';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import * as selectors from '../../app/selectors';
 
-const FormPage1Part2 = ({ formData, setFormData}) => {
+const FormPage1Part2 = ({formData, setFormData}) => {
 
-    const provinces = useSelector(selectors.getProvinces);
-    const municipalities = useSelector(selectors.getMunicipalities);
-    const countries = useSelector(selectors.getCountries);
-    const housings = useSelector(selectors.getHousings);
-    const maritalStatus = useSelector(selectors.getMaritalStatus);
-    const cohabitation = useSelector(selectors.getCohabitations);
+    const data = useSelector(selectors.selectors)
 
-    const [selectedProvince, setSelectedProvince] = useState(provinces.find((province) => province.id === formData.province) || null);
-    const [selectedMunicipality, setSelectedMunicipality] = useState(municipalities.find((municipality) => municipality.id === formData.municipality) || null);
-    const [selectedCountry, setSelectedCountry] = useState(countries.find((m) => m.id === formData.country) || null);
-    const [selectedHousing, setSelectedHousing] = useState(housings.find((m) => m.id === formData.housing) || null);
-    const [selectedMaritalStatus, setSelectedMaritalStatus] = useState(maritalStatus.find((m) => m.id === formData.maritalStatus) || null);
-    const [selectedCohabitation, setSelectedCohabitation] = useState(cohabitation.find((m) => m.id === formData.cohabitation) || null);
+    const [selectedProvince, setSelectedProvince] = useState(null);
+    const [selectedMunicipality, setSelectedMunicipality] = useState(null);
+    const [selectedCountry, setSelectedCountry] = useState(null);
+    const [selectedHousing, setSelectedHousing] = useState(null);
+    const [selectedMaritalStatus, setSelectedMaritalStatus] = useState(null);
+    const [selectedCohabitation, setSelectedCohabitation] = useState(null);
 
     const [municipalityOptions, setMunicipalityOptions] = useState([]);
     const [selectedNationalities, setSelectedNationalities] = useState([]);
-    const [isRegistered, setIsRegistered] = useState(formData.registered || false);
+    const [isRegistered, setIsRegistered] = useState(false);
 
     const handleProvinceChange = (event, value) => {
         if (value) {
-            setFormData({ ...formData, province: value.id });
-            setSelectedProvince(provinces.find((province) => province.id === value.id));
+            setFormData({...formData, province: value.id});
+            setSelectedProvince(data.provinces.find((province) => province.id === value.id));
         } else {
-            setFormData({ ...formData, province: null });
+            setFormData({...formData, province: null});
             setSelectedProvince(null);
         }
     };
 
     const handleMunicipalityChange = (event, value) => {
         if (value) {
-            setFormData({ ...formData, municipality: value.id });
-            setSelectedMunicipality(municipalities.find((municipality) => municipality.id === value.id))
+            setFormData({...formData, municipality: value.id});
+            setSelectedMunicipality(data.municipalities.find((municipality) => municipality.id === value.id))
         } else {
-            setFormData({ ...formData, municipality: null });
+            setFormData({...formData, municipality: null});
             setSelectedMunicipality(null);
         }
     };
 
     const handleCountryChange = (event, value) => {
         if (value) {
-            setFormData({ ...formData, country: value.id });
-            setSelectedCountry(countries.find((m) => m.id === value.id))
+            setFormData({...formData, country: value.id});
+            setSelectedCountry(data.countries.find((m) => m.id === value.id))
         } else {
-            setFormData({ ...formData, country: null });
+            setFormData({...formData, country: null});
             setSelectedCountry(null)
         }
     };
 
     const handleHousingChange = (event, value) => {
         if (value) {
-            setFormData({ ...formData, housing: value.id });
-            setSelectedHousing(housings.find((m) => m.id === value.id));
+            setFormData({...formData, housing: value.id});
+            setSelectedHousing(data.housings.find((m) => m.id === value.id));
         } else {
-            setFormData({ ...formData, housing: null });
+            setFormData({...formData, housing: null});
             setSelectedHousing(null)
         }
     };
     const handleCohabitationChange = (event, value) => {
         if (value) {
-            setFormData({ ...formData, cohabitation: value.id });
-            setSelectedCohabitation(cohabitation.find((m) => m.id === value.id))
+            setFormData({...formData, cohabitation: value.id});
+            setSelectedCohabitation(data.cohabitations.find((m) => m.id === value.id))
         } else {
-            setFormData({ ...formData, cohabitation: null });
+            setFormData({...formData, cohabitation: null});
             setSelectedCohabitation(null)
         }
     };
     const handleMaritalStatusChange = (event, value) => {
         if (value) {
-            setFormData({ ...formData, maritalStatus: value.id });
-            setSelectedMaritalStatus(maritalStatus.find((m) => m.id === value.id))
+            setFormData({...formData, maritalStatus: value.id});
+            setSelectedMaritalStatus(data.maritalStatus.find((m) => m.id === value.id))
         } else {
-            setFormData({ ...formData, maritalStatus: null });
+            setFormData({...formData, maritalStatus: null});
             setSelectedMaritalStatus(null)
         }
     };
-    
+
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        setFormData({...formData, [e.target.name]: e.target.value});
     };
 
     const handleCheckboxChange = (e) => {
-        if(isRegistered)
-            setFormData({ ...formData, dateRegister: '' });
+        if (isRegistered) {
+            setFormData({...formData, dateRegister: ''});
+        }
         const value = e.target.checked;
-        setFormData({ ...formData, [e.target.name]: value });
+        setFormData({...formData, [e.target.name]: value});
         setIsRegistered(value);
     };
 
     const handleNationalitiesChange = (event, values) => {
         const nationalityIds = values.map((value) => value.id);
-        setFormData({ ...formData, nationalities: nationalityIds });
+        setFormData({...formData, nationalities: nationalityIds});
         setSelectedNationalities(values);
     };
 
     useEffect(() => {
-        const filteredMunicipalities = selectedProvince
-            ? municipalities.filter((municipality) => municipality.province.id === selectedProvince.id)
-            : [];
-        setMunicipalityOptions(filteredMunicipalities);
+        if (data) {
+            const filteredMunicipalities = selectedProvince
+                ? data.municipalities.filter((municipality) => municipality.province.id === selectedProvince.id)
+                : [];
+            setMunicipalityOptions(filteredMunicipalities);
 
-        setFormData({ ...formData, province: selectedProvince ? selectedProvince.id : null });
+            setFormData({...formData, province: selectedProvince ? selectedProvince.id : null});
+        }
         // eslint-disable-next-line
-    }, [selectedProvince, setFormData, municipalities]);
+    }, [selectedProvince, setFormData, data]);
 
     useEffect(() => {
-        if (formData.nationalities && formData.nationalities.length > 0) {
+        if (data && formData.nationalities.length > 0) {
             const selected = formData.nationalities.map((countryId) =>
-                countries.find((country) => country.id === countryId)
+                data.countries.find((country) => country.id === countryId)
             );
             setSelectedNationalities(selected);
         }
-    }, [formData.nationalities, countries, setSelectedNationalities]);
+    }, [formData.nationalities, data, setSelectedNationalities]);
 
-    return(
+    useEffect(() => {
+        if (data) {
+            setSelectedProvince(data.provinces.find((province) => province.id === formData.province) || null);
+            setSelectedMunicipality(data.municipalities.find((municipality) => municipality.id === formData.municipality) || null);
+            setSelectedCountry(data.countries.find((m) => m.id === formData.country) || null);
+            setSelectedHousing(data.housings.find((m) => m.id === formData.housing) || null);
+            setSelectedMaritalStatus(data.maritalStatus.find((m) => m.id === formData.maritalStatus) || null);
+            setSelectedCohabitation(data.cohabitations.find((m) => m.id === formData.cohabitation) || null);
+            setIsRegistered(formData.registered || false);
+        }
+    }, [data])
+
+    if (!data)
+        return null;
+
+    return (
         <div>
             <div className="row-container">
                 <Autocomplete
                     className="item"
-                    options={provinces}
+                    options={data.provinces}
                     getOptionLabel={(option) => option.name}
                     value={selectedProvince}
                     onChange={handleProvinceChange}
                     renderInput={(params) => (
-                        <TextField {...params} label="Provincia" placeholder="Provincia" />
+                        <TextField {...params} label="Provincia" placeholder="Provincia"/>
                     )}
+                    required
                 />
                 <Autocomplete
                     className="item"
@@ -142,9 +156,10 @@ const FormPage1Part2 = ({ formData, setFormData}) => {
                     value={selectedMunicipality}
                     onChange={handleMunicipalityChange}
                     renderInput={(params) => (
-                        <TextField {...params} label="Municipio" placeholder="Municipio" />
+                        <TextField {...params} label="Municipio" placeholder="Municipio"/>
                     )}
                     disabled={!selectedProvince}
+                    required
                 />
             </div>
             <div className="row-container">
@@ -155,6 +170,7 @@ const FormPage1Part2 = ({ formData, setFormData}) => {
                     onChange={handleChange}
                     label="Domicilio"
                     placeholder="Domicilio"
+                    required
                 />
 
                 <TextField
@@ -164,6 +180,7 @@ const FormPage1Part2 = ({ formData, setFormData}) => {
                     onChange={handleChange}
                     label="Código Postal"
                     placeholder="Código Postal"
+                    required
                 />
 
 
@@ -173,30 +190,33 @@ const FormPage1Part2 = ({ formData, setFormData}) => {
                            onChange={handleChange}
                            label="Teléfono/s"
                            placeholder="Teléfono"
+                           required
                 />
             </div>
             <div className="row-container">
                 <Autocomplete
                     className="item"
-                    options={countries}
+                    options={data.countries}
                     getOptionLabel={(option) => option.name}
                     value={selectedCountry}
                     onChange={handleCountryChange}
                     renderInput={(params) => (
-                        <TextField {...params} label="País de origen" placeholder="País de origen" />
+                        <TextField {...params} label="País de origen" placeholder="País de origen"/>
                     )}
+                    required
                 />
 
                 <Autocomplete
                     className="item2"
                     multiple
-                    options={countries}
+                    options={data.countries}
                     getOptionLabel={(option) => option.name}
                     value={selectedNationalities}
                     onChange={handleNationalitiesChange}
                     renderInput={(params) => (
-                        <TextField {...params} label="Nacionalidades" placeholder="Nacionalidades" />
+                        <TextField {...params} label="Nacionalidades" placeholder="Nacionalidades"/>
                     )}
+                    required
                 />
             </div>
             <div className="row-container">
@@ -219,7 +239,7 @@ const FormPage1Part2 = ({ formData, setFormData}) => {
                     onChange={handleChange}
                     label="Fecha de Empadronamiento"
                     placeholder="Fecha de Empadronamiento"
-                    InputLabelProps={{ shrink: true }}
+                    InputLabelProps={{shrink: true}}
                 />
 
                 <TextField
@@ -235,32 +255,34 @@ const FormPage1Part2 = ({ formData, setFormData}) => {
             <div className="row-container">
                 <Autocomplete
                     className="item"
-                    options={housings}
+                    options={data.housings}
                     getOptionLabel={(option) => option.name}
                     value={selectedHousing}
                     onChange={handleHousingChange}
                     renderInput={(params) => (
-                        <TextField {...params} label="Vivienda" placeholder="Seleccionar vivienda" />
+                        <TextField {...params} label="Vivienda" placeholder="Seleccionar vivienda"/>
                     )}
                 />
                 <Autocomplete
                     className="item"
-                    options={maritalStatus}
+                    required
+                    options={data.maritalStatus}
                     getOptionLabel={(option) => option.name}
                     value={selectedMaritalStatus}
                     onChange={handleMaritalStatusChange}
                     renderInput={(params) => (
-                        <TextField {...params} label="Estado civil" placeholder="Seleccionar estado civil" />
+                        <TextField {...params} label="Estado civil" placeholder="Seleccionar estado civil"/>
                     )}
                 />
                 <Autocomplete
                     className="item"
-                    options={cohabitation}
+                    required
+                    options={data.cohabitations}
                     getOptionLabel={(option) => option.name}
                     value={selectedCohabitation}
                     onChange={handleCohabitationChange}
                     renderInput={(params) => (
-                        <TextField {...params} label="Tipo de convivencia" placeholder="Tipo de convivencia" />
+                        <TextField {...params} label="Tipo de convivencia" placeholder="Tipo de convivencia"/>
                     )}
                 />
             </div>

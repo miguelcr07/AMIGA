@@ -4,6 +4,8 @@ export const getError = state => getModuleState(state).error;
 
 export const isLoading = state => getModuleState(state).loading;
 
+export const selectors = state => getModuleState(state);
+
 export const getCountries = state =>
     getModuleState(state).countries;
 export const getProvinces = state =>

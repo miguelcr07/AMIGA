@@ -43,6 +43,7 @@ public interface ParticipantMapper {
     ParticipantDto toParticipantDto(Participant p, AnnualData a);
 
     @Mapping(source = "gender", target = "sex", qualifiedByName = "toSex")
+    @Mapping(target = "participant", ignore = true)
     KidDto toKidDto(Kid kid);
 
     List<KidDto> toKidDtoList(List<Kid> kid);

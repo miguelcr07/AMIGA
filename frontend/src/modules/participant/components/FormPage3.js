@@ -6,12 +6,13 @@ import Button from "@mui/material/Button";
 import * as selectors from "../../app/selectors";
 import "./Form.css";
 import {format} from "date-fns";
-import {HomeLink} from "../../common";
+import {Errors, HomeLink} from "../../common";
 
 const FormPage3 = ({formData, setFormData, previousPage, nextPage}) => {
     const demands = useSelector(selectors.getDemands);
     const programs = useSelector(selectors.getPrograms);
     const [selectedPrograms, setSelectedPrograms] = useState([]);
+    const [backendErrors, setBackendErrors] = useState(null);
     const [selectedDemand, setSelectedDemand] =
         useState(demands.find((demands) => demands.id === formData.demand) || null);
 
@@ -47,8 +48,24 @@ const FormPage3 = ({formData, setFormData, previousPage, nextPage}) => {
             );
             setSelectedPrograms(selected);
         }
-        setFormData({...formData, date: format(new Date(), 'yyyy/MM/dd')});
+        setFormData({...formData, date: format(new Date(), 'yyyy-MM-dd')});
     }, [formData.programs, programs, selectedPrograms]);
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const {name} = event.nativeEvent.submitter;
+
+        if (formData.demand === null || formData.programs.length === 0) {
+            setBackendErrors({globalError:"Por favor, complete los campos."});
+            return;
+        }
+
+        if (name === 'previous') {
+            previousPage();
+        } else {
+            nextPage();
+        }
+    };
 
     return (
         <div>
@@ -56,49 +73,54 @@ const FormPage3 = ({formData, setFormData, previousPage, nextPage}) => {
                 <h1>Tipo demanda</h1>
                 <HomeLink></HomeLink>
             </div>
-            <div className="row-container">
-                <Autocomplete
-                    className="item"
-                    options={demands}
-                    getOptionLabel={(demand) => demand.name}
-                    value={selectedDemand}
-                    onChange={handleDemandChange}
-                    renderInput={(params) => <TextField {...params} label="Seleccionar demanda"/>}
-                />
+            <form onSubmit={handleSubmit}>
+                <div className="row-container">
+                    <Autocomplete
+                        className="item"
+                        options={demands}
+                        getOptionLabel={(demand) => demand.name}
+                        value={selectedDemand}
+                        onChange={handleDemandChange}
+                        renderInput={(params) => <TextField {...params} label="Seleccionar demanda"/>}
+                    />
 
-                <Autocomplete
-                    className="item"
-                    multiple
-                    options={programs}
-                    getOptionLabel={(program) => program.name}
-                    value={selectedPrograms}
-                    onChange={handleProgramsChange}
-                    renderInput={(params) => <TextField {...params} label="Seleccionar programas"/>}
-                />
-            </div>
-            <div className="row-container">
-                <TextField
-                    className="item"
-                    label="Derivación"
-                    value={formData.derivation || ""}
-                    onChange={handleDerivationChange}
-                />
-            </div>
-            <div className="row-container">
-                <TextField
-                    className="item"
-                    label="Observaciones"
-                    multiline
-                    rows={4}
-                    value={formData.observations || ""}
-                    onChange={handleObservationsChange}
-                />
-            </div>
-            <div className="center">
-                <Button variant="contained" onClick={previousPage}>Anterior</Button>
-                <div className="bigSpace"></div>
-                <Button variant="contained" onClick={nextPage}>Siguiente</Button>
-            </div>
+                    <Autocomplete
+                        className="item"
+                        multiple
+                        options={programs}
+                        getOptionLabel={(program) => program.name}
+                        value={selectedPrograms}
+                        onChange={handleProgramsChange}
+                        renderInput={(params) => <TextField {...params} label="Seleccionar programas"/>}
+                    />
+                </div>
+                <div className="row-container">
+                    <TextField
+                        required
+                        className="item"
+                        label="Derivación"
+                        value={formData.derivation || ""}
+                        onChange={handleDerivationChange}
+                    />
+                </div>
+                <div className="row-container">
+                    <TextField
+                        className="item"
+                        label="Observaciones"
+                        multiline
+                        rows={4}
+                        value={formData.observations || ""}
+                        onChange={handleObservationsChange}
+                    />
+                </div>
+                <br/>
+                <Errors errors={backendErrors} onClose={() => setBackendErrors(null)}/>
+                <div className="center">
+                    <Button variant="contained" type="submit" name="previous">Anterior</Button>
+                    <div className="bigSpace"></div>
+                    <Button variant="contained" type="submit" name="next">Siguiente</Button>
+                </div>
+            </form>
         </div>
     );
 };

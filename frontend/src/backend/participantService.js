@@ -22,3 +22,13 @@ export const createParticipant = ( data, onSuccess, onErrors) => {
 
     appFetch(`/participant/save`, config('POST', data), onSuccess, onErrors);
 }
+
+export const updateParticipant = ( data, onSuccess, onErrors) => {
+
+    appFetch(`/participant/update`, config('PUT', data), onSuccess, onErrors);
+}
+
+export const saveAnnualData = ( data, onSuccess, onErrors) => {
+
+    appFetch(`/participant/saveAnnualData`, config('POST', data), onSuccess, onErrors);
+}

@@ -22,6 +22,7 @@ const FormPage1Part1 = ({ formData, setFormData }) => {
                     onChange={handleChange}
                     label="Nombre"
                     placeholder="Nombre"
+                    required
                 />
 
                 <TextField
@@ -31,6 +32,7 @@ const FormPage1Part1 = ({ formData, setFormData }) => {
                     onChange={handleChange}
                     label="Apellidos"
                     placeholder="Apellidos"
+                    required
                 />
             </div>
             <div className="row-container">
@@ -66,11 +68,12 @@ const FormPage1Part1 = ({ formData, setFormData }) => {
                     className="item"
                     type="date"
                     name="birthDate"
-                    value={formData.birthdate}
+                    value={formData.birthDate}
                     onChange={handleChange}
                     label="Fecha de Nacimiento"
                     placeholder="Fecha de Nacimiento"
                     InputLabelProps={{ shrink: true }}
+                    required
                 />
 
 
@@ -83,6 +86,7 @@ const FormPage1Part1 = ({ formData, setFormData }) => {
                         name="sex"
                         value={formData.sex}
                         onChange={handleChange}
+                        required
                     >
                         <MenuItem value="H">Hombre</MenuItem>
                         <MenuItem value="M">Mujer</MenuItem>

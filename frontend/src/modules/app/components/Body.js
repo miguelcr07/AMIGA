@@ -3,7 +3,14 @@ import {Route, Routes} from 'react-router-dom';
 
 import AppGlobalComponents from './AppGlobalComponents';
 import {Login, SignUp, UpdateProfile, ChangePassword, Logout} from '../../users';
-import {Participant, FormParticipant, ParticipantDetails, EditParticipant} from '../../participant';
+import {
+    Participant,
+    FormParticipant,
+    ParticipantDetails,
+    EditParticipant,
+    ParticipantData,
+    NewAnnualData
+} from '../../participant';
 import "./Body.css"
 import users from '../../users';
 
@@ -19,8 +26,10 @@ const Body = () => {
             <Routes>
                 <Route path="/*" element={<Participant/>}/>
                 <Route path="/participant/form" element={<FormParticipant/>}/>
-                <Route path={"participant/details"} element={<ParticipantDetails/>}></Route>
-                <Route path={"participant/edit"} element={<EditParticipant/>}></Route>
+                <Route path={"/participant/details"} element={<ParticipantDetails/>}></Route>
+                <Route path={"/participant/data"} element={<ParticipantData/>}></Route>
+                <Route path={"/participant/edit"} element={<EditParticipant/>}></Route>
+                <Route path={"/participant/newAnnualData"} element={<NewAnnualData/>}></Route>
                 {loggedIn && <Route path="/users/update-profile" element={<UpdateProfile/>}/>}
                 {loggedIn && <Route path="/users/change-password" element={<ChangePassword/>}/>}
                 {loggedIn && <Route path="/users/logout" element={<Logout/>}/>}
