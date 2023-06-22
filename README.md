@@ -22,6 +22,10 @@ También se necesita otro contenedor con MySQL 8 para los tests.
 podman run -p 3307:3306 --name amiga-test -e MYSQL_ROOT_PASSWORD=amiga -d mysql:8
 ```
 
+Para inicializar los datos de la bbdd 
+```bash
+cmd /c "podman exec -i amiga mysql --password=amiga < dump-amiga.sql"
+```
 ## Run
 
 ```
