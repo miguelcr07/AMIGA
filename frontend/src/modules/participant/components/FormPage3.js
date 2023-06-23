@@ -55,8 +55,8 @@ const FormPage3 = ({formData, setFormData, previousPage, nextPage}) => {
         event.preventDefault();
         const {name} = event.nativeEvent.submitter;
 
-        if (formData.demand === null || formData.programs.length === 0) {
-            setBackendErrors({globalError:"Por favor, complete los campos."});
+        if (formData.demand === null ) {
+            setBackendErrors({globalError:"Ninguna demanda seleccionada."});
             return;
         }
 

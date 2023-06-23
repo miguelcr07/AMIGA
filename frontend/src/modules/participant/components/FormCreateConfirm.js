@@ -181,7 +181,7 @@ const FormCreateConfirm = ({formData, previousPage}) => {
     return (
         <div>
             <Errors errors={backendErrors} onClose={() => setBackendErrors(null)}/>
-            <Typography variant="h6" align="center">
+            <Typography variant="h2" align="center">
                 Descargar el documento a firmar y guardar datos
             </Typography>
             <br/>

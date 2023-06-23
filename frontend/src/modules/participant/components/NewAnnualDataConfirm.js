@@ -203,7 +203,7 @@ const NewAnnualDataConfirm = ({formData, previousPage}) => {
                         <Button variant="contained" color="primary" size="large">Descargar PDF</Button>
                     </PDFDownloadLink>
                     <Button variant="contained" color="primary" size="large" onClick={() => handleSubmit()}>
-                        Editar datos
+                        Guardar datos
                     </Button>
                 </Toolbar>
             </AppBar>

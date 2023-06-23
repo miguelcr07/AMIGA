@@ -7,7 +7,7 @@ const HomeLink = () => {
     const navigate = useNavigate();
 
     return (
-        <Button variant="contained" onClick={() => navigate("/")}>Cancelar</Button>
+        <Button variant="contained" onClick={() => navigate(-1)}>Cancelar</Button>
 
     );
 

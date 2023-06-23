@@ -83,6 +83,32 @@ const FormPage1 = ({formData, setFormData, nextPage}) => {
             }
         }
 
+        if (formData.province === null ) {
+            setBackendErrors({globalError:"Provincia no seleccionada."});
+            return;
+        }
+
+        if ( formData.municipality === null) {
+            setBackendErrors({globalError:"Municipio no seleccionado."});
+            return;
+        }
+
+        if ( formData.country === null) {
+            setBackendErrors({globalError:"País de origen no seleccionado."});
+            return;
+        }
+        if ( formData.maritalStatus === null) {
+            setBackendErrors({globalError:"Estado civil no seleccionado."});
+            return;
+        }
+        if ( formData.housing === null) {
+            setBackendErrors({globalError:"Vivienda no seleccionada."});
+            return;
+        }
+        if ( formData.cohabitation === null) {
+            setBackendErrors({globalError:"Tipo convivencia no seleccionado."});
+            return;
+        }
         nextPage();
     };
 

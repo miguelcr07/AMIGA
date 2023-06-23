@@ -84,13 +84,14 @@ const FormPage1Part2 = ({formData, setFormData}) => {
         setFormData({...formData, [e.target.name]: e.target.value});
     };
 
-    const handleCheckboxChange = (e) => {
+    const handleRegisteredChange = (e) => {
         if (isRegistered) {
-            setFormData({...formData, dateRegister: ''});
+            setFormData({...formData, dateRegister: '', numberRegistered: '', registered: false});
+            setIsRegistered(false);
+        } else {
+            setIsRegistered(true);
+            setFormData({...formData, registered: true});
         }
-        const value = e.target.checked;
-        setFormData({...formData, [e.target.name]: value});
-        setIsRegistered(value);
     };
 
     const handleNationalitiesChange = (event, values) => {
@@ -225,7 +226,7 @@ const FormPage1Part2 = ({formData, setFormData}) => {
                         <Checkbox
                             name="registered"
                             checked={isRegistered}
-                            onChange={handleCheckboxChange}
+                            onChange={handleRegisteredChange}
                         />
                     }
                     label="Empadronado"
@@ -244,6 +245,7 @@ const FormPage1Part2 = ({formData, setFormData}) => {
 
                 <TextField
                     className="item"
+                    disabled={!isRegistered}
                     type={"number"}
                     name="numberRegistered"
                     value={formData.numberRegistered}

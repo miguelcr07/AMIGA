@@ -175,6 +175,7 @@ function Participant() {
                     <Typography variant="h6">{selectedParticipant.name} {selectedParticipant.surnames}</Typography>
                     <Typography>Email: {selectedParticipant.email}</Typography>
                     <Typography>Teléfono: {selectedParticipant.phone}</Typography>
+                    <br/>
                     <Button variant="contained" onClick={handleGetDetails}>
                         Ver detalles
                     </Button>
