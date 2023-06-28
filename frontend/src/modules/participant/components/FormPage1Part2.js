@@ -181,7 +181,6 @@ const FormPage1Part2 = ({formData, setFormData}) => {
                     onChange={handleChange}
                     label="Código Postal"
                     placeholder="Código Postal"
-                    required
                 />
 
 

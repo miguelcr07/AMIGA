@@ -39,7 +39,6 @@ public interface ParticipantMapper {
     @Mapping(source = "a.employment.id", target = "employment")
     @Mapping(source = "a.benefit", target = "benefit", qualifiedByName = "toBenefit")
     @Mapping(source = "a.demand.id", target = "demand")
-    @Mapping(source = "a.programs", target = "programs", qualifiedByName = "toPrograms")
     ParticipantDto toParticipantDto(Participant p, AnnualData a);
 
     @Mapping(source = "gender", target = "sex", qualifiedByName = "toSex")
@@ -93,14 +92,6 @@ public interface ParticipantMapper {
         List<Long> n = new ArrayList<>();
         for(ExclusionFactor exclusionFactor : exclusionFactors) {
             n.add(exclusionFactor.getId());
-        }
-        return n;
-    }
-    @Named(value = "toPrograms")
-    static List<Long> toPrograms (Set<Program> programs){
-        List<Long> n = new ArrayList<>();
-        for(Program program : programs) {
-            n.add(program.getId());
         }
         return n;
     }

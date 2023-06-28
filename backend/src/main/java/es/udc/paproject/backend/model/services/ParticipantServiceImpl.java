@@ -3,6 +3,7 @@ package es.udc.paproject.backend.model.services;
 import es.udc.paproject.backend.model.daos.AnnualDataDao;
 import es.udc.paproject.backend.model.daos.KidDao;
 import es.udc.paproject.backend.model.daos.ParticipantDao;
+import es.udc.paproject.backend.model.daos.Participant_ProgramDao;
 import es.udc.paproject.backend.model.entities.*;
 import es.udc.paproject.backend.model.exceptions.InstanceNotFoundException;
 import es.udc.paproject.backend.model.mapper.ParticipantMapper;
@@ -36,6 +37,9 @@ public class ParticipantServiceImpl implements ParticipantService {
 
     @Autowired
     private ParticipantMapper participantMapper;
+
+    @Autowired
+    private Participant_ProgramDao participantProgramDao;
 
     @Override
     public List<ParticipantSummaryDto> getParcipants() {
@@ -81,8 +85,13 @@ public class ParticipantServiceImpl implements ParticipantService {
         AnnualData annualData = new AnnualData();
         annualData.setParticipant(participantSaved);
         setAnnualData(participantDto, annualData);
+        AnnualData annualDataSaved = annualDataDao.save(annualData);
 
-        return participantMapper.toParticipantDto(participantSaved, annualDataDao.save(annualData));
+        for (Participant_program program : participantDto.getPrograms()) {
+            participantProgramDao.save(new Participant_program(annualDataSaved, program.getProgram(), program.isItinerary()));
+        }
+
+        return participantMapper.toParticipantDto(participantSaved, annualDataSaved);
     }
 
     @Override
@@ -182,9 +191,6 @@ public class ParticipantServiceImpl implements ParticipantService {
         annualData.setDateBenefit(participantDto.getDateBenefit());
         annualData.setSpecialBenefit(participantDto.getSpecialBenefit());
         annualData.setDemand(selectorService.getDemand(participantDto.getDemand()));
-        for (Long pro : participantDto.getPrograms()) {
-            annualData.getPrograms().add(selectorService.getProgram(pro));
-        }
         annualData.setDerivation(participantDto.getDerivation());
     }
 

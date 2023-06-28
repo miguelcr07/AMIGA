@@ -3,8 +3,7 @@ import {useNavigate} from "react-router-dom";
 import {Button, Dialog, DialogTitle, DialogContent, DialogActions, AppBar, Toolbar} from "@mui/material";
 import {PDFDownloadLink, PDFViewer} from "@react-pdf/renderer";
 import './Confirm.css';
-import * as actions from "../actions";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import ParticipantPdf from "./ParticipantPdf";
 import Typography from "@mui/material/Typography";
 import * as selectors from "../../app/selectors";
@@ -181,7 +180,7 @@ const FormCreateConfirm = ({formData, previousPage}) => {
     return (
         <div>
             <Errors errors={backendErrors} onClose={() => setBackendErrors(null)}/>
-            <Typography variant="h2" align="center">
+            <Typography variant="h4" align="center">
                 Descargar el documento a firmar y guardar datos
             </Typography>
             <br/>

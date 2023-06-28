@@ -7,6 +7,7 @@ import './Participant.css'
 import Menu from "./Menu";
 import {useSelector} from "react-redux";
 import * as userSelector from "../selectors";
+import ObservationList from "./ObservationList";
 
 const ParticipantDetails = () => {
     const user = useSelector(userSelector.getParticipantData);
@@ -20,9 +21,11 @@ const ParticipantDetails = () => {
             <div className="details-body">
                 <div className="header-details">
                     <Typography variant="h6" align="center">
-                        Datos {user.name + ' ' + user.surnames}
+                        {user.name + ' ' + user.surnames}
                     </Typography>
                 </div>
+                <br/>
+                <ObservationList></ObservationList>
             </div>
         </div>
     );

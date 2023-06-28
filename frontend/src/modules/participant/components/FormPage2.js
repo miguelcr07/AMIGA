@@ -36,8 +36,14 @@ const FormPage2 = ({formData, setFormData, nextPage, previousPage}) => {
     const handleBenefitChange = (event) => {
 
         const value = event.target.value;
-        if (formData.benefit === 'OTRA' && value !== 'OTRA')
+        if (formData.benefit === 'OTRA' && value !== 'OTRA'){
             setFormData({...formData, specialBenefit: ''});
+            setSpecialBenefit('');
+        }
+        if(value === 'NO') {
+            setDateBenefit('');
+            setFormData({...formData, dateBenefit: ''});
+        }
         setBenefit(value);
         setFormData({...formData, benefit: value});
     };
@@ -71,10 +77,16 @@ const FormPage2 = ({formData, setFormData, nextPage, previousPage}) => {
         setFormData({...formData, vehicle: value});
     };
 
-    const handleSEPERegisteredChange = (event) => {
-        const value = event.target.value === 'true';
-        setIsSEPERegistered(value);
-        setFormData({...formData, sepe: value});
+    const handleSEPERegisteredChange = () => {
+        if(isSEPERegistered) {
+            setFormData({...formData, monthsSepe: '', sepe: false});
+            setIsSEPERegistered(false);
+            setUnemploymentDuration('');
+        } else {
+            setFormData({...formData,  sepe: true});
+            setIsSEPERegistered(true);
+        }
+
     };
 
     const handleUnemploymentDurationChange = (event) => {
@@ -326,7 +338,7 @@ const FormPage2 = ({formData, setFormData, nextPage, previousPage}) => {
                     <TextField
                         className="item"
                         name="unemploymentDuration"
-                        label="Duración del desempleo"
+                        label="Duración meses desempleo"
                         value={unemploymentDuration}
                         type="number"
                         onChange={handleUnemploymentDurationChange}

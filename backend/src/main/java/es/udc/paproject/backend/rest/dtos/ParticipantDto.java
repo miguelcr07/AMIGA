@@ -1,5 +1,7 @@
 package es.udc.paproject.backend.rest.dtos;
 
+import es.udc.paproject.backend.model.entities.Participant_program;
+
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
@@ -75,7 +77,7 @@ public class ParticipantDto {
     @NotNull
     private Long demand;
     @NotNull
-    private List<Long> programs;
+    private List<Participant_program> programs;
     private String derivation;
 
     public Long getIdParticipant() {
@@ -510,11 +512,11 @@ public class ParticipantDto {
         this.demand = demand;
     }
 
-    public List<Long> getPrograms() {
+    public List<Participant_program> getPrograms() {
         return programs;
     }
 
-    public void setPrograms(List<Long> programs) {
+    public void setPrograms(List<Participant_program> programs) {
         this.programs = programs;
     }
 

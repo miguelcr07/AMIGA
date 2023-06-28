@@ -35,77 +35,21 @@ function Participant() {
         dispatch(actions.findParticipant(
             selectedParticipant.id,
             Math.max(...selectedParticipant.yearList),));
+        dispatch(actions.findObservations({id: selectedParticipant.id, page: 0}));
         navigate('/participant/details')
     }
     const handleChange = (e) => {
         setDoc(e.target.value);
     };
 
-    function validarFormatoDNI(dni) {
-        // Eliminar espacios en blanco al principio y al final del DNI
-        dni = dni.trim();
-
-        // Expresión regular para validar el formato del DNI
-        const formatoDNI = /^\d{8}[A-HJ-NP-TV-Z]$/;
-
-        // Comprobar si el DNI cumple con el formato
-        if (formatoDNI.test(dni)) {
-            // Obtener el número y la letra del DNI
-            const numero = dni.substr(0, 8);
-            const letra = dni.substr(8, 1).toUpperCase();
-
-            // Calcular la letra correspondiente al número del DNI
-            const letrasValidas = 'TRWAGMYFPDXBNJZSQVHLCKE';
-            const letraCalculada = letrasValidas.charAt(numero % 23);
-
-            // Comprobar si la letra del DNI es correcta
-            return letra === letraCalculada;
-        } else {
-            return false; // El formato del DNI es incorrecto
-        }
-    }
-
-    function validarFormatoNIE(nie) {
-        // Eliminar espacios en blanco al principio y al final del NIE
-        nie = nie.trim();
-
-        // Expresión regular para validar el formato del NIE
-        var formatoNIE = /^[XYZ]\d{7}[A-HJ-NP-TV-Z]$/;
-
-        // Comprobar si el NIE cumple con el formato
-        if (formatoNIE.test(nie)) {
-            // Obtener la letra inicial y el número del NIE
-            const letraInicial = nie.substr(0, 1).toUpperCase();
-            const numero = nie.substr(1, 7);
-
-            // Mapear la letra inicial del NIE a un número
-            const mapaLetras = {
-                X: 0,
-                Y: 1,
-                Z: 2,
-            };
-            const numeroInicial = mapaLetras[letraInicial];
-
-            // Calcular la letra de control del NIE
-            const letrasValidas = 'TRWAGMYFPDXBNJZSQVHLCKE';
-            const posicionInicial = numeroInicial * 9;
-            const posicionFinal = posicionInicial + parseInt(numero);
-            const letraCalculada = letrasValidas.charAt(posicionFinal % 23);
-
-            // Comprobar si la letra de control del NIE es correcta
-            return letraCalculada === nie.substr(8, 1).toUpperCase();
-        } else {
-            return false; // El formato del NIE es incorrecto
-        }
-    }
     const handleFind = (event) => {
         event.preventDefault();
 
         let validFormat = true;
         if (selectedAttribute === 'dni') {
-            validFormat = validarFormatoDNI(doc);
+            validFormat = actions.validarFormatoDNI(doc);
         }else if(selectedAttribute === 'nie'){
-            validFormat = validarFormatoNIE(doc);
+            validFormat = actions.validarFormatoNIE(doc);
         }
 
         if (!validFormat) {
@@ -162,6 +106,7 @@ function Participant() {
                         placeholder="Documento"
                         required
                     />
+                    <div className="space"></div>
                     <Button variant="contained" color="primary" type="submit">
                         Buscar
                     </Button>

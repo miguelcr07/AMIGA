@@ -104,9 +104,8 @@ public class AnnualData {
     @JoinColumn(name = "demand_id")
     private Demand demand;
 
-    @ManyToMany
-    @JoinTable(name = "participant_program", joinColumns = @JoinColumn(name = "participant_id"), inverseJoinColumns = @JoinColumn(name = "exclusionFactor_id"))
-    private Set<Program>programs = new HashSet<>();
+    @OneToMany(mappedBy = "annualData")
+    private Set<Participant_program> programs = new HashSet<>();
     private String derivation;
 
     public void setId(Long id) {
@@ -437,11 +436,11 @@ public class AnnualData {
         this.demand = demand;
     }
 
-    public Set<Program> getPrograms() {
+    public Set<Participant_program> getPrograms() {
         return programs;
     }
 
-    public void setPrograms(Set<Program> programs) {
+    public void setPrograms(Set<Participant_program> programs) {
         this.programs = programs;
     }
 

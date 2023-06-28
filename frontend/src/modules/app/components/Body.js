@@ -2,14 +2,14 @@ import {useSelector} from 'react-redux';
 import {Route, Routes} from 'react-router-dom';
 
 import AppGlobalComponents from './AppGlobalComponents';
-import {Login, SignUp, UpdateProfile, ChangePassword, Logout} from '../../users';
+import {Login, UpdateProfile, ChangePassword, Logout} from '../../users';
 import {
     Participant,
     FormParticipant,
     ParticipantDetails,
     EditParticipant,
     ParticipantData,
-    NewAnnualData
+    NewAnnualData, ObservationForm, ObservationView
 } from '../../participant';
 import "./Body.css"
 import users from '../../users';
@@ -30,11 +30,12 @@ const Body = () => {
                 <Route path={"/participant/data"} element={<ParticipantData/>}></Route>
                 <Route path={"/participant/edit"} element={<EditParticipant/>}></Route>
                 <Route path={"/participant/newAnnualData"} element={<NewAnnualData/>}></Route>
+                <Route path={"/participant/observationForm"} element={<ObservationForm/>}></Route>
+                <Route path={"/participant/observationView/:id"} element={<ObservationView/>}></Route>
                 {loggedIn && <Route path="/users/update-profile" element={<UpdateProfile/>}/>}
                 {loggedIn && <Route path="/users/change-password" element={<ChangePassword/>}/>}
                 {loggedIn && <Route path="/users/logout" element={<Logout/>}/>}
                 {!loggedIn && <Route path="/users/login" element={<Login/>}/>}
-                {!loggedIn && <Route path="/users/signup" element={<SignUp/>}/>}
             </Routes>
         </div>
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import {List, ListItem, ListItemIcon, ListItemText, Paper} from '@mui/material';
-import {Edit, AddCircle, NoteAdd, Gavel, Visibility} from '@mui/icons-material'; // Import the Visibility icon
+import {Edit, AddCircle, NoteAdd, Visibility} from '@mui/icons-material';
 import "./Participant.css";
 import {useNavigate} from "react-router-dom";
 
@@ -17,6 +17,10 @@ const Menu = ({user}) => {
 
     const handleNewAnnualData = () => {
         navigate('/participant/newAnnualData');
+    }
+
+    const handleObservationForm = () => {
+        navigate("/participant/observationForm");
     }
 
     return (
@@ -40,25 +44,13 @@ const Menu = ({user}) => {
                     </ListItemIcon>
                     <ListItemText primary="Nueva Inscripción Anual"/>
                 </ListItem>
-                <ListItem button>
+                <ListItem button onClick={handleObservationForm}>
                     <ListItemIcon>
                         <NoteAdd/>
                     </ListItemIcon>
                     <ListItemText primary="Añadir Observación"/>
                 </ListItem>
 
-                <ListItem button>
-                    <ListItemIcon>
-                        <Gavel/>
-                    </ListItemIcon>
-                    <ListItemText primary="Asesoramiento Jurídico"/>
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon>
-                        <Gavel/>
-                    </ListItemIcon>
-                    <ListItemText primary="Asesoramiento SocioLaboral"/>
-                </ListItem>
             </List>
         </Paper>
     );

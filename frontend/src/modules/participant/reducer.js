@@ -3,16 +3,21 @@ import {combineReducers} from 'redux';
 import * as actionTypes from './actionTypes';
 
 const initialState = {
-    participantSummary: null,
+    observations: null,
     participant: null,
 };
-
-const participantSummary = (state = initialState.participantSummary, action) => {
+const observations = (state = initialState.observations, action) => {
 
     switch (action.type) {
 
-        case actionTypes.FIND_PARTICIPANTS_SUMMARY_COMPLETED:
-            return action.participantSummary;
+        case actionTypes.FIND_OBSERVATIONS_COMPLETED:
+            return action.observations;
+
+        case actionTypes.CLEAR_OBSERVATIONS:
+            return initialState.observations;
+
+        case actionTypes.ADD_OBSERVATION:
+            return action.observations
 
         default:
             return state;
@@ -20,7 +25,6 @@ const participantSummary = (state = initialState.participantSummary, action) => 
     }
 
 }
-
 const participant = (state = initialState.participant, action) => {
 
     switch (action.type) {
@@ -35,7 +39,7 @@ const participant = (state = initialState.participant, action) => {
 
 }
 const reducer = combineReducers({
-    participantSummary,
+    observations,
     participant
 });
 

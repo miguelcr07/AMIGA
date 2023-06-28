@@ -7,18 +7,23 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import {useNavigate} from 'react-router-dom';
 import Typography from "@mui/material/Typography";
+import {Tab, Tabs} from "@mui/material";
+import {useState} from "react";
 
 
 function ResponsiveAppBar() {
+    const [value, setValue] = useState(0); // Valor inicial válido
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const navigate = useNavigate();
 
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
@@ -53,6 +58,7 @@ function ResponsiveAppBar() {
                         }}
                         onClick={() => navigate('/')}
                     />
+                    <div className="space"></div>
 
                     <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
                         <IconButton
@@ -99,22 +105,17 @@ function ResponsiveAppBar() {
                     </Box>
 
                     <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
-                        <Button variant="contained" onClick={handleCloseNavMenu}
-                                sx={{my: 2, color: 'white', display: 'block', margin: 2}}>
-                            Participantes
-                        </Button>
-                        <Button variant="contained" onClick={handleCloseNavMenu}
-                                sx={{my: 2, color: 'white', display: 'block', margin: 2}}>
-                            Estadísticas
-                        </Button>
-                        <Button variant="contained" onClick={handleCloseNavMenu}
-                                sx={{my: 2, color: 'white', display: 'block', margin: 2}}>
-                            Voluntariado
-                        </Button>
-                        <Button variant="contained" onClick={handleCloseNavMenu}
-                                sx={{my: 2, color: 'white', display: 'block', margin: 2}}>
-                            Técnicos
-                        </Button>
+                        <Tabs value={value} onChange={handleChange}
+                            variant="fullWidth"
+                            textColor="primary"
+                            indicatorColor="primary"
+                            aria-label="Navigation tabs"
+                        >
+                            <Tab label="Participantes" onClick={handleCloseNavMenu} />
+                            <Tab label="Estadísticas" onClick={handleCloseNavMenu} />
+                            <Tab label="Voluntariado" onClick={handleCloseNavMenu} />
+                            <Tab label="Técnicos" onClick={handleCloseNavMenu} />
+                        </Tabs>
                     </Box>
 
                     <Box sx={{flexGrow: 0}}>
