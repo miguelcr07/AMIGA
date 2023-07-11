@@ -67,12 +67,15 @@ const ParticipantData = () => {
                 setData(prevData => ({...prevData, languages: languageNamesString}));
             }
             if (user.programs?.length > 0) {
-                const programNames = state.programs
-                    .filter(m => user.programs.includes(m.id))
-                    .map(x => x.name);
+                const programNames = user.programs.map((item) => {
+                    const program = state.programs.find((p) => p.id === item.program);
+                    if (program) {
+                        return item.itinerary ? `${program.name} en itinerario` : program.name;
+                    }
+                    return "";
+                }).join(", ");
 
-                const programNamesString = programNames.join(", ");
-                setData(prevData => ({...prevData, programs: programNamesString}));
+                setData(prevData => ({...prevData, programs: programNames}));
             }
             if (user.nationalities?.length > 0) {
                 const nationalitiesNames = state.countries

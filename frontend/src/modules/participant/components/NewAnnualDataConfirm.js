@@ -65,13 +65,16 @@ const NewAnnualDataConfirm = ({formData, previousPage}) => {
             const languageNamesString = languageNames.join(", ");
             setData(prevData => ({...prevData, languages: languageNamesString}));
         }
-        if (formData.programs.length > 0 && programs) {
-            const programNames = programs
-                .filter(m => formData.programs.includes(m.id))
-                .map(x => x.name);
+        if (formData.programs?.length > 0) {
+            const programNames = formData.programs.map((item) => {
+                const program = programs.find((p) => p.id === item.program);
+                if (program) {
+                    return item.itinerary ? `${program.name} en itinerario` : program.name;
+                }
+                return "";
+            }).join(", ");
 
-            const programNamesString = programNames.join(", ");
-            setData(prevData => ({...prevData, programs: programNamesString}));
+            setData(prevData => ({...prevData, programs: programNames}));
         }
         if (formData.nationalities.length > 0 && countries) {
             const nationalitiesNames = countries

@@ -65,14 +65,6 @@ const FormEditConfirm = ({formData, previousPage}) => {
             const languageNamesString = languageNames.join(", ");
             setData(prevData => ({...prevData, languages: languageNamesString}));
         }
-        if (formData.programs.length > 0 && programs) {
-            const programNames = programs
-                .filter(m => formData.programs.includes(m.id))
-                .map(x => x.name);
-
-            const programNamesString = programNames.join(", ");
-            setData(prevData => ({...prevData, programs: programNamesString}));
-        }
         if (formData.nationalities.length > 0 && countries) {
             const nationalitiesNames = countries
                 .filter(m => formData.nationalities.includes(m.id))
@@ -80,6 +72,17 @@ const FormEditConfirm = ({formData, previousPage}) => {
 
             const nationalitiesNamesString = nationalitiesNames.join(", ");
             setData(prevData => ({...prevData, nationalities: nationalitiesNamesString}));
+        }
+        if (formData.programs?.length > 0) {
+            const programNames = formData.programs.map((item) => {
+                const program = programs.find((p) => p.id === item.program);
+                if (program) {
+                    return item.itinerary ? `${program.name} en itinerario` : program.name;
+                }
+                return "";
+            }).join(", ");
+
+            setData(prevData => ({...prevData, programs: programNames}));
         }
         if (formData.municipality && municipalities) {
             const municipalityObject = municipalities.find(m => m.id === formData.municipality);
