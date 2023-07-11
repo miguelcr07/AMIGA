@@ -62,7 +62,7 @@ const FormPage1 = ({formData, setFormData, nextPage}) => {
     };
 
     return (
-        <div>
+        <div className="container">
             <div className="header">
                 <h1>Datos personales</h1>
                 <HomeLink></HomeLink>

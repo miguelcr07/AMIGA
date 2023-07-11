@@ -152,7 +152,7 @@ const FormCreateConfirm = ({formData, previousPage}) => {
         }
         if (formData.kids.length > 0) {
             const children = formData.kids.map(function (kid) {
-                return  kid.birthDate + ' ' + kid.sex;
+                return  kid.birthDate.split("-").reverse().join("-") + ' ' + kid.sex;
             });
 
             const childrenString = children.join(", ");
@@ -180,7 +180,7 @@ const FormCreateConfirm = ({formData, previousPage}) => {
     return (
         <div>
             <Errors errors={backendErrors} onClose={() => setBackendErrors(null)}/>
-            <Typography variant="h4" align="center">
+            <Typography variant="h6" align="center">
                 Descargar el documento a firmar y guardar datos
             </Typography>
             <br/>

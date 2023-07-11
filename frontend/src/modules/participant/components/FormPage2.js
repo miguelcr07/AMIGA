@@ -167,7 +167,7 @@ const FormPage2 = ({formData, setFormData, nextPage, previousPage}) => {
     };
 
     return (
-        <div>
+        <div className="container">
             <form onSubmit={handleSubmit}>
                 <div className="header">
                     <h1>Experiencia Laboral</h1>

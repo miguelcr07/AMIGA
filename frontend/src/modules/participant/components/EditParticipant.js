@@ -78,19 +78,20 @@ const FormContainer = () => {
         setCurrentPage(currentPage - 1);
     };
 
-    useEffect( () => {
-        for (const attribute in participant) {
-            if (participant.hasOwnProperty(attribute) && formData.hasOwnProperty(attribute)) {
-                formData[attribute] = participant[attribute];
+    useEffect(() => {
+            for (const attribute in participant) {
+                if (participant.hasOwnProperty(attribute) && formData.hasOwnProperty(attribute)) {
+                    formData[attribute] = participant[attribute];
+                }
             }
-        }
 
-    }, [participant]
+        }, [participant]
     )
     const renderPage = () => {
         switch (currentPage) {
             case 1:
                 return (
+
                     <FormPage1
                         formData={formData}
                         setFormData={setFormData}
@@ -99,14 +100,14 @@ const FormContainer = () => {
                 );
             case 2:
                 return (
-                    <div className="container">
-                        <FormPage1Continue
-                            formData={formData}
-                            setFormData={setFormData}
-                            nextPage={nextPage}
-                            previousPage={previousPage}
-                        />
-                    </div>
+
+                    <FormPage1Continue
+                        formData={formData}
+                        setFormData={setFormData}
+                        nextPage={nextPage}
+                        previousPage={previousPage}
+                    />
+
                 );
             case 3:
                 return (

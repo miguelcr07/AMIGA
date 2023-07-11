@@ -10,6 +10,7 @@ import es.udc.paproject.backend.model.mapper.ParticipantMapper;
 import es.udc.paproject.backend.rest.dtos.KidDto;
 import es.udc.paproject.backend.rest.dtos.ParticipantDto;
 import es.udc.paproject.backend.rest.dtos.ParticipantSummaryDto;
+import es.udc.paproject.backend.rest.dtos.Participant_ProgramDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -87,8 +89,8 @@ public class ParticipantServiceImpl implements ParticipantService {
         setAnnualData(participantDto, annualData);
         AnnualData annualDataSaved = annualDataDao.save(annualData);
 
-        for (Participant_program program : participantDto.getPrograms()) {
-            participantProgramDao.save(new Participant_program(annualDataSaved, program.getProgram(), program.isItinerary()));
+        for (Participant_ProgramDto program : participantDto.getPrograms()) {
+            participantProgramDao.save(new Participant_program(annualDataSaved, selectorService.getProgram(program.getProgram()), program.isItinerary()));
         }
 
         return participantMapper.toParticipantDto(participantSaved, annualDataSaved);
@@ -112,6 +114,10 @@ public class ParticipantServiceImpl implements ParticipantService {
         annualData.setParticipant(participant);
         setAnnualData(participantDto, annualData);
 
+        for (Participant_ProgramDto program : participantDto.getPrograms()) {
+            participantProgramDao.save(new Participant_program(annualData, selectorService.getProgram(program.getProgram()), program.isItinerary()));
+        }
+
         participantDao.save(participant);
         annualDataDao.save(annualData);
         return participantMapper.toParticipantDto(participant, annualDataDao.save(annualData));
@@ -124,23 +130,45 @@ public class ParticipantServiceImpl implements ParticipantService {
         if (participant == null)
             return null;
 
-        for (KidDto kidDto : participantDto.getKids()) {
-            if (kidDto.getId() == null)
-                kidDao.save(new Kid(kidDto.getBirthDate(), Gender.valueOf(kidDto.getSex()), participant));
-        }
-        setParticipantData(participantDto, participant);
-
         AnnualData annualData = annualDataDao.findById(participantDto.getIdAnnualData()).orElse(null);
 
         if (annualData == null)
             return null;
+
+        for (KidDto kidDto : participantDto.getKids()) {
+            if (kidDto.getId() == null)
+                kidDao.save(new Kid(kidDto.getBirthDate(), Gender.valueOf(kidDto.getSex()), participant));
+        }
+
+        Set<Participant_program> participantProgramList = annualData.getPrograms();
+
+        for (Participant_program program : participantProgramList) {
+            if(!isPresent(participantDto.getPrograms(), program.getId())){
+                participantProgramDao.deleteById(program.getId());
+            }
+        }
+
+        for (Participant_ProgramDto program : participantDto.getPrograms()) {
+            if (program.getId() == null)
+                participantProgramDao.save(new Participant_program(annualData, selectorService.getProgram(program.getProgram()), program.isItinerary()));
+        }
+
+        setParticipantData(participantDto, participant);
         annualData.setParticipant(participant);
         setAnnualData(participantDto, annualData);
 
         participantDao.save(participant);
         annualDataDao.save(annualData);
         return participantMapper.toParticipantDto(participant, annualData);
+    }
 
+    private boolean isPresent(List<Participant_ProgramDto> list, Long id) {
+        for (Participant_ProgramDto item : list) {
+            if (Objects.equals(item.getId(), id)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void setAnnualData(ParticipantDto participantDto, AnnualData annualData) {

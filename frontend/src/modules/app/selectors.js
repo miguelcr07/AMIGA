@@ -30,3 +30,19 @@ export const getPrograms = state =>
     getModuleState(state).programs;
 export const getDemands = state =>
     getModuleState(state).demands;
+
+export const getProgramName = (programs, id) => {
+
+    if (!programs) {
+        return '';
+    }
+
+    const program = programs.find(program => program.id === id);
+
+    if (!program) {
+        return '';
+    }
+
+    return program.name;
+
+}

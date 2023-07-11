@@ -62,3 +62,8 @@
     flex-direction: row;
 }
 
+.separed-container{
+    display: flex;
+    justify-content: space-between;
+}
+

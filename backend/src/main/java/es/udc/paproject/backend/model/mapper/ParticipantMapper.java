@@ -4,6 +4,7 @@ import es.udc.paproject.backend.model.entities.*;
 import es.udc.paproject.backend.rest.dtos.KidDto;
 import es.udc.paproject.backend.rest.dtos.ParticipantDto;
 import es.udc.paproject.backend.rest.dtos.ParticipantSummaryDto;
+import es.udc.paproject.backend.rest.dtos.Participant_ProgramDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -42,10 +43,14 @@ public interface ParticipantMapper {
     ParticipantDto toParticipantDto(Participant p, AnnualData a);
 
     @Mapping(source = "gender", target = "sex", qualifiedByName = "toSex")
-    @Mapping(target = "participant", ignore = true)
     KidDto toKidDto(Kid kid);
 
     List<KidDto> toKidDtoList(List<Kid> kid);
+
+    @Mapping(source = "program.id", target = "program")
+    Participant_ProgramDto toDto(Participant_program participantProgram);
+
+    List<Participant_ProgramDto> toDto(List<Participant_program> participantProgram);
 
     @Named(value = "toSex")
     static String toSex (Gender gender){

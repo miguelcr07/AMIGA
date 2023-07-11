@@ -1,6 +1,6 @@
 import React from 'react';
 import {List, ListItem, ListItemIcon, ListItemText, Paper} from '@mui/material';
-import {Edit, AddCircle, NoteAdd, Visibility} from '@mui/icons-material';
+import {AddCircle, NoteAdd, Visibility, WorkHistory} from '@mui/icons-material';
 import "./Participant.css";
 import {useNavigate} from "react-router-dom";
 
@@ -8,7 +8,6 @@ const Menu = ({user}) => {
     const navigate = useNavigate();
     const date = new Date();
     const handleEdit = () => {
-        navigate('/participant/edit');
     }
 
     const handleViewData = () => {
@@ -34,9 +33,9 @@ const Menu = ({user}) => {
                 </ListItem>
                 <ListItem button disabled={date.getFullYear() !== Math.max(...user.yearList)} onClick={handleEdit}>
                     <ListItemIcon>
-                        <Edit/>
+                        <WorkHistory/>
                     </ListItemIcon>
-                    <ListItemText primary="Editar Datos"/>
+                    <ListItemText primary="Inserciones laborales"/>
                 </ListItem>
                 <ListItem button disabled={ Math.max(...user.yearList) === date.getFullYear()} onClick={handleNewAnnualData}>
                     <ListItemIcon>

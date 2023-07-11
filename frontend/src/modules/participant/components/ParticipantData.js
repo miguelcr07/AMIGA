@@ -12,9 +12,14 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 
 import {BackLink} from "../../common";
+import Button from "@mui/material/Button";
+import {useNavigate} from "react-router-dom";
 
 const ParticipantData = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const user = useSelector(userSelector.getParticipantData);
+    const state = useSelector(selectors.selectors);
     const [year, setYear] = useState(null);
     const [data, setData] = useState({
         factors: '',
@@ -37,8 +42,10 @@ const ParticipantData = () => {
         dispatch(actions.findParticipant(user.idParticipant, value));
     }
 
-    const user = useSelector(userSelector.getParticipantData);
-    const state = useSelector(selectors.selectors);
+    const handleEdit = () => {
+        navigate('/participant/edit');
+    }
+
 
 
     useEffect(() => {
@@ -168,7 +175,10 @@ const ParticipantData = () => {
     return (
 
         <div className="container">
-            <BackLink></BackLink>
+            <div className="separed-container">
+                <BackLink></BackLink>
+                <Button variant="contained" onClick={handleEdit}>Editar</Button>
+            </div>
             <div className="header-details">
                 <Typography variant="h6" align="center">
                     Datos {user.name + ' ' + user.surnames}

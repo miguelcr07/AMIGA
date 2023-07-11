@@ -7,6 +7,7 @@ import * as selectors from "../../app/selectors";
 import "./Form.css";
 import {format} from "date-fns";
 import {Errors, HomeLink} from "../../common";
+import Programs from "./Programs";
 
 const FormPage3 = ({formData, setFormData, previousPage, nextPage}) => {
     const demands = useSelector(selectors.getDemands);
@@ -68,11 +69,12 @@ const FormPage3 = ({formData, setFormData, previousPage, nextPage}) => {
     };
 
     return (
-        <div>
+        <div className="container">
             <div className="header">
                 <h1>Tipo demanda</h1>
                 <HomeLink></HomeLink>
             </div>
+            <Programs formData={formData} setFormData={setFormData} programs={programs}></Programs>
             <form onSubmit={handleSubmit}>
                 <div className="row-container">
                     <Autocomplete

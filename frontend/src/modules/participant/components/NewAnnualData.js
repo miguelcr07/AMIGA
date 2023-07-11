@@ -4,9 +4,9 @@ import FormPage3 from "./FormPage3";
 import FormPage1 from "./FormPage1";
 import * as selectors from "../selectors"
 import {useSelector} from "react-redux";
-import FormEditConfirm from "./FormEditConfirm";
 import NewAnnualDataConfirm from "./NewAnnualDataConfirm";
 import FormPage1Continue from "./FormPage1Continue";
+import {format} from "date-fns";
 
 const NewAnnualData = () => {
     const participant = useSelector(selectors.getParticipantData);
@@ -85,6 +85,7 @@ const NewAnnualData = () => {
                     formData[attribute] = participant[attribute];
                 }
             }
+            setFormData({...formData, date: format(new Date(), 'yyyy-MM-dd')})
 
         }, [participant]
     )

@@ -155,7 +155,7 @@ const NewAnnualDataConfirm = ({formData, previousPage}) => {
         }
         if (formData.kids.length > 0) {
             const children = formData.kids.map(function (kid) {
-                return kid.birthDate + ' ' + kid.sex;
+                return kid.birthDate.split("-").reverse().join("-") + ' ' + kid.sex;
             });
 
             const childrenString = children.join(", ");

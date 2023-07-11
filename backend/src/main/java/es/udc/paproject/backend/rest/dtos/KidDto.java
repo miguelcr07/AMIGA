@@ -13,10 +13,6 @@ public class KidDto {
     private LocalDate birthDate;
     private String sex;
 
-    @ManyToOne
-    @JoinColumn(name = "participant_id")
-    private Participant participant;
-
     public Long getId() {
         return id;
     }
@@ -41,11 +37,4 @@ public class KidDto {
         this.sex = sex;
     }
 
-    public Participant getParticipant() {
-        return participant;
-    }
-
-    public void setParticipant(Participant participant) {
-        this.participant = participant;
-    }
 }

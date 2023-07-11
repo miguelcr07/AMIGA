@@ -4,6 +4,7 @@ import FormPage3 from "./FormPage3";
 import FormPage1 from "./FormPage1";
 import FormCreateConfirm from "./FormCreateConfirm";
 import FormPage1Continue from "./FormPage1Continue";
+import {format} from "date-fns";
 
 const FormContainer = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -25,7 +26,7 @@ const FormContainer = () => {
         interviewPi: '',
         kids: [],
         country: null,
-        date: '',
+        date: format(new Date(), 'yyyy-MM-dd'),
         returned: false,
         nationalities: [],
         situation: '',
@@ -77,55 +78,55 @@ const FormContainer = () => {
         switch (currentPage) {
             case 1:
                 return (
-                    <div className="container">
-                        <FormPage1
-                            formData={formData}
-                            setFormData={setFormData}
-                            nextPage={nextPage}
-                        />
-                    </div>
+
+                    <FormPage1
+                        formData={formData}
+                        setFormData={setFormData}
+                        nextPage={nextPage}
+                    />
+
                 );
             case 2:
                 return (
-                    <div className="container">
-                        <FormPage1Continue
-                            formData={formData}
-                            setFormData={setFormData}
-                            nextPage={nextPage}
-                            previousPage={previousPage}
-                        />
-                    </div>
+
+                    <FormPage1Continue
+                        formData={formData}
+                        setFormData={setFormData}
+                        nextPage={nextPage}
+                        previousPage={previousPage}
+                    />
+
                 );
             case 3:
                 return (
-                    <div className="container">
-                        <FormPage2
-                            formData={formData}
-                            setFormData={setFormData}
-                            nextPage={nextPage}
-                            previousPage={previousPage}
-                        />
-                    </div>
+
+                    <FormPage2
+                        formData={formData}
+                        setFormData={setFormData}
+                        nextPage={nextPage}
+                        previousPage={previousPage}
+                    />
+
                 );
             case 4:
                 return (
-                    <div className="container">
-                        <FormPage3
-                            formData={formData}
-                            setFormData={setFormData}
-                            nextPage={nextPage}
-                            previousPage={previousPage}
-                        />
-                    </div>
+
+                    <FormPage3
+                        formData={formData}
+                        setFormData={setFormData}
+                        nextPage={nextPage}
+                        previousPage={previousPage}
+                    />
+
                 );
             case 5:
                 return (
-                    <div className="container">
-                        <FormCreateConfirm
-                            formData={formData}
-                            previousPage={previousPage}
-                        ></FormCreateConfirm>
-                    </div>
+
+                    <FormCreateConfirm
+                        formData={formData}
+                        previousPage={previousPage}
+                    ></FormCreateConfirm>
+
                 );
             default:
                 return null;

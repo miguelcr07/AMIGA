@@ -77,7 +77,7 @@ public class ParticipantDto {
     @NotNull
     private Long demand;
     @NotNull
-    private List<Participant_program> programs;
+    private List<Participant_ProgramDto> programs;
     private String derivation;
 
     public Long getIdParticipant() {
@@ -512,11 +512,11 @@ public class ParticipantDto {
         this.demand = demand;
     }
 
-    public List<Participant_program> getPrograms() {
+    public List<Participant_ProgramDto> getPrograms() {
         return programs;
     }
 
-    public void setPrograms(List<Participant_program> programs) {
+    public void setPrograms(List<Participant_ProgramDto> programs) {
         this.programs = programs;
     }
 

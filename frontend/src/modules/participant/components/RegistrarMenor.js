@@ -5,6 +5,7 @@ import {TextField, Button, Table, TableHead, TableBody, TableRow,
     TableCell, MenuItem, Select, InputLabel,} from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import {Errors} from "../../common";
+import Typography from "@mui/material/Typography";
 
 const RegistrarMenor = ({ formData, setFormData }) => {
     const [backendErrors, setBackendErrors] = useState(null);
@@ -75,7 +76,9 @@ const RegistrarMenor = ({ formData, setFormData }) => {
 
     return (
         <div className="participant-details">
-
+            <Typography variant="h6" align="center">
+                Añadir menores
+            </Typography>
             <form onSubmit={handleAddChild}>
                 <div className="row-container">
                     <FormControl
