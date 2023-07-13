@@ -29,7 +29,7 @@ const Menu = ({user}) => {
                     <ListItemIcon>
                         <Visibility/>
                     </ListItemIcon>
-                    <ListItemText primary="Ver Datos"/>
+                    <ListItemText primary="Datos"/>
                 </ListItem>
                 <ListItem button disabled={date.getFullYear() !== Math.max(...user.yearList)} onClick={handleEdit}>
                     <ListItemIcon>

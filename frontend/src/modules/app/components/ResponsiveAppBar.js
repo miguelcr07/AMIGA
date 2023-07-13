@@ -16,7 +16,7 @@ import {useState} from "react";
 
 
 function ResponsiveAppBar() {
-    const [value, setValue] = useState(0); // Valor inicial válido
+    const [value, setValue] = useState(0);
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const navigate = useNavigate();
