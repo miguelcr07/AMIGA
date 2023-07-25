@@ -5,10 +5,19 @@ import es.udc.paproject.backend.model.services.ParticipantService;
 import es.udc.paproject.backend.rest.dtos.ParticipantDto;
 import es.udc.paproject.backend.rest.dtos.ParticipantSummaryDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -55,5 +64,32 @@ public class ParticipantController {
             return ResponseEntity.notFound().build();
         else
             return ResponseEntity.ok(participantDto1);
+    }
+
+    @GetMapping("/Excel")
+    ResponseEntity<Resource> getExcel(LocalDate startDate, LocalDate endDate) {
+       // roomService.getExcel(officeId.longValue(), date);
+
+        Path path = Paths.get("./resources/excel/Excel.xls");
+        ByteArrayResource resource = null;
+        try {
+            resource = new ByteArrayResource(Files.readAllBytes(path));
+        } catch ( IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        //HEADERS
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=estadisticas.xls");
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .contentLength(resource.contentLength())
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(resource);
+
     }
 }

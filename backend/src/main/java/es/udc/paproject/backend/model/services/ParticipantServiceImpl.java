@@ -11,6 +11,7 @@ import es.udc.paproject.backend.rest.dtos.KidDto;
 import es.udc.paproject.backend.rest.dtos.ParticipantDto;
 import es.udc.paproject.backend.rest.dtos.ParticipantSummaryDto;
 import es.udc.paproject.backend.rest.dtos.Participant_ProgramDto;
+import jxl.write.WritableWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -160,6 +161,11 @@ public class ParticipantServiceImpl implements ParticipantService {
         participantDao.save(participant);
         annualDataDao.save(annualData);
         return participantMapper.toParticipantDto(participant, annualData);
+    }
+
+    @Override
+    public WritableWorkbook getExcel(LocalDate startDate, LocalDate endDate) {
+        return null;
     }
 
     private boolean isPresent(List<Participant_ProgramDto> list, Long id) {
