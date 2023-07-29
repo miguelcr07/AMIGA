@@ -14,12 +14,15 @@ public class Observation {
     private String title;
 
     private String text;
+    @Enumerated(EnumType.STRING)
+    private ObservationType observationType;
 
-    public Observation(LocalDate date, String title, String text, Participant participant) {
+    public Observation(LocalDate date, String title, String text, Participant participant, ObservationType observationType) {
         this.date = date;
         this.title = title;
         this.text = text;
         this.participant = participant;
+        this.observationType = observationType;
     }
 
     @ManyToOne
@@ -68,5 +71,13 @@ public class Observation {
 
     public void setParticipant(Participant participant) {
         this.participant = participant;
+    }
+
+    public ObservationType getObservationType() {
+        return observationType;
+    }
+
+    public void setObservationType(ObservationType observationType) {
+        this.observationType = observationType;
     }
 }

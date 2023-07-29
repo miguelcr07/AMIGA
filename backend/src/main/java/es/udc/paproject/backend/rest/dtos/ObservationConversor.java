@@ -14,6 +14,6 @@ public class ObservationConversor {
     }
 
     public static List<ObservationDto> toObservationDtos(List<Observation> observations) {
-        return observations.stream().map(c -> toObservationDto(c)).collect(Collectors.toList());
+        return observations.stream().map(ObservationConversor::toObservationDto).collect(Collectors.toList());
     }
 }

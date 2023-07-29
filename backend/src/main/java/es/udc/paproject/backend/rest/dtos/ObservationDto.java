@@ -16,6 +16,8 @@ public class ObservationDto {
 
     private Long participant;
 
+    private String observationType;
+
     public ObservationDto() {
     }
 
@@ -64,5 +66,13 @@ public class ObservationDto {
 
     public void setParticipant(Long participant) {
         this.participant = participant;
+    }
+
+    public String getObservationType() {
+        return observationType;
+    }
+
+    public void setObservationType(String observationType) {
+        this.observationType = observationType;
     }
 }

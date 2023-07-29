@@ -29,4 +29,6 @@ public interface SelectorService {
     List<Program> getPrograms();
 
     List<Demand> getDemands();
+
+    List<Contract> getContracts();
 }

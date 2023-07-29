@@ -65,4 +65,8 @@ public class SelectorController {
     ResponseEntity<List<Demand>> getDemands() {
         return ResponseEntity.ok(selectorService.getDemands());
     }
+    @GetMapping("/contracts")
+    ResponseEntity<List<Contract>> getContracts() {
+        return ResponseEntity.ok(selectorService.getContracts());
+    }
 }

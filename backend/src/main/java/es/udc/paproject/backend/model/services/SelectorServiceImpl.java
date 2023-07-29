@@ -36,6 +36,8 @@ public class SelectorServiceImpl implements SelectorService{
     private ProgramDao programDao;
     @Autowired
     private DemandDao demandDao;
+    @Autowired
+    private ContractDao contractDao;
 
     public Country getCountry(Long id){
         return countryDao.findById(id).orElse(null);
@@ -122,5 +124,12 @@ public class SelectorServiceImpl implements SelectorService{
     @Override
     public List<Demand> getDemands() {
         return StreamSupport.stream(demandDao.findAll().spliterator(), false).collect(Collectors.toList());
+    }
+    public Contract getContract(Long id){
+        return contractDao.findById(id).orElse(null);
+    }
+    @Override
+    public List<Contract> getContracts() {
+        return StreamSupport.stream(contractDao.findAll().spliterator(), false).collect(Collectors.toList());
     }
 }
